@@ -93,7 +93,7 @@
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Remember Login</label>
             </div>
-            <button type="submit" name="btn-login" class="btn btn-primary">Login</button>
+            <button type="submit" name="btn-login" class="btn btn-primary">Sign in</button>
         </form>
     </div>
     <!-- <?php require_once 'components/footer.php' ?> -->

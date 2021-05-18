@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2021 at 03:23 PM
+-- Generation Time: May 18, 2021 at 06:13 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wf-backend-5-ecommerce`
+-- Database: `wf_backend_5_ecommerce`
 --
 
 -- --------------------------------------------------------

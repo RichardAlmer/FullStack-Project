@@ -1,6 +1,6 @@
 CREATE DATABASE `wf-backend-5-ecommerce`;
 
-CREATE TABLE `user` (
+CREATE TABLE `wf-backend-5-ecommerce`.user (
 `pk_user_id` INT(11) NOT NULL AUTO_INCREMENT,
 `email` VARCHAR(100) NOT NULL UNIQUE,
 `password` VARCHAR (255) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `user` (
 PRIMARY KEY (`pk_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
 
-CREATE TABLE `product` (
+CREATE TABLE `wf-backend-5-ecommerce`.product (
 `pk_product_id` INT(11) NOT NULL AUTO_INCREMENT,
 `name` VARCHAR(100) NOT NULL,
 `description` TEXT NOT NULL,

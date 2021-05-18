@@ -1,14 +1,16 @@
 <?php
-$localhost = "173.212.235.205";
-$username = "obermaye_userTeam5";
-$password = "7hNNxNwdby9CCmy";
-$dbname = "obermaye_WF-BackEnd-5";
-// create connection
-$connect = new mysqli($localhost, $username, $password, $dbname);
-// check connection
-if ($connect->connect_error) {
-    die("Connection failed: " . $connect->connect_error);
+$serverName = "173.212.235.205";
+$userName = "obermaye_team5";
+$password = "394hgid45nHJ8";
+$databaseName = "obermaye_wf-backend-5-ecommerce";
+
+echo "hallo";
+
+$conn = mysqli_connect($serverName, $userName, $password, $databaseName);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 } else {
-    echo "Successfully Connected";
+    echo "DB connected";
 }
 ?>

@@ -34,9 +34,9 @@ PRIMARY KEY (`pk_product_id`)
 
 CREATE TABLE `cart_item` (
 `pk_cart_item_id` INT(11) NOT NULL AUTO_INCREMENT,
-`quantity` INT NOT NULL DEFAULT 1;
+`quantity` INT(11) NOT NULL DEFAULT 1,
 `fk_product_id` INT(11) NOT NULL,
-`fk_user_id int` INT(11) NOT NULL,
+`fk_user_id` INT(11) NOT NULL,
 PRIMARY KEY (`pk_cart_item_id`),
 FOREIGN KEY (`fk_product_id`) REFERENCES product(`pk_product_id`),
 FOREIGN KEY (`fk_user_id`) REFERENCES user(`pk_user_id`)
@@ -45,14 +45,14 @@ FOREIGN KEY (`fk_user_id`) REFERENCES user(`pk_user_id`)
 CREATE TABLE `purchase` (
 `pk_purchase_id` INT(11) NOT NULL AUTO_INCREMENT,
 `create_datetime` DATETIME NOT NULL,
-`fk_user_id int` INT(11) NOT NULL,
+`fk_user_id` INT(11) NOT NULL,
 PRIMARY KEY (`pk_purchase_id`),
 FOREIGN KEY (`fk_user_id`) REFERENCES user(`pk_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
 
 CREATE TABLE `purchase_item` (
 `pk_purchase_item_id` INT(11) NOT NULL AUTO_INCREMENT,
-`quantity` INT NOT NULL DEFAULT 1;
+`quantity` INT(11) NOT NULL DEFAULT 1,
 `fk_product_id` INT(11) NOT NULL,
 `fk_purchase_id` INT(11) NOT NULL,
 PRIMARY KEY (`pk_purchase_item_id`),
@@ -112,5 +112,5 @@ CREATE TABLE `chat_message` (
 `fk_chat_id` INT(11) NOT NULL,
 PRIMARY KEY (`pk_chat_message_id`),
 FOREIGN KEY (`fk_user_id`) REFERENCES user(`pk_user_id`),
-FOREIGN KEY (`fk_chat_id`) REFERENCES user(`pk_chat_id`)
+FOREIGN KEY (`fk_chat_id`) REFERENCES chat(`pk_chat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;

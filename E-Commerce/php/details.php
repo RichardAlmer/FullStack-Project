@@ -1,47 +1,73 @@
 <?php
-    session_start();
-    if ( isset($_SESSION['user']) != "") {
-        header("Location: home.php" ); //-----------------------------------
-    }
-    if (isset($_SESSION[ 'admin' ]) != "") {
-        header("Location: dashboard.php"); //-----------------------------------
-    }
+    // session_start();
+    // if ( isset($_SESSION['user']) != "") {
+    //     header("Location: home.php" ); //-----------------------------------
+    // }
+    // if (isset($_SESSION[ 'admin' ]) != "") {
+    //     header("Location: dashboard.php"); //-----------------------------------
+    // }
 
-    //require_once 'db_connect.php';
-    // Review
-    if ($_POST) {  
-        $review = $_POST['review'];
+    // //require_once 'db_connect.php';
+    // // Review
+    // if ($_POST) {  
+    //     $review = $_POST['review'];
     
-        $sql = ""; //-----------------------------------
+    //     $sql = ""; //-----------------------------------
 
-        if ($connect->query($sql) === true ) {
-            $class = "success";
-            $messageReview = "The review was successfully created";
-        } else {
-            $class = "danger";
-            $messageReview = "Error while creating eview. Try again: <br>" . $connect->error;
-        }
-        $connect->close();
-    } else {
-        //header("location: ../error.php"); //-----------------------------------
-    }
-    // Q&A
-    if ($_POST) {  
-        $question = $_POST['question'];
+    //     if ($connect->query($sql) === true ) {
+    //         $class = "success";
+    //         $messageReview = "The review was successfully created";
+    //     } else {
+    //         $class = "danger";
+    //         $messageReview = "Error while creating eview. Try again: <br>" . $connect->error;
+    //     }
+    //     $connect->close();
+    // } else {
+    //     //header("location: ../error.php"); //-----------------------------------
+    // }
+    // // Q&A
+    // if ($_POST) {  
+    //     $question = $_POST['question'];
     
-        $sql = ""; //-----------------------------------
+    //     $sql = ""; //-----------------------------------
 
-        if ($connect->query($sql) === true ) {
-            $class = "success";
-            $messageQA = "The comment was successfully created";
-        } else {
-            $class = "danger";
-            $messageQA = "Error while creating comment. Try again: <br>" . $connect->error;
-        }
-        $connect->close();
-    } else {
-        //header("location: ../error.php"); //-----------------------------------
-    }
+    //     if ($connect->query($sql) === true ) {
+    //         $class = "success";
+    //         $messageQA = "The comment was successfully created";
+    //     } else {
+    //         $class = "danger";
+    //         $messageQA = "Error while creating comment. Try again: <br>" . $connect->error;
+    //     }
+    //     $connect->close();
+    // } else {
+    //     //header("location: ../error.php"); //-----------------------------------
+    // }
+
+    // // Print Reviews
+    // $sql = "SELECT * FROM "; //-----------------------------------
+    // $result = mysqli_query($connect ,$sql);
+    // $review='';
+    // if(mysqli_num_rows($result) > 0) {    
+    //     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){        
+    //     $review .= " ";  //-----------------------------------
+    // };
+    // } else {
+    //     $review =  " ";  //-----------------------------------
+    // }
+
+    // // Print Q&A
+    // $sql = "SELECT * FROM "; //-----------------------------------
+    // $result = mysqli_query($connect ,$sql);
+    // $question='';
+    // if(mysqli_num_rows($result) > 0) {    
+    //     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){        
+    //     $question .= " ";  //-----------------------------------
+    // };
+    // } else {
+    //     $question =  " ";  //-----------------------------------
+    // }
+
+    // $connect->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,10 +95,10 @@
         <hr>
         <div id="review">
             <h3>Reviews</h3>
-            <p class="text-warning">PHP echo reviews</p>
-            <form>
+            <p class="text-warning">PHP echo reviews <?= $review;?></p>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
                 <div class="mb-3">
-                    <input class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="height: 100px; width: 80vw"></input>
+                    <input class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="width: 80vw"></input>
                 </div>
                 <span class="text-<?=$class;?>"><?php echo ($messageReview) ?? ''; ?></span><br>
                 <button type="submit" class="btn btn-primary">Create Review</button>
@@ -81,10 +107,10 @@
         <hr>
         <div id="qAndA">
             <h3>Q&A</h3>
-            <p class="text-warning">PHP echo Questions</p>
-            <form>
+            <p class="text-warning">PHP echo Questions <?= $question;?></p>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
                 <div class="mb-3">
-                    <input class="form-control" type="text" name="question" placeholder="Leave a review here" id="questionText" style="height: 100px; width: 80vw"></input>
+                    <input class="form-control" type="text" name="question" placeholder="Leave a review here" id="questionText" style="width: 80vw"></input>
                 </div>
                 <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
                 <button type="submit" class="btn btn-primary">Create Question</button>

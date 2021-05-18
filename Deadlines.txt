@@ -1,18 +1,54 @@
 Tuesday:
 - Finish DB Structure
-- Style  
+- Mockup
+- registration page
+- login page
+- product detail page
+- starting with CSS for header, footer, landing page (with dummy card)
 
 Wednesday:
-- Functionality 
+- Functionality:
+-- contact page + Google API
+-- admin dashboard
+-- crud for user
+-- crud for product 
+-- Product Catalog Page (category filter)
+-- navbar, footer
+- Apply Design to:
+-- Login Page
+-- Registration Page
+-- Product Detail Page
+-- Product Catalog
 
-Thursday:
+Thursday/Friday:
+- leftovers from wednesday
+- apply design existing cruds pages
+- write review feature
+- question/answer feature
+- add cart items
+- purchase (without paypalAPI) (moves from cart item to purchase item)
+- purchase email notification
+- admin dashboard: user crud, product crud, review rd, sales statistics r
+- admin sales statistic seite
+- admin product review Overview page - delete
 
-Friday:
+Saturday/Sunda:
+- continue, finish
+- varifications for field input (if still open)
+- start with nice to haves
 
 Monday:
+- improve
+- nice to haves:
+-- profile image
+-- ban experation
+-- live chat
+-- paypal api
+- testing, bug fixes
 
 Tuesday:
-
+- last checks
+- bug fixes
 
 Wednesday:
 - Presentation creation/ preperation 

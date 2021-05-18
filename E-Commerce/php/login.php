@@ -1,13 +1,13 @@
 <?php
     session_start();
-    require_once 'components/db_connect.php';
+    require_once 'components/db_connect.php'; //-----------------------------------
 
-    if (isset($_SESSION[ 'user']) != "") {
-        header("Location: home.php");
+    if (isset($_SESSION['user']) != "") {
+        header("Location: home.php"); //-----------------------------------
         exit;
     }
-    if (isset($_SESSION['adm' ]) != "") {
-        header("Location: dashboard.php");
+    if (isset($_SESSION['adm']) != "") {
+        header("Location: dashboard.php"); //-----------------------------------
     }
 
     $error = false ;
@@ -36,7 +36,7 @@
 
         if (!$error) {
             $password = hash('sha256', $pass);
-            $sqlSelect = "SELECT id, first_name, password, status FROM user WHERE email = ? ";
+            $sqlSelect = "SELECT id, first_name, password, status FROM user WHERE email = ? "; //-----------------------------------
             $stmt = $connect->prepare($sqlSelect);
             $stmt->bind_param("s", $email);
             $work = $stmt->execute();
@@ -46,10 +46,10 @@
             if ($count == 1 && $row['password'] == $password) {
                 if($row['status'] == 'adm'){
                 $_SESSION['adm'] = $row['id'];          
-                header( "Location: dashboard.php");}
+                header( "Location: dashboard.php");} //-----------------------------------
                 else{
                     $_SESSION['user'] = $row['id'];
-                    header( "Location: home.php");
+                    header( "Location: home.php"); //-----------------------------------
                 }          
             } else {
                 $errMSG = "Incorrect Credentials, Try again..." ;

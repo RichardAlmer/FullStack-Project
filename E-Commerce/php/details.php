@@ -1,3 +1,48 @@
+<?php
+    session_start();
+    if ( isset($_SESSION['user']) != "") {
+        header("Location: home.php" ); //-----------------------------------
+    }
+    if (isset($_SESSION[ 'adm' ]) != "") {
+        header("Location: dashboard.php"); //-----------------------------------
+    }
+
+    require_once 'db_connect.php';
+    // Review
+    if ($_POST) {  
+        $review = $_POST['review'];
+    
+        $sql = ""; //-----------------------------------
+
+        if ($connect->query($sql) === true ) {
+            $class = "success";
+            $messageReview = "The review was successfully created";
+        } else {
+            $class = "danger";
+            $messageReview = "Error while creating eview. Try again: <br>" . $connect->error;
+        }
+        $connect->close();
+    } else {
+        header("location: ../error.php"); //-----------------------------------
+    }
+    // Q&A
+    if ($_POST) {  
+        $question = $_POST['question'];
+    
+        $sql = ""; //-----------------------------------
+
+        if ($connect->query($sql) === true ) {
+            $class = "success";
+            $messageQA = "The comment was successfully created";
+        } else {
+            $class = "danger";
+            $messageQA = "Error while creating comment. Try again: <br>" . $connect->error;
+        }
+        $connect->close();
+    } else {
+        header("location: ../error.php"); //-----------------------------------
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,10 +72,9 @@
             <p class="text-warning">PHP echo reviews</p>
             <form>
                 <div class="mb-3">
-                    <textarea class="form-control" placeholder="Leave a review here" id="floatingTextarea" style="height: 100px; width: 80vw"></textarea>
+                    <input class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="height: 100px; width: 80vw"></input>
                 </div>
-                <span class="text-danger">PHP echo massage reviewError</span><br>
-                <span class="text-success">PHP echo massage Success</span><br>
+                <span class="text-<?=$class;?>"><?php echo ($messageReview) ?? ''; ?></span><br>
                 <button type="submit" class="btn btn-primary">Create Review</button>
             </form>
         </div>
@@ -40,10 +84,9 @@
             <p class="text-warning">PHP echo Questions</p>
             <form>
                 <div class="mb-3">
-                    <textarea class="form-control" placeholder="Leave a review here" id="floatingTextarea" style="height: 100px; width: 80vw"></textarea>
+                    <input class="form-control" type="text" name="question" placeholder="Leave a review here" id="questionText" style="height: 100px; width: 80vw"></input>
                 </div>
-                <span class="text-danger">PHP echo massage questionError</span><br>
-                <span class="text-success">PHP echo massage Success</span><br>
+                <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
                 <button type="submit" class="btn btn-primary">Create Question</button>
             </form>
         </div>

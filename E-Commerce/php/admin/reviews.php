@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Statistics</title>
+    <title>Manage Reviews</title>
     <?php require_once '../components/boot.php'?>
     <!-- <link rel='stylesheet' type='text/css' href='../../main.css'> -->
 </head>
@@ -20,9 +20,9 @@
     <div id="container">
         <?php include '../components/navbar.php' ?>
         <div id="content">
-            <h1>Sales Statistics</h1>
+            <h1>Manage Reviews</h1>
             <table>
-                <!-- To Do -->
+                 <!-- To Do -->
             </table>
             <a href='dashboard.php'>Back to dashboard</a>
         </div>

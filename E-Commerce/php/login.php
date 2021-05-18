@@ -6,7 +6,7 @@
         header("Location: home.php"); //-----------------------------------
         exit;
     }
-    if (isset($_SESSION['adm']) != "") {
+    if (isset($_SESSION['admin']) != "") {
         header("Location: dashboard.php"); //-----------------------------------
     }
 
@@ -36,7 +36,7 @@
 
         if (!$error) {
             $password = hash('sha256', $pass);
-            $sqlSelect = "SELECT id, first_name, password, status FROM user WHERE email = ? "; //-----------------------------------
+            $sqlSelect = "SELECT id, first_name, password, status, role, banned_until FROM user WHERE email = ? "; //-----------------------------------
             $stmt = $connect->prepare($sqlSelect);
             $stmt->bind_param("s", $email);
             $work = $stmt->execute();
@@ -44,12 +44,14 @@
             $row = $result->fetch_assoc();
             $count = $result->num_rows;
             if ($count == 1 && $row['password'] == $password) {
-                if($row['status'] == 'adm'){
-                $_SESSION['adm'] = $row['id'];          
-                header( "Location: dashboard.php");} //-----------------------------------
-                else{
+                if($row['status'] == 'active' && $row['role'] == 'admin'){
+                    $_SESSION['admin'] = $row['id'];          
+                    header( "Location: dashboard.php");} //-----------------------------------
+                else if($row['status'] == 'active' && $row['role'] == 'user'){
                     $_SESSION['user'] = $row['id'];
                     header( "Location: home.php"); //-----------------------------------
+                }else{
+                    $errMSG = "You are banned until ".$row['banned_until'];
                 }          
             } else {
                 $errMSG = "Incorrect Credentials, Try again..." ;
@@ -71,7 +73,7 @@
 </head>
 <body>
     <div class="container">
-        <form>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
             <?php
                 if (isset($errMSG)) {
                     echo $errMSG;
@@ -79,12 +81,12 @@
             ?>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
                 <span class="text-danger"><?php echo $emailError; ?></span>
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input type="password" class="form-control" name="pass" id="exampleInputPassword1">
                 <span class="text-danger"><?php echo $passError; ?></span>
             </div>
             <div class="mb-3 form-check">

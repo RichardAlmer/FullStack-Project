@@ -1,0 +1,14 @@
+database:
+obermaye_WF-BackEnd-5
+
+user:
+obermaye_userTeam5
+
+password:
+7hNNxNwdby9CCmy
+
+
+173.212.235.205
+obermaye_userTeam5
+7hNNxNwdby9CCmy
+obermaye_WF-BackEnd-5

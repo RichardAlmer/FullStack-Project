@@ -1,0 +1,45 @@
+/* Style for #product */
+
+#product{
+    display: grid;
+    grid-template-rows: 6em 1fr 5em;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'name name' 'img list' 'desc desc';
+}
+
+#name{
+    grid-area: name;
+    justify-self: center;
+    align-self: center;
+}
+
+img{
+    grid-area: img;
+    justify-self: center;
+    align-self: center;
+}
+
+#list{
+    grid-area: list;
+    
+    align-self: center;
+}
+
+#desc{
+    grid-area: desc;
+    justify-self: center;
+    align-self: center;
+}
+
+/* Style for #review */
+
+#review, #qAndA{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form{
+    text-align: center;
+}
+

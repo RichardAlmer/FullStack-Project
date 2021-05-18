@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once 'components/db_connect.php'; //-----------------------------------
+    // require_once 'components/db_connect.php'; //-----------------------------------
 
     if (isset($_SESSION['user']) != "") {
         header("Location: home.php"); //-----------------------------------
@@ -59,7 +59,7 @@
         }
     }
 
-    $connect->close();
+    // $connect->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,10 +93,10 @@
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Remember Login</label>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" name="btn-login" class="btn btn-primary">Login</button>
         </form>
     </div>
-    <?php require_once 'components/footer.php' ?>
+    <!-- <?php require_once 'components/footer.php' ?> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>

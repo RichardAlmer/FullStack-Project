@@ -15,7 +15,7 @@
                         <a class="nav-link my_text" href="/">Home</a>
                     </li>
                     <li class="nav-item dropdown px-2">
-                        <a class="nav-link my_text dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#">Products</a>
+                        <a class="nav-link my_text dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="/">Products</a>
 
                         <ul class="dropdown-menu my_text" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item my_text" href="#">Fashion</a></li>

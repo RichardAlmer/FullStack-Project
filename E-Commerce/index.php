@@ -9,13 +9,13 @@
     </head>
     <body>
         <?php require_once 'php/components/header.php'?>
-        <div class="container my-5 p-5">   
+        <div class="container my-5 p-md-5">   
             <div class="row px-md-5">
-                <div class="py-5 col-12 col-lg-6 ">
+                <div class="py-5 col-12 col-lg-6">
                     <div class="text-uppercase banner_text fw-bold">Find your <br><span class="my_text_maincolor">perfect gift</span> <br>here</div>
                     <div class="my_text_lightgray my-4">More than 10 000 products to buy from home now</div>
                     <div class="btn bg_gray rounded-pill my-4 col-12 col-md-6 py-3">
-                        <a href="/" class="text-white">To all products</a>
+                        <a href="php/product/product-catalog.php" class="text-white">To all products</a>
                     </div>
                 </div>
                 <div class="py-5 col-12 col-lg-6 ">
@@ -26,6 +26,33 @@
             </div>
         </div>
 
+        <div class="container">
+            <div class="row my-4">
+                <div class="col-12 text-center fs_6 text-uppercase my-2">Our bestsellers. <span class="my_text_maincolor">Discover more</span></div>
+                <div class="col-12 text-center my_text_lightgray">Find thing you'll love</div>
+            </div>
+        </div>
+
+        <div class="row py-4">
+                <div class="col-12 col-md-4 col-lg-2 py-2">
+                    <img src="img/general_images/img1.jpg" alt="">
+                </div>
+                <div class="col-12 col-md-4 col-lg-2 py-2">
+                    <img src="img/general_images/img2.jpg" alt="">
+                </div>
+                <div class="col-12 col-md-4 col-lg-2 py-2">
+                    <img src="img/general_images/img3.jpg" alt="">
+                </div>
+                <div class="col-12 col-md-4 col-lg-2 py-2">
+                    <img src="img/general_images/img4.jpg" alt="">
+                </div>
+                <div class="col-12 col-md-4 col-lg-2 py-2">
+                    <img src="img/general_images/img5.jpg" alt="">
+                </div>
+                <div class="col-12 col-md-4 col-lg-2 py-2">
+                    <img src="img/general_images/img6.jpg" alt="">
+                </div>
+            </div>
         <?php require_once 'php/components/footer.php'?>
         <?php require_once 'php/components/boot-javascript.php'?>
     </body>

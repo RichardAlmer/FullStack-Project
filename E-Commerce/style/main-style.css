@@ -39,6 +39,7 @@ img {
 
 .logo {
     width: 16rem;
+    height: auto;
 }
 
 .cart_img {
@@ -70,4 +71,8 @@ img {
     font-size: 4rem;
     letter-spacing: -0.2rem;
     line-height: 1.1;
+}
+
+.fs_6 {
+    font-size: 1.5rem;
 }

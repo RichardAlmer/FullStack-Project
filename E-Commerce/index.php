@@ -8,7 +8,10 @@
         <link rel="stylesheet" href="style/main-style.css" />
     </head>
     <body>
-        <?php require_once 'php/components/header.php'?>
+        <?php 
+            require_once 'php/components/header.php';
+            navbar("");
+        ?>
         <div class="container my-5 p-md-5">   
             <div class="row px-md-5">
                 <div class="py-5 col-12 col-lg-6">
@@ -113,7 +116,10 @@
                 </a>
             </div>
         </div>
-        <?php require_once 'php/components/footer.php'?>
+        <?php 
+            require_once 'php/components/footer.php';
+            footer("");
+        ?>
         <?php require_once 'php/components/boot-javascript.php'?>
     </body>
 </html>

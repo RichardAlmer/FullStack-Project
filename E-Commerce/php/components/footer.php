@@ -1,8 +1,11 @@
+<?php 
+function footer($level=""){
+echo '
 <footer class="bg_gray py-5">
     <div class="container py-5">
         <div class="row justify-content-between">
             <div class="col-12 col-lg-6 mb-5 mb-lg-0 text-center text-lg-start">
-                <img class="logo col-auto" src="img/general_images/logo-white.png" alt="">
+                <img class="logo col-auto" src="'.$level.'img/general_images/logo-white.png" alt="">
             </div>
 
             <div class="col-12 col-lg-6 text-center text-lg-end">
@@ -20,7 +23,8 @@
             </div>
         </div>
     </div>
-    <div class="text-center text-white">&copy; <?php echo date("Y")?></div>;
-</footer>
+    <div class="text-center text-white">&copy; '. date("Y") .'</div>;
+</footer>';
+}
 
 

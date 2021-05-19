@@ -21,6 +21,8 @@
                             <li><a class="dropdown-item my_text" href="#">Fashion</a></li>
                             <li><a class="dropdown-item my_text" href="#">Cosmetics</a></li>
                             <li><a class="dropdown-item my_text" href="#">Electronics</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item my_text" href="php/product/product-catalog.php">All products</a></li>
                         </ul>
                     </li>
 

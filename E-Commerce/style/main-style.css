@@ -59,6 +59,10 @@ img {
      color: var(--main_color) !important;
 }
 
+    .my_text_maincolor:hover {
+        opacity: 0.9;
+    }
+
 .my_text_lightgray {
      color: var(--light_gray) !important;
 }
@@ -66,6 +70,10 @@ img {
 .bg_gray {
     background-color: var(--gray);
 }
+
+    .bg_hover:hover {
+        background-color: var(--main_color);
+    }
 
 .banner_text {
     font-size: 4rem;
@@ -88,13 +96,23 @@ img {
 
 .square {
   position: relative;
+  overflow: hidden;
 }
 
-.square:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
-}
+    .square:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+
+    .square img {
+        transition: transform 5s;
+        transition-timing-function: ease-out;
+    }
+
+        .square img:hover {
+            transform: scale(1.2);
+        }
 
 .content {
   position: absolute;

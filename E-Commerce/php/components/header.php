@@ -14,10 +14,10 @@ echo '<header class="my-4">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
                     <li class="nav-item px-2">
-                        <a class="nav-link my_text" href="'.$level.'/">Home</a>
+                        <a class="nav-link my_text" href="'.$level.'">Home</a>
                     </li>
                     <li class="nav-item dropdown px-2">
-                        <a class="nav-link my_text dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="/">Products</a>
+                        <a class="nav-link my_text dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
 
                         <ul class="dropdown-menu my_text" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item my_text" href="#">Fashion</a></li>

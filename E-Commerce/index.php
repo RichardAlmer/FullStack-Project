@@ -119,7 +119,7 @@
         <?php 
             require_once 'php/components/footer.php';
             footer("");
+            require_once 'php/components/boot-javascript.php';
         ?>
-        <?php require_once 'php/components/boot-javascript.php'?>
     </body>
 </html>

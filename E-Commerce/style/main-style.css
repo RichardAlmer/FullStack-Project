@@ -27,6 +27,10 @@ img {
     width: 100%;
 }
 
+::placeholder {
+  color: var(--light_gray) !important;
+}
+
 /*color variables*/
 
 :root {
@@ -115,9 +119,13 @@ img {
         }
 
 .content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(6, 215, 160, 0.6);
 }
 
 
@@ -126,4 +134,4 @@ img {
     .banner_text {
         font-size: 3rem;
     }
- }
+}

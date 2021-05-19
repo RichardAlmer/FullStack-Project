@@ -2,39 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
-    <?php require_once 'components/boot.php' ?>
-    <style>
-        #map {
-            height: 400px;
-            width: 400px;
-        }
-    </style>
+    <?php require_once 'components/boot.php'?>
+    <link rel="stylesheet" href="../style/main-style.css" />
+    <link rel="stylesheet" href="../style/contact.css" />
 </head>
 <body>
+    <?php 
+        require_once 'components/header.php';
+        navbar("../");
+    ?>
     <div class="container">
-        <h1>Contact</h1>
-        <div id="map"></div>
-        <div>
-            <p><b>Address:</b><br>Kettenbrückengasse 23 / 2 / 12, 1050 Wien</p>
-            <p><b>Phone:</b><br>012353213</p>
-            <p>You can also send us a message</p>
+        <div class="row my-5 pt-5">
+            <div class="col-12 col-md-6 fs_6 text-uppercase my-2">Contact</div>
         </div>
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Email address</label>
-                <input type="email" class="form-control" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Massage</label>
-                <input type="text" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary">Send</button>
-        </form>
     </div>
+            
+    <div class="container">
+        <div class="row my-5 py-4">
+            <div class="col-12 col-lg-6 pe-lg-5 mb-5 mb-lg-0">
+                <div class="col-12 fw-bold my-1">Address:</div>
+                <div class="col-12 mb-3">Kettenbrückengasse 23 / 2 / 12, 1050 Wien</div>
+                <div class="col-12 fw-bold my-1">Phone:</div>
+                <div class="col-12 mb-3">012353213</div>
+                <div class="mt-5">
+                    <div class="fs-5">You can also <span class="my_text_maincolor">send us a message</span></div>
+                    <form>
+                        <div id="emailHelp" class="form-text my_text_lightgray my-2">We'll never share your email with anyone else.</div>
+                        <input type="email" class="form-control my-3" aria-describedby="emailHelp" placeholder="Insert your E-Mail">
+                        <textarea class="form-control my-3" id="exampleFormControlTextarea1" rows="3" placeholder="Write your message"></textarea>
+                        <button type="submit" class="btn bg_gray rounded-pill my-2 col-12 col-md-6 py-2 text-white bg_hover">Send</button>
+                    </form>
+                </div>
+            </div>
+            <div id="map" class="col-12 col-lg-6 map_height"></div>
+        </div>
+    </div>
+
+    <?php 
+        require_once 'components/footer.php';
+        footer("../");
+        require_once 'components/boot-javascript.php';
+    ?>
+
     <script>
         var map;
         function initMap() {

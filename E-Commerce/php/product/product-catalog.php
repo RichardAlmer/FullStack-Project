@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
+        <title>All products</title>
         <?php require_once '../../php/components/boot.php'?>
         <link rel="stylesheet" href="../../style/main-style.css" />
     </head>
@@ -18,10 +18,10 @@
                 <div class="col-12 col-md-6 fs_6 text-uppercase my-2">All products</div>
                 <div class="col-12 col-md-6 my-2 text-end">
                     <a href="" class="col-12 col-md-auto my-2 px-1">
-                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">Sort by rating</div>
+                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">Sort by rating</div>
                     </a>
                     <a href="" class="col-12 col-md-auto my-2 px-1">
-                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">Sort by price</div>
+                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">Sort by price</div>
                     </a>
                 </div>
             </div>
@@ -191,7 +191,7 @@
         <?php 
             require_once '../../php/components/footer.php';
             footer("../../");
+            require_once '../../php/components/boot-javascript.php';
         ?>
-        <?php require_once '../../php/components/boot-javascript.php'?>
     </body>
 </html>

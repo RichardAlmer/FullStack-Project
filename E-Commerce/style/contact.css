@@ -1,0 +1,6 @@
+/*media*/
+@media (max-width: 991.98px) { 
+    .map_height {
+        height: 20rem;
+    }
+}

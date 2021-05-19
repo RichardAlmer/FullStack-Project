@@ -17,7 +17,7 @@ echo '
                         <a class="px-3 text-white text-center text-md-end" href="/">About us</a>
                     </div>
                     <div class="col-12 col-md-4 mb-2 mb-md-0">
-                        <a class="px-3 text-white text-center text-md-end" href="/">Contact</a>
+                        <a class="px-3 text-white text-center text-md-end" href="'.$level.'php/contact.php">Contact</a>
                     </div>
                 </div>
             </div>

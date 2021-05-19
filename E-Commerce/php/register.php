@@ -21,28 +21,39 @@ if (isset($_POST['btn-signup'])) {
 
     // strip_tags -- strips HTML and PHP tags from a string
 
-    $first_name = htmlspecialchars($first_name);
+    $last_name = htmlspecialchars($last_name);
     // htmlspecialchars converts special characters to HTML entities
+
+      // sanitize user input to prevent sql injection
+      $last_name = trim($_POST['last_name']);
+
+      //trim - strips whitespace (or other characters) from the beginning and end of a string
+      $last_name = strip_tags($last_name);
+  
+      // strip_tags -- strips HTML and PHP tags from a string
+  
+      $last_name = htmlspecialchars($last_name);
+      // htmlspecialchars converts special characters to HTML entities
     
-    $last_name = trim($_POST['last_name']);
-    $last_name = strip_tags($last_name);
-    $last_name = htmlspecialchars($last_name);  
+    $email = trim($_POST['email']);
+    $email = strip_tags($email);
+    $email = htmlspecialchars($email);  
     
     $address = trim($_POST['address']);
     $address = strip_tags($address);
     $address = htmlspecialchars($address); 
 
-    $address = trim($_POST['city']);
-    $address = strip_tags($city);
-    $address = htmlspecialchars($country); 
+    $city = trim($_POST['city']);
+    $city = strip_tags($city);
+    $city = htmlspecialchars($city); 
 
-    $address = trim($_POST['postcode']);
-    $address = strip_tags($postcode);
-    $address = htmlspecialchars($postcode); 
+    $postcode = trim($_POST['postcode']);
+    $postcode = strip_tags($postcode);
+    $postcode = htmlspecialchars($postcode); 
 
-    $address = trim($_POST['country']);
-    $address = strip_tags($country);
-    $address = htmlspecialchars($country); 
+    $country = trim($_POST['country']);
+    $country = strip_tags($country);
+    $country = htmlspecialchars($country); 
 
     $email = trim($_POST['email']);
     $email = strip_tags($email);
@@ -122,9 +133,9 @@ if (isset($_POST['btn-signup'])) {
 
          $query = "INSERT INTO user(first_name, last_name, address, city, postcode, country, password, birthdate, email, profile_image) VALUES('$first_name', '$last_name','$address','$city', '$postcode', '$country', '$password', '$birthdate', '$email', '$profile_image->fileName')";
         
+        
         $res = mysqli_query($conn, $query);
-        // var_dump($user);
-        // var_dump($res);
+        
 
         if ($res) {
             $errTyp = "success";

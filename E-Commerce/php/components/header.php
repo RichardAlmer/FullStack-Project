@@ -29,18 +29,28 @@ echo '<header class="my-4">
                     </li>
 
                     <?php
-                        if ( !isset($_SESSION["adm"]) && !isset($_SESSION["user"]) ) {
+                        if (!isset($_SESSION["admin"]) && !isset($_SESSION["user"])) {
                     ?>
+
                     <li class="nav-item px-2">
-                        <a class="nav-link my_text" href="/">Sign in</a>
+                        <a class="nav-link my_text" href="/">Login</a>
                     </li>
 
-                    <?php }
+                    <?php } ?>
+
+                    <?php
+                    if ( isset($_SESSION["admin"]) || isset($_SESSION["user"]) ) {
                     ?>
+
+                    <li class="nav-item px-2">
+                        <a class="nav-link my_text" href="' . $level . '/logout.php?logout&level=' . $level . '">Logout</a>
+                    </li>
+
+                    <?php } ?>
 
                     <li class="nav-item px-2">
                         <a class="nav-link text-dark" href="/">
-                            <img class="cart_img" src="'.$level.'img/general_images/cart.png" alt="">
+                            <img class="cart_img" src="'. $level .'img/general_images/cart.png" alt="">
                         </a>
                     </li>
                 </ul>

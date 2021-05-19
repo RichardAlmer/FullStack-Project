@@ -1,59 +1,44 @@
 <?php
-session_start(); // start a new session or continues the previous
+session_start();
 if (isset($_SESSION['user']) != "") {
-    header("Location: home.php"); // redirects to home.php
+    header("Location: product/product-catalog.php");
 }
 if (isset($_SESSION['admin']) != "") {
-    header("Location: dashboard.php"); // redirects to home.php
+    header("Location: admin/dashboard.php");
 }
+
 require_once 'components/db_connect.php';
-require_once 'components/file_upload.php';         
+require_once 'components/file_upload.php';
+
 $error = false;
-$first_name = $last_name = $email = $address =$city= $postcode =$country = $birthdate = $password = $profile_image = '';
+$first_name = $last_name = $email = $address = $city = $postcode = $country = $birthdate = $password = $profile_image = '';
 $fnameError = $lnameError = $emailError = $addressError = $cityError = $postcodeError = $countryError = $birthdateError = $passError = $picError = '';
-if (isset($_POST['btn-signup'])) {
 
-    // sanitize user input to prevent sql injection
+if (isset($_POST['btnRegister'])) {
+
     $first_name = trim($_POST['first_name']);
-
-    //trim - strips whitespace (or other characters) from the beginning and end of a string
     $first_name = strip_tags($first_name);
+    $first_name = htmlspecialchars($first_name);
 
-    // strip_tags -- strips HTML and PHP tags from a string
-
+    $last_name = trim($_POST['last_name']);
+    $last_name = strip_tags($last_name);
     $last_name = htmlspecialchars($last_name);
-    // htmlspecialchars converts special characters to HTML entities
 
-      // sanitize user input to prevent sql injection
-      $last_name = trim($_POST['last_name']);
-
-      //trim - strips whitespace (or other characters) from the beginning and end of a string
-      $last_name = strip_tags($last_name);
-  
-      // strip_tags -- strips HTML and PHP tags from a string
-  
-      $last_name = htmlspecialchars($last_name);
-      // htmlspecialchars converts special characters to HTML entities
-    
-    $email = trim($_POST['email']);
-    $email = strip_tags($email);
-    $email = htmlspecialchars($email);  
-    
     $address = trim($_POST['address']);
     $address = strip_tags($address);
-    $address = htmlspecialchars($address); 
+    $address = htmlspecialchars($address);
 
     $city = trim($_POST['city']);
     $city = strip_tags($city);
-    $city = htmlspecialchars($city); 
+    $city = htmlspecialchars($city);
 
     $postcode = trim($_POST['postcode']);
     $postcode = strip_tags($postcode);
-    $postcode = htmlspecialchars($postcode); 
+    $postcode = htmlspecialchars($postcode);
 
     $country = trim($_POST['country']);
     $country = strip_tags($country);
-    $country = htmlspecialchars($country); 
+    $country = htmlspecialchars($country);
 
     $email = trim($_POST['email']);
     $email = strip_tags($email);
@@ -81,13 +66,13 @@ if (isset($_POST['btn-signup'])) {
         $error = true;
         $fnameError = "Name and surname must contain only letters and no spaces.";
     }
-   
+
     //basic email validation
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = true;
         $emailError = "Please enter valid email address.";
     } else {
-    // checks whether the email exists or not
+        // checks whether the email exists or not
         $query = "SELECT email FROM user WHERE email='$email'";
         $result = mysqli_query($conn, $query);
         $count = mysqli_num_rows($result);
@@ -111,7 +96,7 @@ if (isset($_POST['btn-signup'])) {
     }
     if (empty($postcode)) {
         $error = true;
-        $postcodeError = "Please enter the Postcode.";
+        $postcodeError = "Please enter the ZIP-Code.";
     }
     if (empty($country)) {
         $error = true;
@@ -131,17 +116,14 @@ if (isset($_POST['btn-signup'])) {
     // if there's no error, continue to signup
     if (!$error) {
 
-         $query = "INSERT INTO user(first_name, last_name, address, city, postcode, country, password, birthdate, email, profile_image) VALUES('$first_name', '$last_name','$address','$city', '$postcode', '$country', '$password', '$birthdate', '$email', '$profile_image->fileName')";
-        
-        
+        $query = "INSERT INTO user(first_name, last_name, address, city, postcode, country, password, birthdate, email, profile_image) VALUES('$first_name', '$last_name','$address','$city', '$postcode', '$country', '$password', '$birthdate', '$email', '$profile_image->fileName')";
+
         $res = mysqli_query($conn, $query);
-        
 
         if ($res) {
             $errTyp = "success";
             $errMSG = "Successfully registered, you may login now";
             $uploadError = ($profile_image->error != 0) ? $profile_image->ErrorMessage : '';
-
         } else {
             $errTyp = "danger";
             $errMSG = "Something went wrong, try again later...";
@@ -155,62 +137,71 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Registration System</title>
-        <?php require_once 'components/boot.php'?>
-    </head>
-    <body>
-        <div class="container">
-            <form class="w-75" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"  autocomplete="off" enctype="multipart/form-data">
-                <h2>Registration</h2>
-                <hr/>
-                <?php
-                if (isset($errMSG)) {
-                ?>
-                    <div class="alert alert-<?php echo $errTyp ?>" >
-                        <p><?php echo $errMSG; ?></p>
-                        <p><?php echo $uploadError; ?></p>
-                    </div>
-                <?php
-                }
-                ?>
-              
-                <input type ="text"  name="first_name"  class="form-control"  placeholder="First name" maxlength="100" value="<?php echo $first_name ?>"  />
-                <span class="text-danger"> <?php echo $fnameError; ?> </span>
 
-                <input type ="text"  name="last_name"  class="form-control"  placeholder="Surname" maxlength="100" value="<?php echo $last_name ?>"  />
-                <span class="text-danger"> <?php echo $lnameError ; ?> </span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration System</title>
+    <?php require_once 'components/boot.php' ?>
+</head>
 
-                <input type ="text"  name="address"  class="form-control"  placeholder="Address" maxlength="255" value="<?php echo $address ?>"  />
-                <span class="text-danger"> <?php echo $addressError; ?> </span>
+<body>
+    <div class="container">
 
-                <input type ="text"  name="city"  class="form-control"  placeholder="City" maxlength="120" value="<?php echo $city ?>"  />
-                <span class="text-danger"> <?php echo $cityError; ?> </span>
+        <h2>Registration</h2>
 
-                <input type ="text"  name="postcode"  class="form-control"  placeholder="ZIP Code" maxlength="12" value="<?php echo $postcode ?>"  />
-                <span class="text-danger"> <?php echo $postcodeError; ?> </span>
+        <hr />
 
-                <input type ="text"  name="country"  class="form-control"  placeholder="Country" maxlength="50" value="<?php echo $country ?>"  />
-                <span class="text-danger"> <?php echo $countryError; ?> </span>
+        <?php if (isset($errMSG)) { ?>
+            <div class="alert alert-<?php echo $errTyp ?>">
+                <p><?php echo $errMSG; ?></p>
+                <p><?php echo $uploadError; ?></p>
+            </div>
+        <?php } ?>
 
-                <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="100" value ="<?php echo $email ?>"  />
-                <span  class="text-danger"> <?php echo $emailError; ?> </span>
-                <div class="d-flex">
-                    <input class='form-control w-50' type="date"  name="birthdate" value ="<?php echo $birthdate ?>"/>
-                    <span class="text-danger"> <?php echo $birthdateError; ?> </span>
+        <form class="w-75" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" enctype="multipart/form-data">
 
-                    <input class='form-control w-50' type="file" name="profile_image" >
-                    <span class="text-danger"> <?php echo $picError; ?> </span>
-                </div>
-                <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="255"/>
-                <span class="text-danger"> <?php echo $passError; ?> </span>
-                <hr/>
-                <button type="submit" class="btn btn-block btn-primary" name="btn-signup">Register</button>
-                <hr/>
-                <a href="index.php">Login in Here...</a>
-            </form>
-        </div>
-    </body>
+            <input type="text" name="first_name" class="form-control" placeholder="First name" maxlength="100" value="<?php echo $first_name ?>" />
+            <span class="text-danger"> <?php echo $fnameError; ?> </span>
+
+            <input type="text" name="last_name" class="form-control" placeholder="Surname" maxlength="100" value="<?php echo $last_name ?>" />
+            <span class="text-danger"> <?php echo $lnameError; ?> </span>
+
+            <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="100" value="<?php echo $email ?>" />
+            <span class="text-danger"> <?php echo $emailError; ?> </span>
+
+            <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="255" />
+            <span class="text-danger"> <?php echo $passError; ?> </span>
+
+            <div class="d-flex">
+                <input class='form-control w-50' type="date" name="birthdate" value="<?php echo $birthdate ?>" />
+                <span class="text-danger"> <?php echo $birthdateError; ?> </span>
+
+                <input class='form-control w-50' type="file" name="profile_image">
+                <span class="text-danger"> <?php echo $picError; ?> </span>
+            </div>
+
+            <input type="text" name="address" class="form-control" placeholder="Address" maxlength="255" value="<?php echo $address ?>" />
+            <span class="text-danger"> <?php echo $addressError; ?> </span>
+
+            <input type="text" name="city" class="form-control" placeholder="City" maxlength="120" value="<?php echo $city ?>" />
+            <span class="text-danger"> <?php echo $cityError; ?> </span>
+
+            <input type="text" name="postcode" class="form-control" placeholder="ZIP Code" maxlength="12" value="<?php echo $postcode ?>" />
+            <span class="text-danger"> <?php echo $postcodeError; ?> </span>
+
+            <input type="text" name="country" class="form-control" placeholder="Country" maxlength="50" value="<?php echo $country ?>" />
+            <span class="text-danger"> <?php echo $countryError; ?> </span>
+
+            <hr />
+            <button type="submit" class="btn btn-block btn-primary" name="btnRegister">Register</button>
+            <hr />
+
+            <a href="index.php">Login in Here...</a>
+        </form>
+    </div>
+
+    <?php require_once 'components/boot-javascript.php' ?>
+</body>
+
 </html>

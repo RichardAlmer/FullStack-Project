@@ -1,20 +1,11 @@
 database:
-obermaye_WF-BackEnd-5
+obermaye_wf-backend-5-ecommerce
 
 user:
-obermaye_userTeam5
+obermaye_userT5
 
 password:
-7hNNxNwdby9CCmy
-
-
-173.212.235.205
-obermaye_userTeam5
-7hNNxNwdby9CCmy
-obermaye_WF-BackEnd-5
-
-233Gggh2eliop09833S1
-7hNNxNwdby9CCmy
-I6uec9vWJUpr
-team5
 394hgid45nHJ8
+
+serverName:
+173.212.235.205

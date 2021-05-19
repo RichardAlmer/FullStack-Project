@@ -13,7 +13,7 @@ CREATE TABLE `user` (
 `birthdate` DATE NOT NULL,
 `status` ENUM('active', 'banned') NOT NULL DEFAULT 'active',
 `role` ENUM('user', 'admin') NOT NULL DEFAULT 'user',
-`profile_image` VARCHAR NULL (255),
+`profile_image` VARCHAR(255) NULL,
 `banned_until` DATETIME NULL,
 PRIMARY KEY (`pk_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;

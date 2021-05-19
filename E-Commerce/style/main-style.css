@@ -37,6 +37,10 @@ img {
 
 /*styles*/
 
+.logo {
+    width: 16rem;
+}
+
 .cart_img {
     width: 32px;
     height: 23px;
@@ -67,39 +71,3 @@ img {
     letter-spacing: -0.2rem;
     line-height: 1.1;
 }
-
-.imagebox {
-    position: relative;
-}
-
-    .imagebox .banner_image_width {
-        width: 15rem;
-    }
-
-    .imagebox .item {
-        position: absolute;
-    }
-
-    .imagebox .first {
-        left: 9rem;
-        top: 13rem;
-        z-index: 4;
-    }
-
-    .imagebox .second {
-        top: 9rem;
-        left: 20rem;
-        z-index: 3;
-    }
-
-    .imagebox .third {
-        left: 3rem;
-        top: 4rem;
-        z-index: 2;
-    }
-
-    .imagebox .fourth {
-        top: 0rem;
-        left: 15rem;
-        z-index: 1;
-    }

@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-light my_bg">
         <div class="container container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="img/logo.png" alt="">
+                <img class="logo" src="img/general_images/logo.png" alt="">
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
 
                     <li class="nav-item px-2">
                         <a class="nav-link text-dark" href="/">
-                            <img class="cart_img" src="img/cart.png" alt="">
+                            <img class="cart_img" src="img/general_images/cart.png" alt="">
                         </a>
                     </li>
                 </ul>

@@ -12,26 +12,15 @@
         <div class="container my-5 p-5">   
             <div class="row px-md-5">
                 <div class="py-5 col-12 col-lg-6 ">
-                    <div class="text-uppercase banner_text fw-bold">Find your <br><span class="my_text_maincolor">perfect gift</span> <br>here!</div>
+                    <div class="text-uppercase banner_text fw-bold">Find your <br><span class="my_text_maincolor">perfect gift</span> <br>here</div>
                     <div class="my_text_lightgray my-4">More than 10 000 products to buy from home now</div>
                     <div class="btn bg_gray rounded-pill my-4 col-12 col-md-6 py-3">
                         <a href="/" class="text-white">To all products</a>
                     </div>
                 </div>
                 <div class="py-5 col-12 col-lg-6 ">
-                    <div class="row imagebox">
-                        <div class="banner_image_width item first">
-                            <img src="img/img1.jpg" alt="">
-                        </div>
-                        <div class="banner_image_width item second">
-                            <img src="img/img2.jpg" alt="">
-                        </div>
-                        <div class="banner_image_width item third">
-                            <img src="img/img3.jpg" alt="">
-                        </div>
-                        <div class="banner_image_width item fourth">
-                            <img src="img/img4.jpg" alt="">
-                        </div>
+                    <div class="row">
+                        <img src="img/general_images/banner.png" alt="">
                     </div>
                 </div>
             </div>

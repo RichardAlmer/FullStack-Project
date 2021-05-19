@@ -1,14 +1,22 @@
 <footer class="bg_gray py-5">
     <div class="container py-5">
         <div class="row justify-content-between">
-            <div class="col-12 col-md-6">
-                <img class="col-auto" src="img/logo-white.png" alt="">
+            <div class="col-12 col-lg-6 mb-5 mb-lg-0 text-center text-lg-start">
+                <img class="logo col-auto" src="img/general_images/logo-white.png" alt="">
             </div>
 
-            <div class="col-12 col-md-6 text-end">
-                <a class="px-3 text-white" href="/">Impressum</a>
-                <a class="px-3 text-white" href="/">About us</a>
-                <a class="px-3 text-white" href="/">Contact</a>
+            <div class="col-12 col-lg-6 text-center text-lg-end">
+                <div class="row">
+                    <div class="col-12 col-md-4 mb-2 mb-md-0">
+                        <a class="px-3 text-white text-center text-md-end" href="/">Impressum</a>
+                    </div>
+                    <div class="col-12 col-md-4 mb-2 mb-md-0">
+                        <a class="px-3 text-white text-center text-md-end" href="/">About us</a>
+                    </div>
+                    <div class="col-12 col-md-4 mb-2 mb-md-0">
+                        <a class="px-3 text-white text-center text-md-end" href="/">Contact</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

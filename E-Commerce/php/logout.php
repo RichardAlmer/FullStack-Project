@@ -16,6 +16,6 @@ if(isset($_GET['logout'])) {
     unset($_SESSION['admin']);
     session_unset();
     session_destroy();
-    header("Location: " . $_GET["level"] . "/index.php");
+    header("Location: " . $_GET["level"] . "index.php");
     exit;
 }

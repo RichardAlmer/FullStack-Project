@@ -11,7 +11,7 @@ CREATE TABLE `user` (
 `postcode` CHAR(12) NOT NULL,
 `country` VARCHAR(50) NOT NULL,
 `birthdate` DATE NOT NULL,
-`status` ENUM('active', 'banned') NOT NULL DEFAULT 'active',
+`status` ENUM('active', 'inactive') NOT NULL DEFAULT 'active',
 `role` ENUM('user', 'admin') NOT NULL DEFAULT 'user',
 `profile_image` VARCHAR(255) NULL,
 `banned_until` DATETIME NULL,

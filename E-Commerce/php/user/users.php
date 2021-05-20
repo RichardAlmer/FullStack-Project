@@ -12,10 +12,10 @@ if (isset($_SESSION["user"])) {
 require_once '../components/db_connect.php';
 
 $userId = $_SESSION['admin'];
-$status = 'admin';
-$sqlSelect = "SELECT * FROM user WHERE status != ? ";
+//protect admin from deletion if id is '1'
+$sqlSelect = "SELECT * FROM user WHERE pk_user_id != ?";
 $stmt = $conn->prepare($sqlSelect);
-$stmt->bind_param("s", $status);
+$stmt->bind_param("s", $userId);
 $work = $stmt->execute();
 $result = $stmt->get_result();
 

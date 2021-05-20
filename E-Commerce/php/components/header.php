@@ -42,7 +42,7 @@ function navbar($level1="", $level2=""){
                         <?php } ?>
 
                         <?php
-                        if ( isset($_SESSION["admin"]) || isset($_SESSION["user"]) ) {
+                        if ( isset($_SESSION["admin"]) || isset($_SESSION["user"])) {
                         ?>
 
                         <li class="nav-item px-2">

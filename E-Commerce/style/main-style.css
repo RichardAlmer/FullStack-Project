@@ -68,15 +68,23 @@ img {
     }
 
 .my_text_lightgray {
-     color: var(--light_gray) !important;
+    color: var(--light_gray) !important;
 }
 
 .bg_gray {
     background-color: var(--gray);
 }
 
+.bg_lightgray {
+    background-color: var(--light_gray) !important;
+}
+
     .bg_hover:hover {
-        background-color: var(--main_color);
+        background-color: var(--main_color) !important;
+    }
+
+    .bg_hover:hover>a {
+        color: white !important;
     }
 
 .banner_text {

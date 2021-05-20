@@ -140,68 +140,109 @@ $conn->close();
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration System</title>
-    <?php require_once 'components/boot.php' ?>
+    <?php require_once 'components/boot.php'?>
+    <link rel="stylesheet" href="../style/main-style.css" />
 </head>
 
 <body>
+    <?php 
+        require_once 'components/header.php';
+        navbar("../");
+    ?>
     <div class="container">
+        <div class="row my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2 text-center">Registration</div>
 
-        <h2>Registration</h2>
-
-        <hr />
-
-        <?php if (isset($errMSG)) { ?>
-            <div class="alert alert-<?php echo $errTyp ?>">
-                <p><?php echo $errMSG; ?></p>
-                <p><?php echo $uploadError; ?></p>
+            <div class="col-12 text-center my_text_maincolor">
+                <?php if (isset($errMSG)) { ?>
+                    <div class="alert alert-<?php echo $errTyp ?>">
+                        <p><?php echo $errMSG; ?></p>
+                        <p><?php echo $uploadError; ?></p>
+                    </div>
+                <?php } ?>
             </div>
-        <?php } ?>
+            
+            <div class="justify-content-center d-flex">
+                <form class="col-12 col-md-6 flex-column" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" enctype="multipart/form-data">
+                    <div class="col-12 my-3">
+                        <label for="first_name" class="form-label">First name</label>
+                        <input id="first_name" type="text" name="first_name" class="form-control" placeholder="Enter your first name" maxlength="100" value="<?php echo $first_name ?>" />
+                        <span class="text-danger"> <?php echo $fnameError; ?> </span>
+                    </div>
+                    
+                    <div class="col-12 my-3">
+                        <label for="last_name" class="form-label">Last name</label>
+                        <input id="last_name" type="text" name="last_name" class="form-control" placeholder="Enter your last name" maxlength="100" value="<?php echo $last_name ?>" />
+                        <span class="text-danger"> <?php echo $lnameError; ?> </span>
+                    </div>
 
-        <form class="w-75" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" enctype="multipart/form-data">
+                    <div class="col-12 my-3">
+                        <label for="email" class="form-label">E-Mail</label>
+                        <input id="email" type="email" name="email" class="form-control" placeholder="Enter your E-mail" maxlength="100" value="<?php echo $email ?>" />
+                        <span class="text-danger"> <?php echo $emailError; ?> </span>
+                    </div>
 
-            <input type="text" name="first_name" class="form-control" placeholder="First name" maxlength="100" value="<?php echo $first_name ?>" />
-            <span class="text-danger"> <?php echo $fnameError; ?> </span>
+                    <div class="col-12 my-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" type="password" name="pass" class="form-control" placeholder="Enter password" maxlength="255" />
+                        <span class="text-danger"> <?php echo $passError; ?> </span>
+                    </div>
 
-            <input type="text" name="last_name" class="form-control" placeholder="Surname" maxlength="100" value="<?php echo $last_name ?>" />
-            <span class="text-danger"> <?php echo $lnameError; ?> </span>
+                    <div class="d-flex row">
+                        <div class="col-12 col-md-6 pe-md-3 mb-3 mb-md-0">
+                            <label for="birthdate" class="form-label">Your date of birth</label>
+                            <input id="birthdate" class='form-control' type="date" name="birthdate" value="<?php echo $birthdate ?>" />
+                            <span class="text-danger"> <?php echo $birthdateError; ?> </span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="avatar" class="form-label">Your image</label>
+                            <input id="avatar" class='form-control' type="file" name="profile_image">
+                            <span class="text-danger"> <?php echo $picError; ?> </span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 my-3">
+                        <label for="address" class="form-label">Your address</label>
+                        <input id="address" type="text" name="address" class="form-control" placeholder="Enter your address" maxlength="255" value="<?php echo $address ?>" />
+                        <span class="text-danger"> <?php echo $addressError; ?> </span>
+                    </div>
 
-            <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="100" value="<?php echo $email ?>" />
-            <span class="text-danger"> <?php echo $emailError; ?> </span>
+                    <div class="col-12 my-3">
+                        <label for="city" class="form-label">Your city</label>
+                        <input id="city" type="text" name="city" class="form-control" placeholder="Enter your city" maxlength="120" value="<?php echo $city ?>" />
+                        <span class="text-danger"> <?php echo $cityError; ?> </span>
+                    </div>
 
-            <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="255" />
-            <span class="text-danger"> <?php echo $passError; ?> </span>
+                    <div class="col-12 my-3">
+                        <label for="postcode" class="form-label">Your postcode</label>
+                        <input id="postcode" type="text" name="postcode" class="form-control" placeholder="Enter your ZIP Code" maxlength="12" value="<?php echo $postcode ?>" />
+                        <span class="text-danger"> <?php echo $postcodeError; ?> </span>
+                    </div>
 
-            <div class="d-flex">
-                <input class='form-control w-50' type="date" name="birthdate" value="<?php echo $birthdate ?>" />
-                <span class="text-danger"> <?php echo $birthdateError; ?> </span>
+                    <div class="col-12 my-3">
+                        <label for="country" class="form-label">Your country</label>
+                        <input id="country" type="text" name="country" class="form-control" placeholder="Enter your country" maxlength="50" value="<?php echo $country ?>" />
+                        <span class="text-danger"> <?php echo $countryError; ?> </span>
+                    </div>
 
-                <input class='form-control w-50' type="file" name="profile_image">
-                <span class="text-danger"> <?php echo $picError; ?> </span>
+                    <button type="submit" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3 mb-2" name="btnRegister">Register</button>
+
+                    <div class="btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3">
+                        <a href="index.php">Login in Here...</a>
+                    </div>
+                </form>
             </div>
-
-            <input type="text" name="address" class="form-control" placeholder="Address" maxlength="255" value="<?php echo $address ?>" />
-            <span class="text-danger"> <?php echo $addressError; ?> </span>
-
-            <input type="text" name="city" class="form-control" placeholder="City" maxlength="120" value="<?php echo $city ?>" />
-            <span class="text-danger"> <?php echo $cityError; ?> </span>
-
-            <input type="text" name="postcode" class="form-control" placeholder="ZIP Code" maxlength="12" value="<?php echo $postcode ?>" />
-            <span class="text-danger"> <?php echo $postcodeError; ?> </span>
-
-            <input type="text" name="country" class="form-control" placeholder="Country" maxlength="50" value="<?php echo $country ?>" />
-            <span class="text-danger"> <?php echo $countryError; ?> </span>
-
-            <hr />
-            <button type="submit" class="btn btn-block btn-primary" name="btnRegister">Register</button>
-            <hr />
-
-            <a href="index.php">Login in Here...</a>
-        </form>
+        </div>
     </div>
-
-    <?php require_once 'components/boot-javascript.php' ?>
+    
+    <?php 
+        require_once 'components/footer.php';
+        footer("../");
+        require_once 'components/boot-javascript.php';
+    ?>
 </body>
 
 </html>

@@ -1,14 +1,13 @@
 <?php
-    // To Do: Session stuff ---------------------------------------
     // session_start();
-    // if ($_SESSION['user_role'] != 'admin') {
-    //     header("Location: home.php");
+    // if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+    //     header("Location: ../../index.php");
     //     exit;
     // }
-    
-    // To Do: DB stuff  ---------------------------------------
-    // require_once 'components/db_connect.php'; //-----------------------------------
-    // $connect->close();
+    // if (isset($_SESSION["user"])) {
+    //     header("Location: ../product/product-catalog.php");
+    //     exit;
+    // }
     ?>
 
 <!DOCTYPE html>
@@ -16,22 +15,25 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <?php require_once '../components/boot.php'?>
-    <!-- <link rel='stylesheet' type='text/css' href='../../style/main.css'> -->
+    <?php require_once '../components/boot.php' ?>
+    <link rel='stylesheet' type='text/css' href='../../style/main-style.css'>
 </head>
 
 <body>
+    <?php
+    require_once '../components/header.php';
+    navbar("../../", "../");
+    ?>
+
     <div id="container">
-        <?php include '../components/navbar.php' ?>
         <div id="content">
             <h1>Admin Dashboard</h1>
-            <a href='users.php'>
+            <a href='../user/users.php'>
                 <div>Manage Users</div>
             </a>
-            <a href='products.php'>
+            <a href='../product/products.php'>
                 <div>Manage Products</div>
             </a>
             <a href='reviews.php'>
@@ -42,6 +44,7 @@
             </a>
         </div>
     </div>
+    <?php require_once '../../php/components/boot-javascript.php'?>
 </body>
 
 </html>

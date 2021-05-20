@@ -1,13 +1,9 @@
 <?php
 session_start();
-require_once '../components/db_connect.php';
-require_once '../components/file_upload.php';
-
 if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
     header("Location: ../../index.php");
     exit;
 }
-
 $backBtn = '';
 if (isset($_SESSION["user"])) {
     $backBtn = "../product/produrct-catalog.php";
@@ -15,6 +11,9 @@ if (isset($_SESSION["user"])) {
 if (isset($_SESSION["admin"])) {
     $backBtn = "../admin/dashBoard.php";
 }
+
+require_once '../components/db_connect.php';
+require_once '../components/file_upload.php';
 
 //fetch and populate form
 if (isset($_GET['id'])) {
@@ -37,12 +36,35 @@ if (isset($_GET['id'])) {
         $city = $data['city'];
         $country = $data['country'];
 
-        $role = $data['role'];
-        $status = $data['status'];
-        $bannedUnitl = $data['banned_until'];
-        if ($role == 'admin') {
-            $bannedUnitl = null;
+        //role dropdown
+        $roleList = ["user", "admin"];
+        $selectedRole = $data['role'];
+        $roleOptions = "";
+        foreach ($roleList as $role) {
+            if ($role == $selectedRole) {
+                $roleOptions .= "<option selected value='$selectedRole'>" . ucfirst($selectedRole) . "</option>";
+            } else {
+                $roleOptions .= "<option value='$role'>" . ucfirst($role) . "</option>";
+            }
         }
+
+        //status dropdown
+        $statusList = ["user", "admin"];
+        $selectedStatus = $data['role'];
+        $statusOptions = "";
+        foreach ($statusList as $status) {
+            if ($status == $selectedStatus) {
+                $statusOptions .= "<option selected value='$selectedStatus'>" . ucfirst($selectedStatus) . "</option>";
+            } else {
+                $statusOptions .= "<option value='$status'>" . ucfirst($status) . "</option>";
+            }
+        }
+
+        // $status = $data['status'];
+        // $bannedUnitl = $data['banned_until'];
+        // if ($role == 'admin') {
+        //     $bannedUnitl = null;
+        // }
     }
 }
 
@@ -87,7 +109,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update User</title>
-    <?php require_once 'components/boot.php' ?>
+    <?php require_once '../components/boot.php' ?>
     <style type="text/css">
         fieldset {
             margin: auto;
@@ -105,8 +127,8 @@ $conn->close();
 <body>
 
     <?php
-        require_once '../components/header.php';
-        navbar("../");
+    require_once '../components/header.php';
+    navbar("../../", "../");
     ?>
 
     <div class="container">
@@ -137,7 +159,6 @@ $conn->close();
                     <th>Password</th>
                     <td><input class="form-control" type="text" name="pass" placeholder="Password" value="<?php echo $password ?>" /></td>
                 </tr>
-
                 <tr>
                     <th>Date of birth</th>
                     <td><input class="form-control" type="date" name="birthdate" placeholder="Date of birth" value="<?php echo $birthdate ?>" /></td>
@@ -145,14 +166,6 @@ $conn->close();
                 <tr>
                     <th>Picture</th>
                     <td><input class="form-control" type="file" name="picture" /></td>
-                </tr>
-                <tr>
-                    <th>Last Name</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
-                </tr>
-                <tr>
-                    <th>Last Name</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
                 </tr>
                 <tr>
                     <th>Street</th>
@@ -173,11 +186,20 @@ $conn->close();
 
                 <tr>
                     <th>Role</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
+                    <td>
+                        <select class="form-select" name="supplier" aria-label="Default select example">
+                            <?php echo $roleOptions; ?>
+                        </select>
+                    </td>
                 </tr>
+
                 <tr>
                     <th>Status</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
+                    <td>
+                        <select class="form-select" name="supplier" aria-label="Default select example">
+                            <?php echo $statusOptions; ?>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th>Banned Until</th>

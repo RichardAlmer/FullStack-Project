@@ -63,52 +63,62 @@ $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <?php require_once 'components/boot.php'?>
+        <link rel="stylesheet" href="../style/main-style.css" />
+        <link rel="stylesheet" href="../style/login.css">
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style/login.css">
-</head>
-
-<body>
-
-    <div class="d-flex flex-column container">
-
-        <h2>Login</h2>
-
-        <?php
-        if (isset($errMSG)) {
-            echo $errMSG;
-        }
+    <body>
+        <?php 
+            require_once 'components/header.php';
+            navbar("../");
         ?>
 
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <span class="text-danger"><?php echo $emailError; ?></span>
+        <div class="container">
+            <div class="row my-5 py-5">
+                <div class="col-12 fs_6 text-uppercase my-2 text-center">Login</div>
+                
+                <div class="col-12 text-center my_text_maincolor">
+                    <?php
+                    if (isset($errMSG)) {
+                        echo $errMSG;
+                    }
+                    ?>
+                </div>
+                <div class="justify-content-center d-flex">
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" class="col-12 col-md-6 col-lg-4 flex-column">
+                        <div class="col-12 my-3">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="your.email@mail.com">
+                            <span class="text-danger"><?php echo $emailError; ?></span>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="pass" id="exampleInputPassword1" placeholder="your password">
+                            <span class="text-danger"><?php echo $passError; ?></span>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Remember Login</label>
+                        </div>
+                        <button type="submit" name="btn-login" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-3">Sign in</button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" name="pass" id="exampleInputPassword1">
-                <span class="text-danger"><?php echo $passError; ?></span>
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Remember Login</label>
-            </div>
-            <button type="submit" name="btn-login" class="btn btn-primary">Sign in</button>
-        </form>
-    </div>
+        </div>
 
-    <?php require_once 'components/footer.php' ?>
+        <?php 
+            require_once 'components/footer.php';
+            footer("../");
+        ?>
 
-    <?php require_once 'components/boot-javascript.php' ?>
+        <?php require_once 'components/boot-javascript.php' ?>
 
-</body>
+    </body>
 
 </html>

@@ -49,8 +49,8 @@ if (isset($_GET['id'])) {
         }
 
         //status dropdown
-        $statusList = ["user", "admin"];
-        $selectedStatus = $data['role'];
+        $statusList = ["active", "inactive"];
+        $selectedStatus = $data['status'];
         $statusOptions = "";
         foreach ($statusList as $status) {
             if ($status == $selectedStatus) {
@@ -139,7 +139,7 @@ $conn->close();
 
         <h2>Update</h2>
 
-        <img class='img-thumbnail rounded-circle' src='pictures/<?php echo $data['profile_image'] ?>' alt="<?php echo $first_name ?>">
+        <img class='img-thumbnail rounded-circle' src='../../img/user_images/<?php echo $profileImage ?>' alt="<?php echo $first_name ?>">
 
         <form method="post" enctype="multipart/form-data">
             <table class="table">
@@ -157,7 +157,7 @@ $conn->close();
                 </tr>
                 <tr>
                     <th>Password</th>
-                    <td><input class="form-control" type="text" name="pass" placeholder="Password" value="<?php echo $password ?>" /></td>
+                    <td><input class="form-control" type="text" name="pass" placeholder="New password" /></td>
                 </tr>
                 <tr>
                     <th>Date of birth</th>
@@ -169,19 +169,19 @@ $conn->close();
                 </tr>
                 <tr>
                     <th>Street</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
+                    <td><input class="form-control" type="text" name="address" placeholder="Street" value="<?php echo $address ?>" /></td>
                 </tr>
                 <tr>
                     <th>ZIP-Code</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
+                    <td><input class="form-control" type="text" name="postcode" placeholder="ZIP-Code" value="<?php echo $postcode ?>" /></td>
                 </tr>
                 <tr>
                     <th>City</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
+                    <td><input class="form-control" type="text" name="city" placeholder="City" value="<?php echo $city ?>" /></td>
                 </tr>
                 <tr>
                     <th>Country</th>
-                    <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
+                    <td><input class="form-control" type="text" name="country" placeholder="Country" value="<?php echo $country ?>" /></td>
                 </tr>
 
                 <tr>
@@ -201,10 +201,12 @@ $conn->close();
                         </select>
                     </td>
                 </tr>
+
                 <tr>
                     <th>Banned Until</th>
                     <td><input class="form-control" type="text" name="last_name" placeholder="Last Name" value="<?php echo $last_name ?>" /></td>
                 </tr>
+
                 <tr>
                     <input type="hidden" name="id" value="<?php echo $data['pk_user_id'] ?>" />
                     <input type="hidden" name="picture" value="<?php echo $profileImage ?>" />

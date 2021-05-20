@@ -27,7 +27,7 @@ CREATE TABLE `product` (
 `price` FLOAT NOT NULL,
 `category` VARCHAR (100) NOT NULL,
 `status` ENUM('active', 'deactive') NOT NULL DEFAULT 'active',
-`discount_procent` INT NOT NULL DEFAULT 100,
+`discount_procent` INT NOT NULL DEFAULT 0,
 PRIMARY KEY (`pk_product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
 

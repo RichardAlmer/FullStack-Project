@@ -1,3 +1,5 @@
+// Rating
+
 var st1 = document.getElementById("st1");
 var st2 = document.getElementById("st2");
 var st3 = document.getElementById("st3");
@@ -49,3 +51,20 @@ st5.addEventListener('click', ()=>{
     st5.style.color = "yellow";
     rating.value = "5";
 });
+
+// Anwer
+
+var answerBtn = document.getElementsByClassName('answerBtn');
+var answerForm = document.getElementsByClassName('answerForm');
+var createAnswerBtn = document.getElementsByClassName('createAnswerBtn');
+console.log(answerBtn);
+console.log(answerForm);
+
+for(let i = 0; i < answerBtn.length; i++){
+    answerBtn[i].addEventListener('click', ()=>{
+        answerForm[i].style.display = "block";
+    });
+    createAnswerBtn[i].addEventListener('click', ()=>{
+        answerForm[i].style.display = "none";
+    })
+}

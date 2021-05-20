@@ -17,7 +17,7 @@ $resultHtml='';
 if(mysqli_num_rows($result) > 0) {     
     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
        $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-2 box_height'>
-                        <a href='detail.php?id=" .$row['pk_product_id']."'>
+                        <a href='product-details.php?id=" .$row['pk_product_id']."'>
                             <div class='square'>
                                 <img class='content' src='../../img/general_images/img2.jpg' alt=''>
                             </div>

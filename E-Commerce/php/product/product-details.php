@@ -1,13 +1,20 @@
 <?php
     require_once '../components/db_connect.php';
 
-    // session_start();
+    session_start();
     // if ( isset($_SESSION['user']) != "") {
-    //     header("Location: home.php" ); //-----------------------------------
+    //     header("Location: porduct-catalog.php" ); //-----------------------------------
     // }
     // if (isset($_SESSION[ 'admin' ]) != "") {
-    //     header("Location: dashboard.php"); //-----------------------------------
+    //     header("Location: ../admin/dashboard.php"); //-----------------------------------
     // }
+
+    $userId = '';
+    if(isset($_SESSION['admin'])){
+        $userId = $_SESSION['admin'];
+    } else if(isset($_SESSION['user'])){
+        $userId = $_SESSION['user'];
+    }
     
     if ($_GET['id']) {
         $id = $_GET['id'];
@@ -34,9 +41,8 @@
             $title = $_POST['title'];
             $date = date('d-m-y h:i:s');
             $product_id = $_GET['id'];
-            $user_id = 1;//$_GET['user']; //---------------------------------------------------
             
-            $sql = "INSERT INTO review (rating, title, comment, create_datetime, fk_product_id, fk_user_id) VALUES ($rating, '$title', '$review', '$date', $product_id, $user_id)";
+            $sql = "INSERT INTO review (rating, title, comment, create_datetime, fk_product_id, fk_user_id) VALUES ($rating, '$title', '$review', '$date', $product_id, $userId)";
 
             if ($conn->query($sql) === true ) {
                 $class = "success";
@@ -48,29 +54,6 @@
         } else {
             $class = "danger";
             $messageReview = "Fill in all fields and don't forget the Stars!";
-        }
-    }
-
-    // Q&A
-    if (isset($_POST['submitQ'])) {
-        if($_POST['question']){
-            $question = $_POST['question'];
-            $date = date('d-m-y h:i:s');
-            $product_id = $_GET['id'];
-            $user_id = 1;//$_GET['user']; //---------------------------------------------------
-        
-            $sql = "INSERT INTO question (question, create_datetime, fk_product_id, fk_user_id) VALUES ('$question', '$date', $product_id, $user_id)"; 
-
-            if ($conn->query($sql) === true ) {
-                $class = "success";
-                $messageQA = "The comment was successfully created";
-            } else {
-                $class = "danger";
-                $messageQA = "Error while creating comment. Try again: <br>" . $conn->error;
-            }
-        } else {
-            $class = "danger";
-            $messageQA = "Fill in the fields!";
         }
     }
 
@@ -101,7 +84,6 @@
             }
             $review .= " 
                 <div>
-                    <p>qurschnitt rating</p>
                     <p>$row[first_name] wrote a review on $row[name]</p>
                     <p>$stars</p>
                     <p>$row[title]</p>
@@ -112,7 +94,7 @@
         };
     }
 
-    // average rating
+    // Average and Count Rating
     $sql = "SELECT AVG(rating), COUNT(rating) FROM review WHERE fk_product_id = {$id}";
     $result = mysqli_query($conn ,$sql);
     $avgRating = "";
@@ -141,6 +123,40 @@
         };
     }
 
+    // Q&A
+    $class = "";
+    $messageQA = "";
+    if (isset($_POST['submitQ'])) {
+        if($_POST['question']){
+            $question = $_POST['question'];
+            $date = date('d-m-y h:i:s');
+            $product_id = $_GET['id'];
+        
+            $sql = "INSERT INTO question (question, create_datetime, fk_product_id, fk_user_id) VALUES ('$question', '$date', $product_id, $userId)"; 
+
+            if ($conn->query($sql) === true ) {
+                $class = "success";
+                $messageQA = "The comment was successfully created";
+            } else {
+                $class = "danger";
+                $messageQA = "Error while creating comment. Try again: <br>" . $conn->error;
+            }
+        } else {
+            $class = "danger";
+            $messageQA = "Fill in the fields!";
+        }
+    }
+
+    
+    // Answer Form
+    $form = '<form method="post" action="'.htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id'].'" autocomplete="off">
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="answer" placeholder="Leave a answer here" id="answerText" style="width: 80vw"></input>
+                </div>
+                <span class="text-'.$class.'">'.$messageQA.'</span><br>
+                <button type="submit" name="submitA" class="createAnswerBtn btn btn-primary">Create Answer</button>
+            </form>';
+
     // Print Q&A
     $sql = "SELECT question.question, question.create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
     $result = mysqli_query($conn ,$sql);
@@ -152,6 +168,9 @@
                     <p>$row[first_name] has a question about $row[name]</p>
                     <p>$row[create_datetime]</p>
                     <p>$row[question]</p>
+                    <button type='button' class='answerBtn btn btn-warning'>Answer</button>
+                    <div class='answer'></div>
+                    <div class='answerForm'>$form</div>
                 </div>
             ";
         };
@@ -165,7 +184,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Name</title>
+    <title><?php echo $name ?></title>
     <?php require_once '../../php/components/boot.php'?>
     <link rel="stylesheet" href="../../style/details.css">
 </head>
@@ -177,20 +196,31 @@
     <div class="container">
         <div id="product">
             <h2 id="name"><?php echo $name ?></h2>
-            <img src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
+            <img src="../../img/general_images/img2.jpg" alt="<?php echo $name ?>" width="300px">
             <ul id="list">
                 <li><?php echo $avgRating ?></li>
                 <li><?php echo $brand ?></li>
                 <li><?php echo $category ?></li>
                 <li><?php echo $status ?></li>
                 <li><?php echo $price ?>€</li>
+                <?php
+                    if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
+                ?>
+                <button type="button" class="btn btn-warning"><a href="#">Add to Cart</a></button>
+                <?php
+                    }
+                ?>
             </ul>
             <p id="desc"><?php echo $description ?></p>
         </div>
+        
         <hr>
         <div id="review">
             <h3>Reviews</h3>
             <div id="reviews"><?= $review;?></div>
+            <?php
+                if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
+            ?>
             <div id="stars">
                 <span id="st1">★</span><span id="st2">★</span><span id="st3">★</span><span id="st4">★</span><span id="st5">★</span>
             </div><br>
@@ -199,22 +229,31 @@
                     <input class="form-control" type="text" name="title" placeholder="Leave a title here" id="reviewTitle" style="width: 80vw"></input><br>
                     <textarea class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="width: 80vw"></textarea>
                 </div>
-                <span class="text-<?=$class;?>"><?php echo ($messageReview) ?? ''; ?></span><br>
+                <span class="text-<?=$class;?>"><?php echo ($messageReview) ?? ""; ?></span><br>
                 <input id="rating" type="hidden" name="rating" value="" />
                 <button type="submit" name="submitRev" class="btn btn-primary">Create Review</button>
             </form>
+            <?php
+                }
+            ?>
         </div>
         <hr>
         <div id="qAndA">
             <h3>Q&A</h3>
             <div id="questions"><?= $question;?></div>
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
-                <div class="mb-3">
-                    <input class="form-control" type="text" name="question" placeholder="Leave a review here" id="questionText" style="width: 80vw"></input>
-                </div>
-                <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
-                <button type="submit" name="submitQ" class="btn btn-primary">Create Question</button>
-            </form>
+            <?php
+                if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
+            ?>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
+                    <div class="mb-3">
+                        <textarea class="form-control" type="text" name="question" placeholder="Leave a question here" id="questionText" style="width: 80vw"></textarea>
+                    </div>
+                    <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
+                    <button type="submit" name="submitQ" class="btn btn-primary">Create Question</button>
+                </form>
+            <?php
+                }
+            ?>
         </div>
     </div>
     <?php 

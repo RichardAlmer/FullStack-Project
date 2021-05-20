@@ -31,7 +31,7 @@ img{
     align-self: center;
 }
 
-/* Style for #review */
+/* Style for #review and #qAndA */
 
 #review, #qAndA{
     display: flex;
@@ -46,4 +46,8 @@ form{
 #st1, #st2, #st3, #st4, #st5{
     cursor: default !important;
     color:gray;
+}
+
+.answerForm{
+    display: none;
 }

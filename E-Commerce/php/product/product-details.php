@@ -1,16 +1,5 @@
 <?php
-    $hostname = "127.0.0.1";
-    $username = "root";
-    $password = "";
-    $dbname = "wf-backend-5-ecommerce";
-    
-    $connect = mysqli_connect($hostname, $username, $password, $dbname);
-    
-    // if($connect->connect_error) {
-    //     die("Connection failed: " . $connect->connect_error);
-    // }else {
-    //     echo "Successfully Connected";
-    // }
+    require_once '../components/db_connect.php';
 
     // session_start();
     // if ( isset($_SESSION['user']) != "") {
@@ -23,7 +12,7 @@
     if ($_GET['id']) {
         $id = $_GET['id'];
         $sql = "SELECT * FROM product WHERE pk_product_id = {$id}";
-        $result = $connect->query($sql);
+        $result = $conn->query($sql);
         if ($result->num_rows == 1){
             $data = $result->fetch_assoc();
             $name = $data['name'];
@@ -37,7 +26,6 @@
         };
     };
     
-    //require_once 'db_connect.php';
     //Review
     if (isset($_POST['submitRev'])) { 
         if ($_POST['review']&&$_POST['rating']){
@@ -50,12 +38,12 @@
             
             $sql = "INSERT INTO review (rating, title, comment, create_datetime, fk_product_id, fk_user_id) VALUES ($rating, '$title', '$review', '$date', $product_id, $user_id)";
 
-            if ($connect->query($sql) === true ) {
+            if ($conn->query($sql) === true ) {
                 $class = "success";
                 $messageReview = "The review was successfully created";
             } else {
                 $class = "danger";
-                $messageReview = "Error while creating review. Try again: <br>" . $connect->error;
+                $messageReview = "Error while creating review. Try again: <br>" . $conn->error;
             }
         } else {
             $class = "danger";
@@ -73,12 +61,12 @@
         
             $sql = "INSERT INTO question (question, create_datetime, fk_product_id, fk_user_id) VALUES ('$question', '$date', $product_id, $user_id)"; 
 
-            if ($connect->query($sql) === true ) {
+            if ($conn->query($sql) === true ) {
                 $class = "success";
                 $messageQA = "The comment was successfully created";
             } else {
                 $class = "danger";
-                $messageQA = "Error while creating comment. Try again: <br>" . $connect->error;
+                $messageQA = "Error while creating comment. Try again: <br>" . $conn->error;
             }
         } else {
             $class = "danger";
@@ -89,7 +77,7 @@
     // Print Reviews
     $id = $_GET['id'];
     $sql = "SELECT review.rating, review.title, review.comment, review.create_datetime, product.name, user.first_name FROM review INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
-    $result = mysqli_query($connect ,$sql);
+    $result = mysqli_query($conn ,$sql);
     $review='';
     if(mysqli_num_rows($result) > 0) {    
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
@@ -113,6 +101,7 @@
             }
             $review .= " 
                 <div>
+                    <p>qurschnitt rating</p>
                     <p>$row[first_name] wrote a review on $row[name]</p>
                     <p>$stars</p>
                     <p>$row[title]</p>
@@ -123,9 +112,38 @@
         };
     }
 
+    // average rating
+    $sql = "SELECT AVG(rating), COUNT(rating) FROM review WHERE fk_product_id = {$id}";
+    $result = mysqli_query($conn ,$sql);
+    $avgRating = "";
+    if(mysqli_num_rows($result) > 0) {    
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            $stars = "";
+            $average = round($row['AVG(rating)']);
+            switch($average){
+                case 1:
+                    $stars = "★";
+                    break;
+                case 2:
+                    $stars = "★★";
+                    break;
+                case 3:
+                    $stars = "★★★";
+                    break;
+                case 4:
+                    $stars = "★★★★";
+                    break;
+                case 5:
+                    $stars = "★★★★★";
+                    break;
+            }
+            $avgRating .= $stars." ".$row['COUNT(rating)'];  
+        };
+    }
+
     // Print Q&A
     $sql = "SELECT question.question, question.create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
-    $result = mysqli_query($connect ,$sql);
+    $result = mysqli_query($conn ,$sql);
     $question='';
     if(mysqli_num_rows($result) > 0) {    
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){        
@@ -139,7 +157,7 @@
         };
     }
 
-    $connect->close();
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,15 +166,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Name</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <?php require_once '../../php/components/boot.php'?>
     <link rel="stylesheet" href="../../style/details.css">
 </head>
 <body>
+    <?php 
+        require_once '../../php/components/header.php';
+        navbar("../../", "../");
+    ?>
     <div class="container">
         <div id="product">
             <h2 id="name"><?php echo $name ?></h2>
             <img src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
             <ul id="list">
+                <li><?php echo $avgRating ?></li>
                 <li><?php echo $brand ?></li>
                 <li><?php echo $category ?></li>
                 <li><?php echo $status ?></li>
@@ -174,7 +197,7 @@
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
                 <div class="mb-3">
                     <input class="form-control" type="text" name="title" placeholder="Leave a title here" id="reviewTitle" style="width: 80vw"></input><br>
-                    <input class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="width: 80vw"></input>
+                    <textarea class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="width: 80vw"></textarea>
                 </div>
                 <span class="text-<?=$class;?>"><?php echo ($messageReview) ?? ''; ?></span><br>
                 <input id="rating" type="hidden" name="rating" value="" />
@@ -194,7 +217,12 @@
             </form>
         </div>
     </div>
+    <?php 
+        require_once '../../php/components/footer.php';
+        footer("../../");
+        require_once '../../php/components/boot-javascript.php';
+    ?>
     <script src="../../script/review.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <?php require_once '../../php/components/boot-javascript.php'?>
 </body>
 </html>

@@ -16,7 +16,7 @@ $result = mysqli_query($conn ,$sql);
 $resultHtml=''; 
 if(mysqli_num_rows($result) > 0) {     
     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
-       $resultHtml .= "<div class='col-12 col-md-4 col-lg-2 py-2 box_height'>
+       $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-2 box_height'>
                         <a href='detail.php?id=" .$row['pk_product_id']."'>
                             <div class='square'>
                                 <img class='content' src='../../img/general_images/img2.jpg' alt=''>
@@ -75,8 +75,16 @@ $conn->close();
         </div>
 
         <div class="container mb-4">
-            <div id="result" class="row row_width py-3">
-                <?php echo $resultHtml; ?>
+            <div id="result" class="row py-3">
+                <div class="row col-10">
+                    <?php echo $resultHtml; ?>
+                </div>
+                <div class="col-2 py-3">
+                    <div class="fw-bold mb-3">Shop by category</div>
+                    <div class="my_text">
+                        <?php echo $categories; ?>
+                    </div>
+                </div>
             </div>
         </div>
         <?php 

@@ -16,6 +16,9 @@ $result = mysqli_query($conn ,$sql);
 $tbody=''; 
 if(mysqli_num_rows($result) > 0) {     
     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
+        $sqlR = "SELECT COUNT(rating) AS count FROM review WHERE fk_product_id = $row[pk_product_id]";
+        $resultR = mysqli_query($conn ,$sqlR);
+        $data = $resultR->fetch_assoc();
         $tbody .= "
         <tr>
             <td>" . $row['name'] . "</td>
@@ -23,7 +26,7 @@ if(mysqli_num_rows($result) > 0) {
             <td>" . $row['brand'] . "</td>
             <th>" . $row['discount_procent'] . " %</th>
             <td>" . $row['status'] . "</td>
-            <td><a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-warning btn-sm' type='button'>View Reviews</button></a></td>
+            <td>".$data['count']." Reviews <a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-warning btn-sm' type='button'>View Reviews</button></a></td>
             <td><a href='update.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
             <a href='delete.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
         </tr>";

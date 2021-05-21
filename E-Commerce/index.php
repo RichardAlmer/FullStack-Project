@@ -1,3 +1,13 @@
+<?php
+require_once "php/components/db_connect.php";
+function getAllProducts() {
+    global $conn;
+    $result = mysqli_query($conn, "SELECT * FROM product ORDER BY RAND()");
+    return $result;
+}
+$products = getAllProducts();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -50,10 +60,35 @@
                     </div>
                 </a>
             </div>
+            <div class="container-fluid col-12 d-flex justify-content-center align-items-center mt-lg-5 mb-lg-5">
+<!-- loop for all the products random generated -->
+<?php if ($products->num_rows >= 1) : ?>
+    <section class="col-lg-10 col-12 d-flex justify-content-center align-items-center flex-wrap">
+        <?php foreach ($products as $product)  : ?>
+            <article class="card col-11 col-lg-3 m-4">
+                <img src="img/product_images/<?= $product['image'] ?>" class="card-img-top" alt="<?= $product['image'] ?>">
+                <div class="card-body">
+                    <h5 class="card-title">Product name : <?= $product['name'] ?></h5>
+                    <p class="card-text">Price: <span class="fw-bold"><?= $product['price'] ?>€</span></p>
+                    <p class="card-text"><?= $product['description'] ?></p>
+                    <p class="card-text"><?= $product['brand'] ?> </p>
+                    <p class="card-text"><?= $product['category'] ?> </p>
+                    <a href="details.php?id=<?= $product['pk_product_id'] ?>" class="btn btn-success mb-2 btn-sm">Show more Info</a>
+                    <h5 class="bold"> Product ID: <?= $product['pk_product_id'] ?> </h5>
+                    <!--  -->
+                </div>
+            </article>
+        <?php endforeach; ?>
+    </section>
+<?php else : ?>
+    <h1>There are no offers available</h1>
+<?php endif; ?>
+</div>
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">
                 <a href="/">
+                <?php foreach ($products as $product) : ?>
                     <div class="square">
-                        <img class="content" src="img/general_images/img2.jpg" alt="">
+                        <img  src="/img/general_images/<?php echo $image ?>" class="content"  alt="">
                     </div>
                     <div class="row py-3 text-center">
                         <div class="col-12 fs-5 my-2">Rolex watch</div>
@@ -61,6 +96,7 @@
                         <a href="/" class="col-12 my-1">Harry Potter</a>
                         <div class="col-12 fw-bold my-3">€20.30</div>
                     </div>
+                    <?php endforeach; ?>
                 </a>
             </div>
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">

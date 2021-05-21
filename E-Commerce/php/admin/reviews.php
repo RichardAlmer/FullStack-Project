@@ -1,32 +1,102 @@
 <?php
-// To Do: Session stuff ---------------------------------------
+    require_once '../components/db_connect.php';
 
-// To Do: DB stuff  ---------------------------------------
+    session_start();
+    if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+        header("Location: ../../index.php");
+        exit;
+    }
+    if (isset($_SESSION["user"])) {
+        header("Location: ../product/product-catalog.php");
+        exit;
+    }
 
+    $id = $_GET['id'];
+    $sql = "SELECT pk_review_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id WHERE review.fk_product_id = {$id} ORDER BY create_datetime DESC";
+    $result = mysqli_query($conn ,$sql);
+    $tbody='';
+    if(mysqli_num_rows($result)  > 0) {    
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            $stars = "";
+            switch($row['rating']){
+                case 1:
+                    $stars = "★";
+                    break;
+                case 2:
+                    $stars = "★★";
+                    break;
+                case 3:
+                    $stars = "★★★";
+                    break;
+                case 4:
+                    $stars = "★★★★";
+                    break;
+                case 5:
+                    $stars = "★★★★★";
+                    break;
+            }
+            $tbody .= "<tr>
+                    <td>".$row['create_datetime']."</td>
+                    <td>".$row['name']."</td>
+                    <td>".$row['title']."</td>
+                    <td>".$stars."</td>
+                    <td><a href='../product/product-details.php?id=".$row['pk_product_id']."'><button class='btn btn-warning btn-sm' type='button'>View</button></a><a href='delete-review.php?id=".$row['pk_review_id']."'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
+                </tr>";
+        };
+    } else {
+        $tbody =  "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
+    }
+
+    $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Reviews</title>
     <?php require_once '../components/boot.php'?>
     <!-- <link rel='stylesheet' type='text/css' href='../../main.css'> -->
-</head>
+    <style type= "text/css">
+        .manageProduct {          
+            margin: auto;
+        }
+        .img-thumbnail {
+            width: 70px !important;
+            height: 70px !important;
+        }
+        td {          
+            text-align: left;
+            vertical-align: middle;
 
+        }
+        tr {
+            text-align: center;
+        }
+    </style>
+</head>
 <body>
     <div id="container">
-        <?php include '../components/navbar.php' ?>
+        <?php require_once '../components/header.php'; 
+        navbar("../../", "../");?>
         <div id="content">
             <h1>Manage Reviews</h1>
-            <table>
-                 <!-- To Do -->
+            <table class='table table-striped'>
+            <thead class='table-success'>
+                    <tr>
+                        <th>Created on</th>
+                        <th>Product Name</th>
+                        <th>Review Title</th>
+                        <th>Rating</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?= $tbody;?>
+                </tbody>
             </table>
-            <a href='dashboard.php'>Back to dashboard</a>
+            <a href='../product/products.php'>Back to Manage Products</a>
         </div>
     </div>
 </body>
-
 </html>

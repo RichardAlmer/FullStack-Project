@@ -57,8 +57,6 @@ st5.addEventListener('click', ()=>{
 var answerBtn = document.getElementsByClassName('answerBtn');
 var answerForm = document.getElementsByClassName('answerForm');
 var createAnswerBtn = document.getElementsByClassName('createAnswerBtn');
-console.log(answerBtn);
-console.log(answerForm);
 
 for(let i = 0; i < answerBtn.length; i++){
     answerBtn[i].addEventListener('click', ()=>{

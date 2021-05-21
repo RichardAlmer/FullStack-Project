@@ -53,7 +53,7 @@ if ($_GET['id']) {
     <div id="container" class="container">
         <div class="row my-5 py-5">
             <div class="col-12 fs_6 text-uppercase my-2">Profile</div>
-            <div id="content">
+            <div id="content" class="row align-items-start">
                 <?php
                 if (isset($errMSG)) {
                     ?>
@@ -64,7 +64,7 @@ if ($_GET['id']) {
                 }
                 ?>
 
-                <div class="col-12 col-md-2">
+                <div class="row col-12 col-md-4">
                     <?php 
                         if ($role == 'admin') {
                             echo "<img src='../../img/user_images/default-admin.jpg'>";
@@ -74,48 +74,31 @@ if ($_GET['id']) {
                     
                     ?>
                 </div>
-                <table class='table'>
-                    <tr>
-                        <th>First name</th>
-                        <td>
-                            <?php echo $firstName ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Last name</th>
-                        <td>
-                            <?php echo $lastName ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Address</th>
-                        <td>
-                            <?php echo $address ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>City</th>
-                        <td><?php echo $city ?></td>
-                    </tr>
-                    <tr>
-                        <th>Postcode</th>
-                        <td><?php echo $postcode ?></td>
-                    </tr>
-                    <tr>
-                        <th>Country</th>
-                        <td><?php echo $country ?></td>
-                    </tr>
-                    <tr>
-                        <th>Birthdate</th>
-                        <td><?php echo $birthdate ?></td>
-                    </tr>
-                    <tr>
-                        <th><a href="javascript:history.back()"><button class='btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3' type="button">Back</button></a></th>
-                        <td>
-                            <a href='profile-update.php?id="<?php echo $id ?>"'><button class='btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3 mb-2' type='button'>Update</button></a>
-                        </td>
-                    </tr>
-                </table>
+                <div class="row col-12 col-md-8 py-5">
+                    <div class="col-12 col-md-4 fw-bold py-2">First name</div>
+                    <div class="col-12 col-md-8 pb-3 py-md-2"><?php echo $firstName ?></div>
+
+                    <div class="col-12 col-md-4 fw-bold py-2">Last name</div>
+                    <div class="col-12 col-md-8 pb-3 py-md-2"><?php echo $lastName ?></div>
+
+                    <div class="col-12 col-md-4 fw-bold py-2">Country</div>
+                    <div class="col-12 col-md-8 pb-3 py-md-2"><?php echo $country ?></div>
+
+                    <div class="col-12 col-md-4 fw-bold py-2">Address</div>
+                    <div class="col-12 col-md-8 pb-3 py-md-2"><?php echo $city .' '. $postcode .', '. $address ?></div>
+
+                    <div class="col-12 col-md-4 fw-bold py-2">Birthdate</div>
+                    <div class="col-12 col-md-8 pb-3 py-md-2"><?php echo $birthdate ?></div>
+                </div>
+            </div>
+            
+            <div class="container">
+                <button class='col-12 col-md-2 btn btn bg_gray bg_hover rounded-pill py-2 px-4 text-white my-1' type='button'>
+                    <a class="col-12" href='profile-update.php?id="<?php echo $id ?>"'>Update</a>
+                </button>
+                <button class='col-12 col-md-2 btn btn bg_lightgray bg_hover rounded-pill py-2 px-4 text-white my-1' type="button">
+                    <a class="col-12" href="javascript:history.back()">Back</a>
+                </button>
             </div>
         </div>
     </div>

@@ -30,18 +30,20 @@
     <div id="container" class="container">
         <div id="content" class="row my-5 py-5">
             <div class="col-12 fs_6 text-uppercase my-2">Admin Dashboard</div>
-            <div class="col-12 py-2">
-                <a href='../user/users.php'>Manage Users</a>
+            <div class="py-5 my-4">
+                <div class="col-12">
+                    <a class="fs-5 btn btn bg_gray bg_hover rounded-pill col-12 col-md-3 py-2 px-4 text-white my-2" href='../user/users.php'>Manage Users</a>
+                </div>
+                <div class="col-12">
+                    <a class="fs-5 btn btn bg_gray bg_hover rounded-pill col-12 col-md-3 py-2 px-4 text-white my-2" href='../product/products.php'>Manage Products</a>
+                </div>
+                <div class="col-12">
+                    <a class="fs-5 btn btn bg_gray bg_hover rounded-pill col-12 col-md-3 py-2 px-4 text-white my-2" href='reviews.php'>Manage Reviews</a>
+                </div>
+                <div class="col-12">
+                    <a class="fs-5 btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-3 py-2 px-4 text-white my-2" href='statistics.php'>View Statistics</a>
+                </div>
             </div>
-                <a href='../product/products.php'>
-                    <div>Manage Products</div>
-                </a>
-                <a href='reviews.php'>
-                    <div>Manage Reviews</div>
-                </a>
-                <a href='statistics.php'>
-                    <div>View Statistics</div>
-                </a>
         </div>
     </div>
     <?php 

@@ -36,7 +36,7 @@ function navbar($level1="", $level2=""){
                         ?>
 
                         <li class="nav-item px-2">
-                            <a class="nav-link my_text" href="/">Login</a>
+                            <a class="nav-link my_text" href="'.$level1.'php/login.php">Login</a>
                         </li>
 
                         <?php } ?>
@@ -58,7 +58,7 @@ function navbar($level1="", $level2=""){
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link text-dark" href="'.$level1.'php/user/profile.php?id='.$id.'">
-                                <img class="cart_img" src="'.$level1.'img/default-user.jpg" alt="profile">
+                                <img class="cart_img" src="'.$level1.'img/user_images/default-user.jpg" alt="profile">
                             </a>
                         </li>
                     </ul>

@@ -93,12 +93,12 @@ if ($_GET['id']) {
             </div>
             
             <div class="container">
-                <a href='profile-update.php?id="<?php echo $id ?>"'>
-                    <button class='col-12 col-md-2 btn bg_gray bg_hover rounded-pill py-2 px-4 text-white my-1' type='button'>Update</button>
-                </a>
-                
                 <a href="javascript:history.back()">
-                    <button class='col-12 col-md-2 btn btn bg_lightgray bg_hover rounded-pill py-2 px-4 text-white my-1' type="button">Back</button>
+                    <button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type="button">Back</button>
+                </a>
+
+                <a href='profile-update.php?id="<?php echo $id ?>"'>
+                    <button class='col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type='button'>Update</button>
                 </a>
             </div>
         </div>

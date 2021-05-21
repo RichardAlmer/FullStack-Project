@@ -63,12 +63,16 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Profile</title>
     <?php require_once '../components/boot.php'?>
-    <link rel='stylesheet' type='text/css' href='styles.css'>
+    <link rel="stylesheet" href="../../style/main-style.css" />
 </head>
 
 <body>
-    <div id="container">
-        <div id="content">
+    <?php 
+        require_once '../components/header.php';
+        navbar("../../");
+    ?>
+    <div id="container" class="container">
+        <div id="content" class="row my-5 py-5">
 
             <div class="<?php echo $class; ?>" role="alert">
                 <p><?php echo ($message) ?? ''; ?></p>
@@ -132,6 +136,13 @@ $conn->close();
             </form> 
 
         </div>
+    </div>
+
+    <?php 
+        require_once '../components/footer.php';
+        footer("../../");
+        require_once '../components/boot-javascript.php';
+    ?>
 </body>
 
 </html>

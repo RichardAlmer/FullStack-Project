@@ -50,7 +50,9 @@ if (isset($_POST["submit"])) {
     $discountProcent = $_POST['discountProcent'];
     $id = $_POST['id'];
     
-    $uploadError = '';    
+    $uploadError = '';  
+    
+    $image = file_upload($_FILES['image']);
 
     $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', image = '$image->fileName', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status' 
     WHERE pk_product_id = '$id'";

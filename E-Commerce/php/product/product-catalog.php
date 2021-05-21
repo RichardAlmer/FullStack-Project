@@ -7,7 +7,8 @@ $resultCategories = mysqli_query($conn ,$sqlCategories);
 $categories=''; 
 if(mysqli_num_rows($resultCategories) > 0) {     
     while($row = mysqli_fetch_array($resultCategories, MYSQLI_ASSOC)){ 
-        $categories .= "<a href='' onclick='showProducts('category', this.innerHTML)'>".$row['category']."</a><br/>";
+        //$categories .= "<a href='' onclick='showProducts('category', 'Sport')'>".$row['category']."</a><br/>";
+        $categories .= "<div class='my_text'><a href='#' onclick='filterProducts('category', 'Sports')'>".$row['category']."</a></div><br/>";
     }
 }
 
@@ -53,7 +54,7 @@ $conn->close();
     <body>
         <?php 
             require_once '../../php/components/header.php';
-            navbar("../../");
+            navbar("../../", "../");
         ?>
 
         <div class="container">
@@ -76,10 +77,8 @@ $conn->close();
                     <?php echo $resultHtml; ?>
                 </div>
                 <div class="col-2 py-3">
-                    <div class="fw-bold mb-3">Shop by category</div>
-                    <div class="my_text">
-                        <?php echo $categories; ?>
-                    </div>
+                    <div class="fw-bold mb-3">Shop by category</div> 
+                    <?php echo $categories; ?>
                 </div>
             </div>
         </div>
@@ -88,9 +87,10 @@ $conn->close();
             footer("../../");
             require_once '../../php/components/boot-javascript.php';
         ?>
+        
         <script>
-            function showProducts(filter, value, order="desc") {
-                if (value == "") {
+            function filterProducts(filter, value, order="desc") {
+                if (filter == "") {
                     document.getElementById("result").innerHTML = "no result";
                     return;
                 } else {
@@ -103,6 +103,7 @@ $conn->close();
                     xmlhttp.open("GET", "product-filter.php?filter="+filter+"&value="+value, true);
                     xmlhttp.send();
                 }
+                alert('clicked');
             }
         </script>
         <?php require_once '../../php/components/boot-javascript.php'?>

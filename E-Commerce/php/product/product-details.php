@@ -248,7 +248,7 @@
     <div class="container">
         <div id="product">
             <h2 id="name"><?php echo $name ?></h2>
-            <img src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
+            <img id="proImg" src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
             <ul id="list">
                 <li><?php echo $avgRating ?></li>
                 <li><?php echo $brand ?></li>

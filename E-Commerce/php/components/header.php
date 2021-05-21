@@ -1,7 +1,5 @@
 <?php 
-function navbar($level1="", $level2=""){
-
-    $id = 1; // To Do: Session Stuff -----------------------------
+function navbar($level1="", $level2="", $id=""){
 
     echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">

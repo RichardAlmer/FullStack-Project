@@ -23,28 +23,32 @@
 
 <body>
     <?php
-    require_once '../components/header.php';
-    navbar("../../", "../");
+        require_once '../components/header.php';
+        navbar("../../", "../");
     ?>
 
-    <div id="container">
-        <div id="content">
-            <h1>Admin Dashboard</h1>
-            <a href='../user/users.php'>
-                <div>Manage Users</div>
-            </a>
-            <a href='../product/products.php'>
-                <div>Manage Products</div>
-            </a>
-            <a href='reviews.php'>
-                <div>Manage Reviews</div>
-            </a>
-            <a href='statistics.php'>
-                <div>View Statistics</div>
-            </a>
+    <div id="container" class="container">
+        <div id="content" class="row my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Admin Dashboard</div>
+            <div class="col-12 py-2">
+                <a href='../user/users.php'>Manage Users</a>
+            </div>
+                <a href='../product/products.php'>
+                    <div>Manage Products</div>
+                </a>
+                <a href='reviews.php'>
+                    <div>Manage Reviews</div>
+                </a>
+                <a href='statistics.php'>
+                    <div>View Statistics</div>
+                </a>
         </div>
     </div>
-    <?php require_once '../../php/components/boot-javascript.php'?>
+    <?php 
+        require_once '../components/footer.php';
+        footer("../../");
+        require_once '../components/boot-javascript.php';
+    ?>
 </body>
 
 </html>

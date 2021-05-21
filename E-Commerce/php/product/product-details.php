@@ -77,12 +77,14 @@
                     break;
             }
             $review .= " 
-                <div>
-                    <p>$row[first_name] wrote a review on $row[name]</p>
-                    <p>$stars</p>
-                    <p>$row[title]</p>
-                    <p>$row[create_datetime]</p>
-                    <p>$row[comment]</p>
+                <div class='col-12 col-md-8'>
+                    <div class='row align-items-center'>
+                        <div class='col-12 col-md-8 my-2'><span class='my_text_maincolor'>$row[first_name]</span> wrote a review on <span class='my_text_maincolor'>$row[name]</span></div>
+                        <div class='col-12 col-md-4 my_text_lightgray'>$row[create_datetime]</div>
+                    </div>
+                    <div class='fs-5'>$stars</div>
+                    <div class='fs-5 fw-bold my-2'>$row[title]</div>
+                    <div class='mt-3'>$row[comment]</div>
                 </div>
             ";  
         }
@@ -264,7 +266,7 @@
                     <div class="col-12 fs_6 my_text_maincolor fw-bold"><?php echo $price ?>€</div>
                     <div class="col-12 my_text_lightgray fs_7 mb-4">Price without shipping</div>
                     <div class="col-12"><span class="my_text_lightgray">from </span><a href=""><?php echo $brand ?></a></div>
-                    <div class="col-12 my_text_maincolor my-2"><?php echo $category ?></div>
+                    <div class="col-12 my-2"><a class="my_text_maincolor" href=""><?php echo $category ?></a></div>
                     <div class="col-12 my_text_lightgray fs-5">Description:</div>
                     <div id="desc" class="col-12"><?php echo $description ?></div>
 
@@ -282,29 +284,32 @@
     </div>
 
     <div class="container">
-        
         <hr>
-        <div id="review">
-            <h3>Reviews</h3>
-            <div id="reviews"><?= $review;?></div>
+        <div id="review" class="py-4">
+            <div class="col-12 fs_6 text-uppercase my-2 text-center">Reviews</div>
+            <div id="reviews" class="row text-center justify-content-center"><?= $review;?></div>
+
             <?php
                 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
             ?>
-            <div id="stars">
-                <span id="st1">★</span><span id="st2">★</span><span id="st3">★</span><span id="st4">★</span><span id="st5">★</span>
-            </div><br>
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
-                <div class="mb-3">
-                    <input class="form-control" type="text" name="title" placeholder="Leave a title here" id="reviewTitle" style="width: 80vw"></input><br>
-                    <textarea class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="width: 80vw"></textarea>
+            <div class="row my-5 py-3 text-center justify-content-center">
+                <div id="stars" class="text-center mb-4 my_text_lightgray">
+                    <span id="st1">★</span><span id="st2">★</span><span id="st3">★</span><span id="st4">★</span><span id="st5">★</span>
                 </div>
-                <span class="text-<?=$class;?>"><?php echo ($messageReview) ?? ""; ?></span><br>
-                <input id="rating" type="hidden" name="rating" value="" />
-                <button type="submit" name="submitRev" class="btn btn-primary">Create Review</button>
-            </form>
+                <form class="col-12 col-md-8" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
+                    <div class="my-2">
+                        <input class="form-control mb-2" type="text" name="title" placeholder="Leave a title here" id="reviewTitle">
+                        <textarea class="form-control mb-2" type="text" name="review" placeholder="Leave a review here" id="reviewText"></textarea>
+                    </div>
+                    <div class="my-2 text-<?=$class;?>"><?php echo ($messageReview) ?? ""; ?></div>
+                    <input id="rating" type="hidden" name="rating" value="" />
+                    <button type="submit" name="submitRev" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create Review</button>
+                </form>
+            </div>
             <?php
                 }
             ?>
+
         </div>
     </div>
 

@@ -81,7 +81,7 @@ $products = getAllProducts();
         <?php endforeach; ?>
     </section>
 <?php else : ?>
-    <h1>There are no offers available</h1>
+    <h1>There are no products available</h1>
 <?php endif; ?>
 </div>
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">

@@ -2,12 +2,6 @@
     require_once '../components/db_connect.php';
 
     session_start();
-    // if ( isset($_SESSION['user']) != "") {
-    //     header("Location: porduct-catalog.php" ); //-----------------------------------
-    // }
-    // if (isset($_SESSION[ 'admin' ]) != "") {
-    //     header("Location: ../admin/dashboard.php"); //-----------------------------------
-    // }
 
     $userId = '';
     if(isset($_SESSION['admin'])){
@@ -169,32 +163,15 @@
         }
     }    
 
-    // Print Answers
-    // $sql = "SELECT answer.answer, answer.fk_question_id, answer.create_datetime, pk_question_id, user.first_name FROM answer INNER JOIN question ON fk_question_id = pk_question_id INNER JOIN user ON answer.fk_user_id = pk_user_id";
-    // $result = mysqli_query($conn ,$sql);
-    // $answer = '';
-    // $qId = '';
-    // if(mysqli_num_rows($result) > 0) {    
-    //     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-    //         $qId .= "$row[fk_question_id]";
-    //         $answer .= " 
-    //                 <p>Answer from $row[first_name]</p>
-    //                 <p>$row[create_datetime]</p>
-    //                 <p>$row[answer]</p>
-    //                 <hr>
-    //         ";
-    //     }
-    // }
-
     // Print Question
     $messageA = "";
-    $sql = "SELECT question.pk_question_id, question.question, question.create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
+    $sql = "SELECT question.pk_question_id, question.question, question.create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id} ORDER BY create_datetime DESC";
     $result = mysqli_query($conn ,$sql);
     $question = "";
     $answer = "";
     if(mysqli_num_rows($result) > 0) {    
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $sqlA = "SELECT answer.answer, answer.fk_question_id, answer.create_datetime, user.first_name FROM answer INNER JOIN user ON answer.fk_user_id = pk_user_id WHERE answer.fk_question_id = $row[pk_question_id]";
+            $sqlA = "SELECT answer.answer, answer.fk_question_id, answer.create_datetime, user.first_name FROM answer INNER JOIN user ON answer.fk_user_id = pk_user_id WHERE answer.fk_question_id = $row[pk_question_id] ORDER BY create_datetime DESC";
             $resultA = mysqli_query($conn ,$sqlA);
             $aId = "";
             while($rowA = mysqli_fetch_array($resultA, MYSQLI_ASSOC)){
@@ -227,6 +204,7 @@
                         <div class='answer'>$answer</div>
                     </div>
                 ";
+                $answer = "";
             } else {
                 $question .= " 
                     <div>
@@ -271,7 +249,7 @@
     <div class="container">
         <div id="product">
             <h2 id="name"><?php echo $name ?></h2>
-            <img src="../../img/general_images/img2.jpg" alt="<?php echo $name ?>" width="300px">
+            <img src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
             <ul id="list">
                 <li><?php echo $avgRating ?></li>
                 <li><?php echo $brand ?></li>

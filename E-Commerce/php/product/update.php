@@ -1,23 +1,20 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
-//     header("Location: ../../index.php");
-//     exit;
-// }
-// $backBtn = '';
-// if (isset($_SESSION["user"])) {
-//     $backBtn = "../product/produrct-catalog.php";
-// }
-// if (isset($_SESSION["admin"])) {
-//     $backBtn = "../admin/dashBoard.php";
-// }
+session_start();
+if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+    header("Location: ../../index.php");
+    exit;
+}
+if (isset($_SESSION["user"])) {
+    header("Location: ../product/product-catalog.php");
+    exit;
+}
 
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
 $error = false;
-$name = $description = $brand = $image = $price = $category = $status = $discountProcent = '';
-$nameError = $descriptionError = $brandError = $imageError = $priceError = $categoryError = '';
+$name = $description = $brand = $picture = $price = $category = $status = $discountProcent = '';
+$nameError = $descriptionError = $brandError = $pictureError = $priceError = $categoryError = '';
 
 //fetch and populate form
 if (isset($_GET['id'])) {
@@ -29,7 +26,7 @@ if (isset($_GET['id'])) {
         $name = $data['name'];
         $description = $data['description'];
         $brand = $data['brand'];
-        $image = $data['image'];
+        $picture = $data['image'];
         $price = $data['price'];
         $category = $data['category'];
         $status = $data['status'];
@@ -43,7 +40,7 @@ if (isset($_POST["submit"])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $brand = $_POST['brand'];
-    $image = $_POST['image'];
+    $picture = $_POST['picture'];
     $price = $_POST['price'];
     $category = $_POST['category'];
     $status = $_POST['status'];
@@ -52,9 +49,9 @@ if (isset($_POST["submit"])) {
     
     $uploadError = '';  
     
-    $image = file_upload($_FILES['image']);
+    $picture = file_upload($_FILES['picture'], 'product');
 
-    $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', image = '$image->fileName', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status' 
+    $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', image = '$picture->fileName', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status' 
     WHERE pk_product_id = '$id'";
     
     if ($conn->query($sql) === true) {     
@@ -80,6 +77,18 @@ $conn->close();
     <title>Update Product</title>
     <?php require_once '../components/boot.php' ?>
     <link rel='stylesheet' type='text/css' href='../../style/main-style.css'>
+    <style type="text/css">
+        fieldset {
+            margin: auto;
+            margin-top: 100px;
+            width: 60%;
+        }
+
+        .img-thumbnail {
+            width: 70px !important;
+            height: 70px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -94,8 +103,10 @@ $conn->close();
             <p><?php echo ($message) ?? ''; ?></p>
             <p><?php echo ($uploadError) ?? ''; ?></p>
         </div>
-
+        
         <h2>Update Product</h2>
+
+        <img class='img-thumbnail rounded-circle' src='../../img/product_images/<?php echo $picture ?>' alt="<?php echo $name ?>">
 
         <form method="post" enctype="multipart/form-data">
             <table class="table">
@@ -107,8 +118,8 @@ $conn->close();
                     </td>
                 </tr>
                 <tr>
-                    <th>Image</th>
-                    <td><input class="form-control" type="file" name="image" /></td>
+                    <th>Picture</th>
+                    <td><input class="form-control" type="file" name="picture" /></td>
                 </tr>
                 <tr>
                     <th>Description</th>
@@ -163,7 +174,7 @@ $conn->close();
                 </tr>
                 <tr>
                     <input type="hidden" name="id" value="<?php echo $data['pk_product_id'] ?>" />
-                    <input type="hidden" name="image" value="<?php echo $image ?>" />
+                    <input type="hidden" name="picture" value="<?php echo $picture ?>" />
                     <td><a href="products.php"><button class="btn btn-warning" type="button">Back</button></a></td>
                     <td><button name="submit" class="btn btn-success" type="submit">Save Changes</button></td>
                 </tr>

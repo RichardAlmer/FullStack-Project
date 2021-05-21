@@ -177,7 +177,7 @@
             while($rowA = mysqli_fetch_array($resultA, MYSQLI_ASSOC)){
                 $aId = "$rowA[fk_question_id]";
                 $answer .= " 
-                        <p>Answer from $rowA[first_name] | $rowA[fk_question_id]</p>
+                        <p>Answer from $rowA[first_name]</p>
                         <p>$rowA[create_datetime]</p>
                         <p>$rowA[answer]</p>
                         <hr>
@@ -189,7 +189,6 @@
                         <p>$row[first_name] has a question about $row[name]</p>
                         <p>$row[create_datetime]</p>
                         <p>$row[question]</p>
-                        <p>$row[pk_question_id]</p>
                         <button type='button' class='answerBtn btn btn-warning'>Answer</button>
                         <div class='answerForm'>
                             <form method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
@@ -249,7 +248,7 @@
     <div class="container">
         <div id="product">
             <h2 id="name"><?php echo $name ?></h2>
-            <img src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
+            <img id="proImg" src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
             <ul id="list">
                 <li><?php echo $avgRating ?></li>
                 <li><?php echo $brand ?></li>

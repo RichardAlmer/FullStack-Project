@@ -238,6 +238,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $name ?></title>
     <?php require_once '../../php/components/boot.php'?>
+    <link rel="stylesheet" href="../../style/main-style.css" />
     <link rel="stylesheet" href="../../style/details.css">
 </head>
 <body>

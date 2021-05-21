@@ -9,6 +9,7 @@ if (isset($_SESSION['admin']) != "") {
 }
 
 require_once 'components/db_connect.php';
+require_once 'components/banChecker.php';
 
 $error = false;
 $email = $password = $emailError = $passError = '';
@@ -54,14 +55,11 @@ if (isset($_POST['btn-login'])) {
         $bannedUntil = $row['banned_until'];
         $banDate = date('d-m-y H:i:s', strtotime($bannedUntil));
 
-        // var_dump($password == $inputPW);
-        // exit;
-
         if ($count == 1 && $inputPW == $password) {
             if ($status == 'active' && $role == 'admin') {
                 $_SESSION['admin'] = $userId;
                 header("Location: admin/dashboard.php");
-            } else if ($status == 'active' && $role == 'user' && empty($bannedUntil)) {
+            } else if ($status == 'active' && $role == 'user' && banChecker($conn, $userId)) {
                 $_SESSION['user'] = $userId;
                 header("Location: product/product-catalog.php");
             } else {

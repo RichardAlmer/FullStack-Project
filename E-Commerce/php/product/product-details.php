@@ -30,10 +30,10 @@
             $category = $data['category'];
             $status = $data['status'];
             $discount_procent = $data['discount_procent'];
-        };
-    };
+        }
+    }
     
-    //Review
+    // Create Review
     if (isset($_POST['submitRev'])) { 
         if ($_POST['review']&&$_POST['rating']){
             $review = $_POST['review'];
@@ -91,7 +91,7 @@
                     <p>$row[comment]</p>
                 </div>
             ";  
-        };
+        }
     }
 
     // Average and Count Rating
@@ -120,10 +120,10 @@
                     break;
             }
             $avgRating .= $stars." ".$row['COUNT(rating)'];  
-        };
+        }
     }
 
-    // Q&A
+    // Create Question
     $class = "";
     $messageQA = "";
     if (isset($_POST['submitQ'])) {
@@ -143,38 +143,112 @@
             }
         } else {
             $class = "danger";
-            $messageQA = "Fill in the fields!";
+            $messageQA = "Fill in the field!";
         }
     }
 
-    
-    // Answer Form
-    $form = '<form method="post" action="'.htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id'].'" autocomplete="off">
-                <div class="mb-3">
-                    <input class="form-control" type="text" name="answer" placeholder="Leave a answer here" id="answerText" style="width: 80vw"></input>
-                </div>
-                <span class="text-'.$class.'">'.$messageQA.'</span><br>
-                <button type="submit" name="submitA" class="createAnswerBtn btn btn-primary">Create Answer</button>
-            </form>';
+    // Print Answers
+    // $sql = "SELECT answer.answer, answer.fk_question_id, answer.create_datetime, pk_question_id, user.first_name FROM answer INNER JOIN question ON fk_question_id = pk_question_id INNER JOIN user ON answer.fk_user_id = pk_user_id";
+    // $result = mysqli_query($conn ,$sql);
+    // $answer = '';
+    // $qId = '';
+    // if(mysqli_num_rows($result) > 0) {    
+    //     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+    //         $qId .= "$row[fk_question_id]";
+    //         $answer .= " 
+    //                 <p>Answer from $row[first_name]</p>
+    //                 <p>$row[create_datetime]</p>
+    //                 <p>$row[answer]</p>
+    //                 <hr>
+    //         ";
+    //     }
+    // }
 
-    // Print Q&A
-    $sql = "SELECT question.question, question.create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
+    // Print Question
+    $messageA = "";
+    $sql = "SELECT question.pk_question_id, question.question, question.create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
     $result = mysqli_query($conn ,$sql);
-    $question='';
+    $question = "";
+    $answer = "";
     if(mysqli_num_rows($result) > 0) {    
-        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){        
-            $question .= " 
-                <div>
-                    <p>$row[first_name] has a question about $row[name]</p>
-                    <p>$row[create_datetime]</p>
-                    <p>$row[question]</p>
-                    <button type='button' class='answerBtn btn btn-warning'>Answer</button>
-                    <div class='answer'></div>
-                    <div class='answerForm'>$form</div>
-                </div>
-            ";
-        };
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            $sqlA = "SELECT answer.answer, answer.fk_question_id, answer.create_datetime, user.first_name FROM answer INNER JOIN user ON answer.fk_user_id = pk_user_id WHERE answer.fk_question_id = $row[pk_question_id]";
+            $resultA = mysqli_query($conn ,$sqlA);
+            $aId = "";
+            while($rowA = mysqli_fetch_array($resultA, MYSQLI_ASSOC)){
+                $aId = "$rowA[fk_question_id]";
+                $answer .= " 
+                        <p>Answer from $rowA[first_name] | $rowA[fk_question_id]</p>
+                        <p>$rowA[create_datetime]</p>
+                        <p>$rowA[answer]</p>
+                        <hr>
+                    ";
+            }
+            if($aId == $row['pk_question_id']){
+                $question .= " 
+                    <div>
+                        <p>$row[first_name] has a question about $row[name]</p>
+                        <p>$row[create_datetime]</p>
+                        <p>$row[question]</p>
+                        <p>$row[pk_question_id]</p>
+                        <button type='button' class='answerBtn btn btn-warning'>Answer</button>
+                        <div class='answerForm'>
+                            <form method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
+                                <div class='mb-3'>
+                                    <input class='form-control' type='text' name='answer' placeholder='Leave a answer here' id='answerText' style='width: 80vw'></input>
+                                    <input type='hidden' name='questionId' value='$row[pk_question_id]' />
+                                </div>
+                                <span class='text-".$class."'>".$messageA."</span><br>
+                                <button type='submit' name='submitA' class='createAnswerBtn btn btn-primary'>Create Answer</button>
+                            </form>
+                        </div>
+                        <div class='answer'>$answer</div>
+                    </div>
+                ";
+            } else {
+                $question .= " 
+                    <div>
+                        <p>$row[first_name] has a question about $row[name]</p>
+                        <p>$row[create_datetime]</p>
+                        <p>$row[question]</p>
+                        <button type='button' class='answerBtn btn btn-warning'>Answer</button>
+                        <div class='answerForm'>
+                            <form method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
+                                <div class='mb-3'>
+                                    <input class='form-control' type='text' name='answer' placeholder='Leave a answer here' id='answerText' style='width: 80vw'></input>
+                                    <input type='hidden' name='questionId' value='$row[pk_question_id]' />
+                                </div>
+                                <span class='text-".$class."'>".$messageA."</span><br>
+                                <button type='submit' name='submitA' class='createAnswerBtn btn btn-primary'>Create Answer</button>
+                            </form>
+                        </div>
+                    </div>
+                ";
+            }
+        }
     }
+    
+    // Cretate Answer
+    if (isset($_POST['submitA'])) {
+        if($_POST['answer']){
+            $answer = $_POST['answer'];
+            $questionId = $_POST['questionId'];
+            $date = date('d-m-y h:i:s');
+        
+            $sql = "INSERT INTO answer (answer, create_datetime, fk_question_id, fk_user_id) VALUES ('$answer', '$date', $questionId, $userId)"; 
+
+            if ($conn->query($sql) === true ) {
+                $class = "success";
+                $messageA = "The answer was successfully created";
+            } else {
+                $class = "danger";
+                $messageA = "Error while creating comment. Try again: <br>" . $conn->error;
+            }
+        } else {
+            $class = "danger";
+            $messageA = "Fill in the field!";
+        }
+    }    
 
     $conn->close();
 ?>

@@ -147,6 +147,28 @@
         }
     }
 
+    // Cretate Answer
+    if (isset($_POST['submitA'])) {
+        if($_POST['answer']){
+            $answer = $_POST['answer'];
+            $questionId = $_POST['questionId'];
+            $date = date('d-m-y h:i:s');
+        
+            $sql = "INSERT INTO answer (answer, create_datetime, fk_question_id, fk_user_id) VALUES ('$answer', '$date', $questionId, $userId)"; 
+
+            if ($conn->query($sql) === true ) {
+                $class = "success";
+                $messageA = "The answer was successfully created";
+            } else {
+                $class = "danger";
+                $messageA = "Error while creating comment. Try again: <br>" . $conn->error;
+            }
+        } else {
+            $class = "danger";
+            $messageA = "Fill in the field!";
+        }
+    }    
+
     // Print Answers
     // $sql = "SELECT answer.answer, answer.fk_question_id, answer.create_datetime, pk_question_id, user.first_name FROM answer INNER JOIN question ON fk_question_id = pk_question_id INNER JOIN user ON answer.fk_user_id = pk_user_id";
     // $result = mysqli_query($conn ,$sql);
@@ -227,30 +249,9 @@
             }
         }
     }
-    
-    // Cretate Answer
-    if (isset($_POST['submitA'])) {
-        if($_POST['answer']){
-            $answer = $_POST['answer'];
-            $questionId = $_POST['questionId'];
-            $date = date('d-m-y h:i:s');
-        
-            $sql = "INSERT INTO answer (answer, create_datetime, fk_question_id, fk_user_id) VALUES ('$answer', '$date', $questionId, $userId)"; 
-
-            if ($conn->query($sql) === true ) {
-                $class = "success";
-                $messageA = "The answer was successfully created";
-            } else {
-                $class = "danger";
-                $messageA = "Error while creating comment. Try again: <br>" . $conn->error;
-            }
-        } else {
-            $class = "danger";
-            $messageA = "Fill in the field!";
-        }
-    }    
 
     $conn->close();
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -280,7 +281,7 @@
                 <?php
                     if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
                 ?>
-                <button type="button" class="btn btn-warning"><a href="#">Add to Cart</a></button>
+                <button id="addToCartBtn" type="button" class="btn btn-warning">Add to Cart</button>
                 <?php
                     }
                 ?>

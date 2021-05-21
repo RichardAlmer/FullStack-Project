@@ -113,7 +113,7 @@
                     $stars = "★★★★★";
                     break;
             }
-            $avgRating .= $stars." ".$row['COUNT(rating)'];  
+            $avgRating .= $stars." | ".$row['COUNT(rating)'];  
         }
     }
 
@@ -247,25 +247,41 @@
         navbar("../../", "../");
     ?>
     <div class="container">
-        <div id="product">
-            <h2 id="name"><?php echo $name ?></h2>
-            <img id="proImg" src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
-            <ul id="list">
-                <li><?php echo $avgRating ?></li>
-                <li><?php echo $brand ?></li>
-                <li><?php echo $category ?></li>
-                <li><?php echo $status ?></li>
-                <li><?php echo $price ?>€</li>
-                <?php
-                    if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
-                ?>
-                <button id="addToCartBtn" type="button" class="btn btn-warning">Add to Cart</button>
-                <?php
-                    }
-                ?>
-            </ul>
-            <p id="desc"><?php echo $description ?></p>
+        <div id="product" class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">About product</div>
+
+            <div class="row my-4">
+                <div class="col-12 col-md-6">
+                    <img id="proImg" src="../../img/product_images/<?php echo $image ?>" alt="<?php echo $image ?>">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="row align-items-center">
+                        <div id="name" class="col-12 col-md-10 py-3 py-md-0 fs-4"><?php echo $name ?></div>
+                        <div class="col-12 col-md-2 my_text_maincolor fw-bold"><?php echo $status ?></div>
+                    </div>
+                    <div class="col-12 my-3 fs-5"><?php echo $avgRating ?></div>
+                    <div class="col-12 fs_6 my_text_maincolor fw-bold"><?php echo $price ?>€</div>
+                    <div class="col-12 my_text_lightgray fs_7 mb-4">Price without shipping</div>
+                    <div class="col-12"><span class="my_text_lightgray">from </span><a href=""><?php echo $brand ?></a></div>
+                    <div class="col-12 my_text_maincolor my-2"><?php echo $category ?></div>
+                    <div class="col-12 my_text_lightgray fs-5">Description:</div>
+                    <div id="desc" class="col-12"><?php echo $description ?></div>
+
+                    <?php
+                        if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
+                    ?>
+                        <button id="addToCartBtn" type="button" class="btn btn bg_gray bg_hover rounded-pill col-12 py-2 px-4 text-white my-5">Add to Cart</button>
+                    <?php
+                        }
+                    ?>
+
+                </div>
+            </div>
         </div>
+    </div>
+
+    <div class="container">
         
         <hr>
         <div id="review">
@@ -290,6 +306,9 @@
                 }
             ?>
         </div>
+    </div>
+
+    <div class="container">
         <hr>
         <div id="qAndA">
             <h3>Q&A</h3>
@@ -309,12 +328,12 @@
             ?>
         </div>
     </div>
+
     <?php 
         require_once '../../php/components/footer.php';
         footer("../../");
         require_once '../../php/components/boot-javascript.php';
     ?>
     <script src="../../script/review.js"></script>
-    <?php require_once '../../php/components/boot-javascript.php'?>
 </body>
 </html>

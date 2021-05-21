@@ -36,7 +36,7 @@ if (isset($_POST['btn-login'])) {
     }
 
     if (!$error) {
-        $password = hash('sha256', $pass);
+        $inputPW = hash('sha256', $pass);
         $sqlSelect = "SELECT pk_user_id, first_name, password, status, role, banned_until FROM user WHERE email = ? ";
         $stmt = $conn->prepare($sqlSelect);
         $stmt->bind_param("s", $email);
@@ -45,15 +45,27 @@ if (isset($_POST['btn-login'])) {
         $row = $result->fetch_assoc();
         $count = $result->num_rows;
 
-        if ($count == 1 && $row['password'] == $password) {
-            if ($row['status'] == 'active' && $row['role'] == 'admin') {
-                $_SESSION['admin'] = $row['pk_user_id'];
+        // var_dump($row);
+
+        $userId = $row['pk_user_id'];
+        $password = $row['password'];
+        $role = $row['role'];
+        $status = $row['status'];
+        $bannedUntil = $row['banned_until'];
+        $banDate = date('d-m-y H:i:s', strtotime($bannedUntil));
+
+        // var_dump($password == $inputPW);
+        // exit;
+
+        if ($count == 1 && $inputPW == $password) {
+            if ($status == 'active' && $role == 'admin') {
+                $_SESSION['admin'] = $userId;
                 header("Location: admin/dashboard.php");
-            } else if ($row['status'] == 'active' && $row['role'] == 'user') {
-                $_SESSION['user'] = $row['pk_user_id'];
+            } else if ($status == 'active' && $role == 'user' && empty($bannedUntil)) {
+                $_SESSION['user'] = $userId;
                 header("Location: product/product-catalog.php");
             } else {
-                $errMSG = "You are banned until " . $row['banned_until'];
+                $errMSG = "You are banned until " . $banDate;
             }
         } else {
             $errMSG = "Incorrect Credentials, Try again...";

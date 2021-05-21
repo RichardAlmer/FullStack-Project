@@ -52,7 +52,7 @@ if ($_GET['id']) {
     ?>
     <div id="container" class="container">
         <div class="row my-5 py-5">
-            <div class="col-12 fs_6 text-uppercase my-2">Profile</div>
+            <div class="col-12 fs_6 text-uppercase my-2">Hello, <span class="my_text_maincolor"><?php echo $firstName ?></span></div>
             <div id="content" class="row align-items-start">
                 <?php
                 if (isset($errMSG)) {

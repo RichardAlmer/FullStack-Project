@@ -79,7 +79,7 @@ $conn->close();
             navbar("../");
         ?>
 
-        <div class="container">
+        <div class="container py-5">
             <div class="row my-5 py-5">
                 <div class="col-12 fs_6 text-uppercase my-2 text-center">Login</div>
                 

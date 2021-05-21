@@ -73,68 +73,74 @@ $conn->close();
     ?>
     <div id="container" class="container">
         <div id="content" class="row my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Update Profile</div>
 
             <div class="<?php echo $class; ?>" role="alert">
                 <p><?php echo ($message) ?? ''; ?></p>
                 <p><?php echo ($uploadError) ?? ''; ?></p>       
             </div>
 
-            <h1>Update Profile</h1>
-           
-            <form  method="post" enctype="multipart/form-data">
-            <table class='table'>
-                <tr>
-                    <th>First name</th>
-                    <td>
+            <form class="my-3"  method="post" enctype="multipart/form-data">
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">First name</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Last name</th>
-                    <td>
-                        <input class="form-control" type="text" name="lastName" placeholder="First Name" value="<?php echo $lastName ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td>
-                        <input class="form-control" type="text" name="address" placeholder="First Name" value="<?php echo $address ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>City</th>
-                    <td>
-                        <input class="form-control" type="text" name="city" placeholder="First Name" value="<?php echo $city ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Postcode</th>
-                    <td>
-                        <input class="form-control" type="text" name="postcode" placeholder="First Name" value="<?php echo $postcode ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Country</th>
-                    <td>
-                        <input class="form-control" type="text" name="country" placeholder="First Name" value="<?php echo $country ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Birthdate</th>
-                    <td>
-                        <input class="form-control" type="text" name="birthdate" placeholder="First Name" value="<?php echo $birthdate ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <input type="hidden" name="ids" value="<?php echo $data['pk_user_id'] ?>" />
-                        <a href="javascript:history.back()"><button class='btn btn-light' type="button">Back</button></a>
-                    </th>
-                    <td><button name="submit" class="btn btn-dark" type= "submit">Save Changes</button></td>
-                </tr>
-            </table>
-            </form> 
+                    </div>
+                </div>
 
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Last name</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="lastName" placeholder="First Name" value="<?php echo $lastName ?>" />
+                    </div>
+                </div>
+
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Address</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="address" placeholder="First Name" value="<?php echo $address ?>" />
+                    </div>
+                </div>
+
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">City</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="city" placeholder="First Name" value="<?php echo $city ?>" />
+                    </div>
+                </div>
+
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Postcode</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="postcode" placeholder="First Name" value="<?php echo $postcode ?>" />
+                    </div>
+                </div>
+
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Country</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="country" placeholder="First Name" value="<?php echo $country ?>" />
+                    </div>
+                </div>
+
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Birthdate</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="birthdate" placeholder="First Name" value="<?php echo $birthdate ?>" />
+                    </div>
+                </div>
+
+                <div class="row py-4">
+                    <input type="hidden" name="ids" value="<?php echo $data['pk_user_id'] ?>" />
+
+                    <div class="">
+                        <a href="javascript:history.back()">
+                            <button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type="button">Back</button>
+                        </a>
+                        <button name="submit" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type= "submit">Save Changes</button>
+                    </div>
+                </div>
+            </form> 
         </div>
     </div>
 

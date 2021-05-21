@@ -2,16 +2,17 @@
 
 require_once '../components/db_connect.php';
 
+// get category filter links
 $sqlCategories = ("SELECT DISTINCT category FROM product");
 $resultCategories = mysqli_query($conn ,$sqlCategories);
 $categories=''; 
 if(mysqli_num_rows($resultCategories) > 0) {     
     while($row = mysqli_fetch_array($resultCategories, MYSQLI_ASSOC)){ 
-        //$categories .= "<a href='' onclick='showProducts('category', 'Sport')'>".$row['category']."</a><br/>";
-        $categories .= "<div class='my_text'><a href='#' onclick='filterProducts('category', 'Sports')'>".$row['category']."</a></div><br/>";
+        $categories .= "<div class='my_text'><a href='#' onclick='filterProducts(\"category\", \"".$row['category']."\")'>".$row['category']."</a></div><br/>";
     }
 }
 
+// get products
 $sql = ("SELECT * FROM product WHERE status = 'active'");
 $result = mysqli_query($conn ,$sql);
 $resultHtml=''; 
@@ -62,34 +63,35 @@ $conn->close();
                 <div class="col-12 col-md-6 fs_6 text-uppercase my-2">All products</div>
                 <div class="col-12 col-md-6 my-2 text-end">
                     <a href="" class="col-12 col-md-auto my-2 px-1">
-                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">Sort by rating</div>
+                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
+                            <a href='#' onclick='filterProducts("category","all","rating","DESC")'>Sort by rating</a>
+                        </div>
                     </a>
                     <a href="" onclick="showProducts('price', 'desc')" class="col-12 col-md-auto my-2 px-1">
-                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">Sort by price</div>
+                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">
+                            <a href='#' onclick='filterProducts("category","all","price","ASC")'>Sort by price</a>
+                        </div>
                     </a>
                 </div>
             </div>
         </div>
 
         <div class="container mb-4">
-            <div id="result" class="row py-3">
-                <div class="row col-10">
+            <div class="row py-3">
+                <div id="result" class="row col-10">
                     <?php echo $resultHtml; ?>
                 </div>
                 <div class="col-2 py-3">
                     <div class="fw-bold mb-3">Shop by category</div> 
                     <?php echo $categories; ?>
+                    <div class='my_text'><a href='#' onclick='filterProducts("category","all")'>All categories</a></div><br/>
                 </div>
             </div>
         </div>
-        <?php 
-            require_once '../../php/components/footer.php';
-            footer("../../");
-            require_once '../../php/components/boot-javascript.php';
-        ?>
         
         <script>
-            function filterProducts(filter, value, order="desc") {
+            function filterProducts(filter, value, sort="none", order="ASC") {
+                
                 if (filter == "") {
                     document.getElementById("result").innerHTML = "no result";
                     return;
@@ -100,12 +102,17 @@ $conn->close();
                             document.getElementById("result").innerHTML = this.responseText;
                         }
                     };
-                    xmlhttp.open("GET", "product-filter.php?filter="+filter+"&value="+value, true);
+                    xmlhttp.open("GET", "product-filter.php?filter="+filter+"&value="+value+"&sort="+sort+"&order="+order, true);
                     xmlhttp.send();
                 }
-                alert('clicked');
+                
             }
         </script>
-        <?php require_once '../../php/components/boot-javascript.php'?>
+        
+        <?php 
+            require_once '../../php/components/footer.php';
+            footer("../../");
+            require_once '../../php/components/boot-javascript.php';
+        ?>
     </body>
 </html>

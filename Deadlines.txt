@@ -13,12 +13,14 @@ Wednesday:
 -- crud for user
 -- crud for product 
 -- Product Catalog Page (category filter)
+-- Profile page & Edit
 -- navbar, footer
 - Apply Design to:
 -- Login Page
 -- Registration Page
 -- Product Detail Page
 -- Product Catalog
+
 
 Thursday/Friday:
 - leftovers from wednesday

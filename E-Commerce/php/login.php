@@ -14,6 +14,7 @@ $error = false;
 $email = $password = $emailError = $passError = '';
 
 if (isset($_POST['btn-login'])) {
+
     $email = trim($_POST['email']);
     $email = strip_tags($email);
     $email = htmlspecialchars($email);
@@ -43,6 +44,7 @@ if (isset($_POST['btn-login'])) {
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
         $count = $result->num_rows;
+
         if ($count == 1 && $row['password'] == $password) {
             if ($row['status'] == 'active' && $row['role'] == 'admin') {
                 $_SESSION['admin'] = $row['pk_user_id'];
@@ -63,62 +65,63 @@ $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
-        <?php require_once 'components/boot.php'?>
-        <link rel="stylesheet" href="../style/main-style.css" />
-        <link rel="stylesheet" href="../style/login.css">
-    </head>
 
-    <body>
-        <?php 
-            require_once 'components/header.php';
-            navbar("../");
-        ?>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <?php require_once 'components/boot.php' ?>
+    <link rel="stylesheet" href="../style/main-style.css" />
+    <link rel="stylesheet" href="../style/login.css">
+</head>
 
-        <div class="container py-5">
-            <div class="row my-5 py-5">
-                <div class="col-12 fs_6 text-uppercase my-2 text-center">Login</div>
-                
-                <div class="col-12 text-center my_text_maincolor">
-                    <?php
-                    if (isset($errMSG)) {
-                        echo $errMSG;
-                    }
-                    ?>
-                </div>
-                <div class="justify-content-center d-flex">
-                    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" class="col-12 col-md-6 col-lg-4 flex-column">
-                        <div class="col-12 my-3">
-                            <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="your.email@mail.com">
-                            <span class="text-danger"><?php echo $emailError; ?></span>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="pass" id="exampleInputPassword1" placeholder="your password">
-                            <span class="text-danger"><?php echo $passError; ?></span>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Remember Login</label>
-                        </div>
-                        <button type="submit" name="btn-login" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-3">Sign in</button>
-                    </form>
-                </div>
+<body>
+    <?php
+    require_once 'components/header.php';
+    navbar("../");
+    ?>
+
+    <div class="container py-5">
+        <div class="row my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2 text-center">Login</div>
+
+            <div class="col-12 text-center my_text_maincolor">
+                <?php
+                if (isset($errMSG)) {
+                    echo $errMSG;
+                }
+                ?>
+            </div>
+            <div class="justify-content-center d-flex">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" class="col-12 col-md-6 col-lg-4 flex-column">
+                    <div class="col-12 my-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="your.email@mail.com">
+                        <span class="text-danger"><?php echo $emailError; ?></span>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="pass" id="exampleInputPassword1" placeholder="your password">
+                        <span class="text-danger"><?php echo $passError; ?></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Remember Login</label>
+                    </div>
+                    <button type="submit" name="btn-login" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-3">Sign in</button>
+                </form>
             </div>
         </div>
+    </div>
 
-        <?php 
-            require_once 'components/footer.php';
-            footer("../");
-        ?>
+    <?php
+    require_once 'components/footer.php';
+    footer("../");
+    ?>
 
-        <?php require_once 'components/boot-javascript.php' ?>
+    <?php require_once 'components/boot-javascript.php' ?>
 
-    </body>
+</body>
 
 </html>

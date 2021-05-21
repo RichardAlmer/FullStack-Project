@@ -29,8 +29,9 @@ if ($result->num_rows > 0) {
             <td>" . $row['first_name'] . " " . $row['last_name'] . "</td>
             <td>" . $row['birthdate'] . "</td>
             <td>" . $row['email'] . "</td>
-            <td><a href='update.php?id=" . $userId . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
-            <a href='delete.php?id=" . $userId . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
+            <td>" . $row['banned_until'] . "</td>
+            <td><a href='update.php?id=" . $row['pk_user_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
+            <a href='delete.php?id=" . $row['pk_user_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
         </tr>";
     }
 } else {
@@ -62,7 +63,7 @@ $conn->close();
         <div id="content">
             <h1>Manage Users</h1>
 
-            <a href="create.php"><button class='btn btn-primary' type="button">Add Product</button></a>
+            <a href="create.php"><button class='btn btn-primary' type="button">Add User</button></a>
 
             <table class='table table-striped'>
                 <thead class='table-success'>
@@ -71,6 +72,7 @@ $conn->close();
                         <th>Name</th>
                         <th>Date of birth</th>
                         <th>Email</th>
+                        <th>Banned until</th>
                         <th>Action</th>
                     </tr>
                 </thead>

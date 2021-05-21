@@ -77,10 +77,10 @@
                     break;
             }
             $review .= " 
-                <div class='col-12 col-md-8'>
+                <div class='col-12 col-md-8 my-4'>
                     <div class='row align-items-center'>
                         <div class='col-12 col-md-8 my-2'><span class='my_text_maincolor'>$row[first_name]</span> wrote a review on <span class='my_text_maincolor'>$row[name]</span></div>
-                        <div class='col-12 col-md-4 my_text_lightgray'>$row[create_datetime]</div>
+                        <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$row[create_datetime]</div>
                     </div>
                     <div class='fs-5'>$stars</div>
                     <div class='fs-5 fw-bold my-2'>$row[title]</div>
@@ -179,48 +179,55 @@
             while($rowA = mysqli_fetch_array($resultA, MYSQLI_ASSOC)){
                 $aId = "$rowA[fk_question_id]";
                 $answer .= " 
-                        <p>Answer from $rowA[first_name]</p>
-                        <p>$rowA[create_datetime]</p>
-                        <p>$rowA[answer]</p>
-                        <hr>
+                        <div class='row align-items-center ps-md-5'>
+                            <div class='col-12 col-md-8 my-2'>Answer from <span class='my_text_maincolor'>$rowA[first_name]</span></div>
+                            <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$rowA[create_datetime]</div>
+                        </div>
+                        <div class='mt-3 ps-md-5'>$rowA[answer]</div>
                     ";
             }
             if($aId == $row['pk_question_id']){
                 $question .= " 
-                    <div>
-                        <p>$row[first_name] has a question about $row[name]</p>
-                        <p>$row[create_datetime]</p>
-                        <p>$row[question]</p>
-                        <button type='button' class='answerBtn btn btn-warning'>Answer</button>
+                    <div class='col-12 col-md-8 my-4'>
+                        <div class='row align-items-center'>
+                            <div class='col-12 col-md-8 my-2'><span class='my_text_maincolor'>$row[first_name]</span> has a question about <span class='my_text_maincolor'>$row[name]</span></div>
+                            <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$row[create_datetime]</div>
+                        </div>
+                        <div class='my-3'>$row[question]</div>
+                        <button type='button' class='answerBtn btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3 mb-2'>Answer</button>
                         <div class='answerForm'>
-                            <form method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
+                            <form class='my-3' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
                                 <div class='mb-3'>
-                                    <input class='form-control' type='text' name='answer' placeholder='Leave a answer here' id='answerText' style='width: 80vw'></input>
+                                    <input class='form-control' type='text' name='answer' placeholder='Leave an answer here' id='answerText'></input>
                                     <input type='hidden' name='questionId' value='$row[pk_question_id]' />
                                 </div>
-                                <span class='text-".$class."'>".$messageA."</span><br>
-                                <button type='submit' name='submitA' class='createAnswerBtn btn btn-primary'>Create Answer</button>
+                                <div class='text-".$class."'>".$messageA."</div>
+                                <button type='submit' name='submitA' class='createAnswerBtn btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white'>Create Answer</button>
                             </form>
                         </div>
-                        <div class='answer'>$answer</div>
+                        <div class='answer col-12 justify-content-end'>$answer</div>
                     </div>
+                    <hr>
                 ";
                 $answer = "";
             } else {
                 $question .= " 
-                    <div>
-                        <p>$row[first_name] has a question about $row[name]</p>
-                        <p>$row[create_datetime]</p>
-                        <p>$row[question]</p>
-                        <button type='button' class='answerBtn btn btn-warning'>Answer</button>
+                    <div class='col-12 col-md-8 my-4'>
+                        <div class='row align-items-center'>
+                            <div class='col-12 col-md-8 my-2'><span class='my_text_maincolor'>$row[first_name]</span> has a question about <span class='my_text_maincolor'>$row[name]</span></div>
+                            <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$row[create_datetime]</div>
+                        </div>
+                        <div class='my-3'>$row[question]</div>
+                        <button type='button' class='answerBtn btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3 mb-2'>Answer</button>
+
                         <div class='answerForm'>
-                            <form method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
+                            <form class='my-3' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
                                 <div class='mb-3'>
-                                    <input class='form-control' type='text' name='answer' placeholder='Leave a answer here' id='answerText' style='width: 80vw'></input>
+                                    <input class='form-control' type='text' name='answer' placeholder='Leave an answer here' id='answerText'></input>
                                     <input type='hidden' name='questionId' value='$row[pk_question_id]' />
                                 </div>
-                                <span class='text-".$class."'>".$messageA."</span><br>
-                                <button type='submit' name='submitA' class='createAnswerBtn btn btn-primary'>Create Answer</button>
+                                <div class='text-".$class."'>".$messageA."</div>
+                                <button type='submit' name='submitA' class='createAnswerBtn btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white'>Create Answer</button>
                             </form>
                         </div>
                     </div>
@@ -287,7 +294,7 @@
         <hr>
         <div id="review" class="py-4">
             <div class="col-12 fs_6 text-uppercase my-2 text-center">Reviews</div>
-            <div id="reviews" class="row text-center justify-content-center"><?= $review;?></div>
+            <div id="reviews" class="row justify-content-center"><?= $review;?></div>
 
             <?php
                 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
@@ -315,9 +322,9 @@
 
     <div class="container">
         <hr>
-        <div id="qAndA">
-            <h3>Q&A</h3>
-            <div id="questions"><?= $question;?></div>
+        <div id="qAndA" class="py-4">
+            <div class="col-12 fs_6 text-uppercase my-2 text-center">Q&A</div>
+            <div id="questions" class="row justify-content-center"><?= $question;?></div>
             <?php
                 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
             ?>

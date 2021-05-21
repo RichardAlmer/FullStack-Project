@@ -71,6 +71,10 @@ img {
     color: var(--light_gray) !important;
 }
 
+.bg_maincolor {
+    background-color: var(--main_color);
+}
+
 .bg_gray {
     background-color: var(--gray);
 }

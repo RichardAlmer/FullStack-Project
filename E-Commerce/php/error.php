@@ -3,21 +3,32 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
     <?php require_once 'components/boot.php'?>
-    <link rel='stylesheet' type='text/css' href='styles.css'>
+    <link rel="stylesheet" href="../style/main-style.css" />
 </head>
 
 <body>
+    <?php 
+        require_once 'components/header.php';
+        navbar("../");
+    ?>
     <div class="container">
-        <div class="mt-3 mb-3">
-            <h1>Invalid Request</h1>
+        <div class="row my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Invalid Request</div>
         </div>
-        <div class="alert alert-warning" role="alert">
-            <p>You've made an invalid request. Please <a href="../index.php" class="alert-link">go back</a> to index and
-                try again.</p>
+        <div class="col-12 bg_maincolor p-5 my-4 fs-5" role="alert">
+            <div>You've made an invalid request. Please <a href="../index.php" class="alert-link">go back</a> to index and try again.</div>
         </div>
     </div>
+
+    <?php 
+        require_once 'components/footer.php';
+        footer("../");
+        require_once 'components/boot-javascript.php';
+    ?>
 </body>
 
 </html>

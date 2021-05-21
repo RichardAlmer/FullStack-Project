@@ -23,6 +23,7 @@ if(mysqli_num_rows($result) > 0) {
             <td>" . $row['brand'] . "</td>
             <th>" . $row['discount_procent'] . " %</th>
             <td>" . $row['status'] . "</td>
+            <td><a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-warning btn-sm' type='button'>View Reviews</button></a></td>
             <td><a href='update.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
             <a href='delete.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
         </tr>";
@@ -66,6 +67,7 @@ $conn->close();
                         <th>Brand</th>
                         <th>Discount</th>
                         <th>Status</th>
+                        <th>Reviews</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -74,7 +76,7 @@ $conn->close();
                 </tbody>
             </table>
 
-            <a href='dashboard.php'>Back to dashboard</a>
+            <a href='../admin/dashboard.php'>Back to dashboard</a>
         </div>
     </div>
 

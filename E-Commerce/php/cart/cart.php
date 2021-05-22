@@ -122,7 +122,7 @@
             if($productId == $row['fk_product_id']){
                 $item .= "
                 <tr>
-                    <td><img class='img-thumbnail' src='../../img/product_images/".$row['image']."'></td>
+                    <td><a href='../product/product-details.php?id=".$productId."'><img class='img-thumbnail' src='../../img/product_images/".$row['image']."'></a></td>
                     <td>" .$row['name']."</td>
                     <td>" .$row['status']."</td>
                     <td>
@@ -151,7 +151,7 @@
             }
         }
     }
-    
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -176,6 +176,7 @@
     <div class="container">
     <div class="my-2 text-<?=$class;?>"><?php echo ($message) ?? ""; ?></div>
         <h1>Cart</h1>
+        <?php if($item !== ""){ ?>
         <div class="manageProduct w-75 mt-3">
             <table class='table table-striped'>
                <thead class='table-success'>
@@ -198,7 +199,16 @@
                         <td></td>
                         <td>-<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</td>
                         <td><?php echo array_sum($allPrice) ?>€</td>
-                        <td><?php echo array_sum($allDiscountPrice) ?>€</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total: </td>
+                        <td><b><?php echo array_sum($allDiscountPrice) ?>€</b></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -207,11 +217,16 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><button type="button" class="btn btn-primary">Purchase</button></td>
+                        <td><a href="purchase.php"><button type="button" class="btn btn-primary">Purchase</button></a></td>
                     </tr>
                 </tbody>
             </table>
-       </div>
+        </div>
+        <?php }else{ ?>
+            <div>
+                <h2>Your cart is empty!</h2>
+            </div>
+        <?php } ?>
     </div>
     <?php 
         require_once '../../php/components/footer.php';

@@ -236,6 +236,7 @@
         }
     }
 
+    // add to cart
     $productId = "";
     if (isset($_POST['cartBtn'])){
         $productId = $_POST['productId'];

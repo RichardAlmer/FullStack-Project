@@ -17,18 +17,9 @@ function navbar($level1="", $level2="", $id=""){
                         <li class="nav-item px-2">
                             <a class="nav-link my_text" href="'.$level1.'/">Home</a>
                         </li>
-                        <li class="nav-item dropdown px-2">
-                            <a class="nav-link my_text dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="/">Products</a>
-
-                            <ul class="dropdown-menu my_text" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item my_text" href="#">Cosmetics</a></li>
-                                <li><a class="dropdown-item my_text" href="#">Sports</a></li>
-                                <li><a class="dropdown-item my_text" href="#">Fashion</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item my_text" href="'.$level1.'php/product/product-catalog.php">All products</a></li>
-                            </ul>
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level1.'php/product/product-catalog.php">Products</a>
                         </li>
-
                         <?php
                             if (!isset($_SESSION["admin"]) && !isset($_SESSION["user"])) {
                         ?>
@@ -39,14 +30,16 @@ function navbar($level1="", $level2="", $id=""){
 
                         <?php } ?>
 
-                        <?php
-                        if ( isset($_SESSION["admin"]) || isset($_SESSION["user"])) {
-                        ?>
+                        <?php if ( isset($_SESSION["admin"]) || isset($_SESSION["user"])) { ?>
+                            <li class="nav-item px-2">
+                                <a class="nav-link my_text" href="'.$level2.'logout.php?logout&level='.$level2.'">Logout</a>
+                            </li>
+                        <?php } ?>
 
-                        <li class="nav-item px-2">
-                            <a class="nav-link my_text" href="'.$level2.'logout.php?logout&level='.$level2.'">Logout</a>
-                        </li>
-
+                        <?php if ( isset($_SESSION["admin"])) { ?>
+                            <li class="nav-item px-2">
+                                <a class="nav-link my_text" href="'.$level1.'php/admin/dashboard.php">Admin Dashboard</a>
+                            </li>
                         <?php } ?>
 
                         <li class="nav-item px-2">

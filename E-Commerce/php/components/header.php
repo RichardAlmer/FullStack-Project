@@ -50,7 +50,7 @@ function navbar($level1="", $level2="", $id=""){
                         <?php } ?>
 
                         <li class="nav-item px-2">
-                            <a class="nav-link text-dark" href="/">
+                            <a class="nav-link text-dark" href="../cart/cart.php">
                                 <img class="cart_img" src="'.$level1.'img/general_images/cart.png" alt="cart">
                             </a>
                         </li>

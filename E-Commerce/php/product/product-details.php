@@ -227,6 +227,19 @@
         }
     }
 
+    $productId = "";
+    if (isset($_POST['cartBtn'])){
+        $productId = $_POST['productId'];
+        $sql = "INSERT INTO cart_item (quantity, fk_product_id, fk_user_id) VALUES (1, $productId, $userId)";
+        if ($conn->query($sql) === true ) {
+            $class = "success";
+            $messageC = "The product was successfully added to cart.";
+        } else {
+            $class = "danger";
+            $messageC = "Error while adding to cart. Try again: <br>" . $conn->error;
+        }
+    }
+
     $conn->close();
     
 ?>
@@ -244,9 +257,15 @@
 <body>
     <?php 
         require_once '../../php/components/header.php';
-        navbar("../../", "../");
+        if(isset($_SESSION['admin'])){
+            $id = $_SESSION['admin'];
+        } else if(isset($_SESSION['user'])) {
+            $id = $_SESSION['user'];
+        }
+        navbar("../../", "../", $id);
     ?>
     <div class="container">
+        <span class="text-<?=$class;?>"><?php echo ($messageC) ?? ""; ?></span><br>
         <div id="product">
             <h2 id="name"><?php echo $name ?></h2>
             <img id="proImg" src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
@@ -259,7 +278,10 @@
                 <?php
                     if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
                 ?>
-                <button id="addToCartBtn" type="button" class="btn btn-warning">Add to Cart</button>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
+                    <input type="hidden" name="productId" value="<?php echo $id ?>" />
+                    <button id="addToCartBtn" type="submit" name="cartBtn" class="btn btn-warning">Add to Cart</button>
+                </form>
                 <?php
                     }
                 ?>

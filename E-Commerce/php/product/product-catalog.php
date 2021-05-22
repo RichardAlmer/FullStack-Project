@@ -13,7 +13,7 @@ if(mysqli_num_rows($resultCategories) > 0) {
 }
 
 // get products
-$sql = ("SELECT * FROM product WHERE status = 'active'");
+$sql = ("SELECT * FROM product WHERE status = 'active' ORDER BY pk_product_id DESC");
 $result = mysqli_query($conn ,$sql);
 $resultHtml=''; 
 $currentPrice='';
@@ -33,7 +33,8 @@ if(mysqli_num_rows($result) > 0) {
         if ($row['discount_procent'] != '0') {
             $resultHtml .= "<span class='my_text_maincolor'>(-{$row['discount_procent']}%)</span>";
         }
-        $resultHtml .= "</div></div></a></div>";  
+        $resultHtml .= "</div><div class='col-12 fw-bold my-3'>Rating:  
+        </div></div></a></div>";  
     };
 } else  {
    $tbody =  "<div><center>No Data Available </center></div>";
@@ -60,7 +61,10 @@ $conn->close();
 
         <div class="container">
             <div class="row my-5 pt-5">
-                <div class="col-12 col-md-6 fs_6 text-uppercase my-2">All products</div>
+                <div class="col-12 col-md-4 fs_6 text-uppercase my-2">All products</div>
+                <div class="col-12 col-md-2 fs_6 my-2">
+                    <input type="text" class="form-control" onkeyup="showResult(this.value)" name="search" id="search" aria-describedby="searchHelp" placeholder="Search for product name">
+                </div>
                 <div class="col-12 col-md-6 my-2 text-end">
                     <a href="" class="col-12 col-md-auto my-2 px-1">
                         <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
@@ -91,7 +95,6 @@ $conn->close();
         
         <script>
             function filterProducts(filter, value, sort="none", order="ASC") {
-                
                 if (filter == "") {
                     document.getElementById("result").innerHTML = "no result";
                     return;
@@ -102,10 +105,27 @@ $conn->close();
                             document.getElementById("result").innerHTML = this.responseText;
                         }
                     };
-                    xmlhttp.open("GET", "product-filter.php?filter="+filter+"&value="+value+"&sort="+sort+"&order="+order, true);
+                    xmlhttp.open("GET", "actions/product-filter.php?filter="+filter+"&value="+value+"&sort="+sort+"&order="+order, true);
                     xmlhttp.send();
                 }
                 
+            }
+
+            function showResult(str) {
+                if (str.length==0) {
+                    document.getElementById("result").innerHTML="";
+                    document.getElementById("result").style.border="0px";
+                    return;
+                }
+                var xmlhttp=new XMLHttpRequest();
+                xmlhttp.onreadystatechange=function() {
+                if (this.readyState==4 && this.status==200) {
+                    document.getElementById("result").innerHTML=this.responseText;
+                    document.getElementById("result").style.border="1px solid #A5ACB2";
+                }
+            }
+                xmlhttp.open("GET","actions/product-search.php?search="+str,true);
+                xmlhttp.send();
             }
         </script>
         

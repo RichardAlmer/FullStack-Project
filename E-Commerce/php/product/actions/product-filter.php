@@ -4,7 +4,7 @@ $value = $_GET['value'];
 $sort = $_GET['sort'];
 $order = $_GET['order'];
 
-require_once '../components/db_connect.php';
+require_once '../../components/db_connect.php';
 
 mysqli_select_db($conn,"ajax_demo");
 

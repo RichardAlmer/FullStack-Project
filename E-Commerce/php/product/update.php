@@ -1,23 +1,20 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
-//     header("Location: ../../index.php");
-//     exit;
-// }
-// $backBtn = '';
-// if (isset($_SESSION["user"])) {
-//     $backBtn = "../product/produrct-catalog.php";
-// }
-// if (isset($_SESSION["admin"])) {
-//     $backBtn = "../admin/dashBoard.php";
-// }
+session_start();
+if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+    header("Location: ../../index.php");
+    exit;
+}
+if (isset($_SESSION["user"])) {
+    header("Location: ../product/product-catalog.php");
+    exit;
+}
 
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
 $error = false;
-$name = $description = $brand = $image = $price = $category = $status = $discountProcent = '';
-$nameError = $descriptionError = $brandError = $imageError = $priceError = $categoryError = '';
+$name = $description = $brand = $picture = $price = $category = $status = $discountProcent = '';
+$nameError = $descriptionError = $brandError = $pictureError = $priceError = $categoryError = '';
 
 //fetch and populate form
 if (isset($_GET['id'])) {
@@ -26,10 +23,11 @@ if (isset($_GET['id'])) {
     $result = $conn->query($sql);
     if ($result->num_rows == 1) {
         $data = $result->fetch_assoc();
+
         $name = $data['name'];
         $description = $data['description'];
         $brand = $data['brand'];
-        $image = $data['image'];
+        $picture = $data['image'];
         $price = $data['price'];
         $category = $data['category'];
         $status = $data['status'];
@@ -37,34 +35,73 @@ if (isset($_GET['id'])) {
     }
 }
 
+function sanitizeUserInput ($fieldInput, $fieldName) {
+    // --- sanitize user input to prevent sql injection --- //
+    $fieldInput = trim($_POST[$fieldName]);     
+    $fieldInput = strip_tags($fieldInput);       
+    $fieldInput = htmlspecialchars($fieldInput);  // htmlspecialchars converts special characters to HTML entities
+    return $fieldInput;
+}
+
 //update on submit
 $class = 'd-none';
-if (isset($_POST["submit"])) {
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $brand = $_POST['brand'];
-    $image = $_POST['image'];
+if (isset($_POST["btnSave"])) {
     $price = $_POST['price'];
     $category = $_POST['category'];
     $status = $_POST['status'];
     $discountProcent = $_POST['discountProcent'];
-    $id = $_POST['id'];
+    //$picture = $_POST['picture'];
+    $id = $_POST['id']; 
     
-    $uploadError = '';  
-    
-    $image = file_upload($_FILES['image']);
+     // validation of required fields and input type where needed
+     if (empty($name)) {
+        $error = true;
+        $nameError = "Please enter a name for the product.";
+    } 
+    if (empty($description)) {
+        $error = true;
+        $descriptionError = "Please enter a description for the product.";
+    } 
+    if (empty($brand)) {
+        $error = true;
+        $brandError = "Please enter a brand for the product.";
+    } 
+    if (empty($price)) {
+        $error = true;
+        $priceError = "Please enter a price for the product.";
+    } else if (!preg_match("/^[0-9]+(?:\.[0-9]{0,2})?$/", $price)) {
+        $error = true;
+        $priceError = "Price must be currency value.";
+    }
+    if (empty($category)) {
+        $error = true;
+        $categoryError = "Please enter a category for the product.";
+    } else if (!preg_match("/^[a-zA-Z]+$/", $category)) {
+        $error = true;
+        $categoryError = "Category must contain only letters and no spaces.";
+    }
 
-    $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', image = '$image->fileName', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status' 
-    WHERE pk_product_id = '$id'";
-    
-    if ($conn->query($sql) === true) {     
-        $class = "alert alert-success";
-        $message = "The record was successfully updated.";
-        header("refresh:3;url=products.php");
-    } else {
-        $class = "alert alert-danger";
-        $message = "Error while updating record: <br>" . $conn->error;
-        header("refresh:3;url=products.php");
+    // if there's no error, continue to create product
+    if (!$error) {
+        $uploadError = ''; 
+        $picture = file_upload($_FILES['picture'], 'product');
+
+        $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', image = '$picture->fileName', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status' 
+        WHERE pk_product_id = '$id'";
+        
+        $result = $conn->query($sql);
+
+        if ($result) {     
+            $class = "alert alert-success";
+            $message = "The record was successfully updated.";
+            $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
+            header("refresh:3;url=products.php");
+        } else {
+            $class = "alert alert-danger";
+            $message = "Error while updating record: <br>" . $conn->error;
+            $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
+            header("refresh:3;url=products.php");
+        }
     }
 }
 
@@ -80,6 +117,18 @@ $conn->close();
     <title>Update Product</title>
     <?php require_once '../components/boot.php' ?>
     <link rel='stylesheet' type='text/css' href='../../style/main-style.css'>
+    <style type="text/css">
+        fieldset {
+            margin: auto;
+            margin-top: 100px;
+            width: 60%;
+        }
+
+        .img-thumbnail {
+            width: 70px !important;
+            height: 70px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -94,8 +143,10 @@ $conn->close();
             <p><?php echo ($message) ?? ''; ?></p>
             <p><?php echo ($uploadError) ?? ''; ?></p>
         </div>
-
+        
         <h2>Update Product</h2>
+
+        <img class='img-thumbnail rounded-circle' src='../../img/product_images/<?php echo $picture ?>' alt="<?php echo $name ?>">
 
         <form method="post" enctype="multipart/form-data">
             <table class="table">
@@ -107,8 +158,11 @@ $conn->close();
                     </td>
                 </tr>
                 <tr>
-                    <th>Image</th>
-                    <td><input class="form-control" type="file" name="image" /></td>
+                    <th>Picture</th>
+                    <td>
+                        <input class="form-control" type="file" name="picture" />
+                        <span class="text-danger"> <?php echo $pictureError; ?> </span>
+                    </td>
                 </tr>
                 <tr>
                     <th>Description</th>
@@ -163,9 +217,9 @@ $conn->close();
                 </tr>
                 <tr>
                     <input type="hidden" name="id" value="<?php echo $data['pk_product_id'] ?>" />
-                    <input type="hidden" name="image" value="<?php echo $image ?>" />
+                    <input type="hidden" name="picture" value="<?php echo $picture ?>" />
                     <td><a href="products.php"><button class="btn btn-warning" type="button">Back</button></a></td>
-                    <td><button name="submit" class="btn btn-success" type="submit">Save Changes</button></td>
+                    <td><button name="btnSave" class="btn btn-success" type="submit">Save Changes</button></td>
                 </tr>
             </table>
         </form>

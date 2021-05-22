@@ -1,17 +1,20 @@
 <?php
-// session_start(); 
-// if (isset($_SESSION['user']) != "") {
-//     header("Location: home.php"); 
-// }
-// if (isset($_SESSION['adm']) != "") {
-//     header("Location: dashboard.php"); 
-// }
+session_start();
+if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+    header("Location: ../../index.php");
+    exit;
+}
+if (isset($_SESSION["user"])) {
+    header("Location: ../product/product-catalog.php");
+    exit;
+}
+
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
-$error = false;
-$name = $description = $brand = $image = $price = $category = $status = $discountProcent = '';
-$nameError = $descriptionError = $brandError = $imageError = $priceError = $categoryError = '';
+$passError = '';
+$name = $description = $brand = $picture = $price = $category = $status = $discountProcent = '';
+$nameError = $descriptionError = $brandError = $pictureError = $priceError = $categoryError = '';
 
 function sanitizeUserInput ($fieldInput, $fieldName) {
     // --- sanitize user input to prevent sql injection --- //
@@ -21,19 +24,22 @@ function sanitizeUserInput ($fieldInput, $fieldName) {
     return $fieldInput;
 }
 
-if (isset($_POST['submit'])) {
+//Create
+$class = 'd-none';
+if (isset($_POST['btnCreate'])) {
+
+    $error = false;
 
     $name = sanitizeUserInput($name, 'name');
     $description = sanitizeUserInput($description, 'description');
     $brand = sanitizeUserInput($brand, 'brand');
     $price = sanitizeUserInput($price, 'price');
     $category = sanitizeUserInput($category, 'category');
-    //$status = $_POST[$status];                    //throws error
-    //$discountProcent = $_POST[$discountProcent];  //throws error
- 
+    $discountProcent = $_POST['discountProcent'];
+    $status = $_POST['status'];                  
+   
     $uploadError = '';
-    $image = file_upload($_FILES['image']);
-
+  
     // validation of required fields and input type where needed
     if (empty($name)) {
         $error = true;
@@ -50,37 +56,38 @@ if (isset($_POST['submit'])) {
     if (empty($price)) {
         $error = true;
         $priceError = "Please enter a price for the product.";
-    } 
-    // else if (!preg_match("/^[0-9]+$/", $price)) {
-    //     $error = true;
-    //     $nameError = "Category must contain only letters and no spaces.";
-    // }
+    } else if (!preg_match("/^[0-9]+(?:\.[0-9]{0,2})?$/", $price)) {
+        $error = true;
+        $priceError = "Price must be currency value.";
+    }
     if (empty($category)) {
         $error = true;
         $categoryError = "Please enter a category for the product.";
     } else if (!preg_match("/^[a-zA-Z]+$/", $category)) {
         $error = true;
-        $nameError = "Category must contain only letters and no spaces.";
+        $categoryError = "Category must contain only letters and no spaces.";
     }
 
     // if there's no error, continue to create product
-    ///// //VALUES('$name', '$description', '$brand', '$image->fileName', '$price', '$category', '$status', '$discountProcent')";
-    // error in line 32 file_upload - $image->fileName
     if (!$error) {
+        $uploadError = '';
+        $picture = file_upload($_FILES['picture'], 'product');
 
-        $query = "INSERT INTO product(`name`, `description`, `brand`, `image`, `price`, `category`, `status`, `discount_procent`) 
-        VALUES('$name', '$description', '$brand', 'default-product.jpg', '$price', '$category', 'active', 'none')";
-        $res = mysqli_query($conn, $query);
+        $sql = "INSERT INTO product(`name`, `description`, `brand`, `image`, `price`, `category`, `status`, `discount_procent`) 
+        VALUES('$name', '$description', '$brand', '$picture->fileName', '$price', '$category', '$status', '$discountProcent')";
+        
+        $result = $conn->query($sql);
 
-        if ($res) {
-            $errTyp = "success";
-            $errMSG = "Successfully added product";
-            $uploadError = ($image->error != 0) ? $image->ErrorMessage : '';
-
+        if ($result) {
+            $class = "alert alert-success";
+            $message = "The record was successfully created";
+            $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
+            header("refresh:3;url=products.php");
         } else {
-            $errTyp = "danger";
-            $errMSG = "Something went wrong, try again later...";
-            $uploadError = ($image->error != 0) ? $image->ErrorMessage : '';
+            $class = "alert alert-danger";
+            $message = "Error while creating record : <br>" . $conn->error;
+            $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
+            header("refresh:3;url=create.php");
         }
     }
 }
@@ -107,31 +114,28 @@ $conn->close();
 
         <div class="container">
 
-            <?php
-            if (isset($errMSG)) {
-            ?>
-                <div class="alert alert-<?php echo $errTyp ?>" >
-                    <p><?php echo $errMSG; ?></p>
-                    <p><?php echo $uploadError; ?></p>
-                </div>
-            <?php
-            }
-            ?>
+            <div class="<?php echo $class; ?>" role="alert">
+                <p><?php echo ($message) ?? ''; ?></p>
+                <p><?php echo ($uploadError) ?? ''; ?></p>
+            </div>
 
             <h2>Add Product</h2>
            
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data">
             <table class="table">
                 <tr>
                     <th>Name</th>
                     <td>
-                        <input class="form-control" type="text" name="name" placeholder="Name" value="<?php echo $name ?>" />
+                        <input class="form-control" type="text" name="name" placeholder="Name" value="<?php echo $name ?>" maxlength="100" />
                         <span class="text-danger"> <?php echo $nameError; ?> </span>
                     </td>
                 </tr>
                 <tr>
-                    <th>Image</th>
-                    <td><input class="form-control" type="file" name="image" /></td>
+                    <th>Picture</th>
+                    <td>
+                        <input class="form-control" type="file" name="picture" />
+                        <span class="text-danger"> <?php echo $pictureError; ?> </span>
+                    </td>
                 </tr>
                 <tr>
                     <th>Description</th>
@@ -143,7 +147,7 @@ $conn->close();
                 <tr>
                     <th>Brand</th>
                     <td>
-                        <input class="form-control" type="text" name="brand" placeholder="Brand of product" value="<?php echo $brand ?>" />
+                        <input class="form-control" type="text" name="brand" placeholder="Brand of product" value="<?php echo $brand ?>" maxlength="100" />
                         <span class="text-danger"> <?php echo $brandError; ?> </span>
                     </td>
                 </tr>
@@ -157,7 +161,7 @@ $conn->close();
                 <tr>
                     <th>Category</th>
                     <td>
-                        <input class="form-control" type="text" name="category" placeholder="Category of product" value="<?php echo $category ?>" />
+                        <input class="form-control" type="text" name="category" placeholder="Category of product" value="<?php echo $category ?>" maxlength="100" />
                         <span class="text-danger"> <?php echo $categoryError; ?> </span>
                     </td>
                 </tr>
@@ -179,14 +183,14 @@ $conn->close();
                     <th>Status</th>
                     <td>
                     <select class="form-select" aria-label="Default select example" id="status" name="status">
-                            <option value="active" <?php echo ( $status == 'active') ? 'selected' : '' ?>>active</option>
-                            <option value="deactive" <?php echo ( $status == 'deactive') ? 'selected' : '' ?>>deactive</option>    
-                        </select>
+                        <option value="active" <?php echo ( $status == 'active') ? 'selected' : '' ?>>active</option>
+                        <option value="deactive" <?php echo ( $status == 'deactive') ? 'selected' : '' ?>>deactive</option>
+                    </select>
                     </td>
                 </tr>
                 <tr>
                     <td><a href="products.php"><button class="btn btn-warning" type="button">Back</button></a></td>
-                    <td><button name="submit" class="btn btn-success" type="submit">Add Product</button></td>
+                    <td><button name="btnCreate" class="btn btn-success" type="submit">Add Product</button></td>
                 </tr>
             </table>
         </form>

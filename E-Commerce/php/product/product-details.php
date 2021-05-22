@@ -77,12 +77,14 @@
                     break;
             }
             $review .= " 
-                <div>
-                    <p>$row[first_name] wrote a review on $row[name]</p>
-                    <p>$stars</p>
-                    <p>$row[title]</p>
-                    <p>$row[create_datetime]</p>
-                    <p>$row[comment]</p>
+                <div class='col-12 col-md-8 my-4'>
+                    <div class='row align-items-center'>
+                        <div class='col-12 col-md-8 my-2'><span class='my_text_maincolor'>$row[first_name]</span> wrote a review on <span class='my_text_maincolor'>$row[name]</span></div>
+                        <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$row[create_datetime]</div>
+                    </div>
+                    <div class='fs-5'>$stars</div>
+                    <div class='fs-5 fw-bold my-2'>$row[title]</div>
+                    <div class='mt-3'>$row[comment]</div>
                 </div>
             ";  
         }
@@ -113,7 +115,7 @@
                     $stars = "★★★★★";
                     break;
             }
-            $avgRating .= $stars." ".$row['COUNT(rating)'];  
+            $avgRating .= $stars." | ".$row['COUNT(rating)'];  
         }
     }
 
@@ -177,48 +179,55 @@
             while($rowA = mysqli_fetch_array($resultA, MYSQLI_ASSOC)){
                 $aId = "$rowA[fk_question_id]";
                 $answer .= " 
-                        <p>Answer from $rowA[first_name]</p>
-                        <p>$rowA[create_datetime]</p>
-                        <p>$rowA[answer]</p>
-                        <hr>
+                        <div class='row align-items-center ps-md-5'>
+                            <div class='col-12 col-md-8 my-2'>Answer from <span class='my_text_maincolor'>$rowA[first_name]</span></div>
+                            <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$rowA[create_datetime]</div>
+                        </div>
+                        <div class='mt-3 ps-md-5'>$rowA[answer]</div>
                     ";
             }
             if($aId == $row['pk_question_id']){
                 $question .= " 
-                    <div>
-                        <p>$row[first_name] has a question about $row[name]</p>
-                        <p>$row[create_datetime]</p>
-                        <p>$row[question]</p>
-                        <button type='button' class='answerBtn btn btn-warning'>Answer</button>
+                    <div class='col-12 col-md-8 my-4'>
+                        <div class='row align-items-center'>
+                            <div class='col-12 col-md-8 my-2'><span class='my_text_maincolor'>$row[first_name]</span> has a question about <span class='my_text_maincolor'>$row[name]</span></div>
+                            <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$row[create_datetime]</div>
+                        </div>
+                        <div class='my-3'>$row[question]</div>
+                        <button type='button' class='answerBtn btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3 mb-2'>Answer</button>
                         <div class='answerForm'>
-                            <form method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
+                            <form class='my-3' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
                                 <div class='mb-3'>
-                                    <input class='form-control' type='text' name='answer' placeholder='Leave a answer here' id='answerText' style='width: 80vw'></input>
+                                    <input class='form-control' type='text' name='answer' placeholder='Leave an answer here' id='answerText'></input>
                                     <input type='hidden' name='questionId' value='$row[pk_question_id]' />
                                 </div>
-                                <span class='text-".$class."'>".$messageA."</span><br>
-                                <button type='submit' name='submitA' class='createAnswerBtn btn btn-primary'>Create Answer</button>
+                                <div class='text-".$class."'>".$messageA."</div>
+                                <button type='submit' name='submitA' class='createAnswerBtn btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white'>Create Answer</button>
                             </form>
                         </div>
-                        <div class='answer'>$answer</div>
+                        <div class='answer col-12 justify-content-end'>$answer</div>
                     </div>
+                    <hr>
                 ";
                 $answer = "";
             } else {
                 $question .= " 
-                    <div>
-                        <p>$row[first_name] has a question about $row[name]</p>
-                        <p>$row[create_datetime]</p>
-                        <p>$row[question]</p>
-                        <button type='button' class='answerBtn btn btn-warning'>Answer</button>
+                    <div class='col-12 col-md-8 my-4'>
+                        <div class='row align-items-center'>
+                            <div class='col-12 col-md-8 my-2'><span class='my_text_maincolor'>$row[first_name]</span> has a question about <span class='my_text_maincolor'>$row[name]</span></div>
+                            <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$row[create_datetime]</div>
+                        </div>
+                        <div class='my-3'>$row[question]</div>
+                        <button type='button' class='answerBtn btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3 mb-2'>Answer</button>
+
                         <div class='answerForm'>
-                            <form method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
+                            <form class='my-3' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$_GET['id']."' autocomplete='off'>
                                 <div class='mb-3'>
-                                    <input class='form-control' type='text' name='answer' placeholder='Leave a answer here' id='answerText' style='width: 80vw'></input>
+                                    <input class='form-control' type='text' name='answer' placeholder='Leave an answer here' id='answerText'></input>
                                     <input type='hidden' name='questionId' value='$row[pk_question_id]' />
                                 </div>
-                                <span class='text-".$class."'>".$messageA."</span><br>
-                                <button type='submit' name='submitA' class='createAnswerBtn btn btn-primary'>Create Answer</button>
+                                <div class='text-".$class."'>".$messageA."</div>
+                                <button type='submit' name='submitA' class='createAnswerBtn btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white'>Create Answer</button>
                             </form>
                         </div>
                     </div>
@@ -265,57 +274,75 @@
         navbar("../../", "../", $id);
     ?>
     <div class="container">
-        <span class="text-<?=$class;?>"><?php echo ($messageC) ?? ""; ?></span><br>
-        <div id="product">
-            <h2 id="name"><?php echo $name ?></h2>
-            <img id="proImg" src="<?php echo $image ?>" alt="<?php echo $name ?>" width="300px">
-            <ul id="list">
-                <li><?php echo $avgRating ?></li>
-                <li><?php echo $brand ?></li>
-                <li><?php echo $category ?></li>
-                <li><?php echo $status ?></li>
-                <li><?php echo $price ?>€</li>
-                <?php
-                    if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
-                ?>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
-                    <input type="hidden" name="productId" value="<?php echo $id ?>" />
-                    <button id="addToCartBtn" type="submit" name="cartBtn" class="btn btn-warning">Add to Cart</button>
-                </form>
-                <?php
-                    }
-                ?>
-            </ul>
-            <p id="desc"><?php echo $description ?></p>
+        <div id="product" class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">About product</div>
+
+            <div class="row my-4">
+                <div class="col-12 col-md-6">
+                    <img id="proImg" src="../../img/product_images/<?php echo $image ?>" alt="<?php echo $image ?>">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="row align-items-center">
+                        <div id="name" class="col-12 col-md-10 py-3 py-md-0 fs-4"><?php echo $name ?></div>
+                        <div class="col-12 col-md-2 my_text_maincolor fw-bold"><?php echo $status ?></div>
+                    </div>
+                    <div class="col-12 my-3 fs-5"><?php echo $avgRating ?></div>
+                    <div class="col-12 fs_6 my_text_maincolor fw-bold"><?php echo $price ?>€</div>
+                    <div class="col-12 my_text_lightgray fs_7 mb-4">Price without shipping</div>
+                    <div class="col-12"><span class="my_text_lightgray">from </span><a href=""><?php echo $brand ?></a></div>
+                    <div class="col-12 my-2"><a class="my_text_maincolor" href=""><?php echo $category ?></a></div>
+                    <div class="col-12 my_text_lightgray fs-5">Description:</div>
+                    <div id="desc" class="col-12"><?php echo $description ?></div>
+
+                    <?php
+                        if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
+                    ?>
+                        <button id="addToCartBtn" type="button" class="btn btn bg_gray bg_hover rounded-pill col-12 py-2 px-4 text-white my-5">Add to Cart</button>
+                    <?php
+                        }
+                    ?>
+
+                </div>
+            </div>
         </div>
-        
+    </div>
+
+    <div class="container">
         <hr>
-        <div id="review">
-            <h3>Reviews</h3>
-            <div id="reviews"><?= $review;?></div>
+        <div id="review" class="py-4">
+            <div class="col-12 fs_6 text-uppercase my-2 text-center">Reviews</div>
+            <div id="reviews" class="row justify-content-center"><?= $review;?></div>
+
             <?php
                 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
             ?>
-            <div id="stars">
-                <span id="st1">★</span><span id="st2">★</span><span id="st3">★</span><span id="st4">★</span><span id="st5">★</span>
-            </div><br>
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
-                <div class="mb-3">
-                    <input class="form-control" type="text" name="title" placeholder="Leave a title here" id="reviewTitle" style="width: 80vw"></input><br>
-                    <textarea class="form-control" type="text" name="review" placeholder="Leave a review here" id="reviewText" style="width: 80vw"></textarea>
+            <div class="row my-5 py-3 text-center justify-content-center">
+                <div id="stars" class="text-center mb-4 my_text_lightgray">
+                    <span id="st1">★</span><span id="st2">★</span><span id="st3">★</span><span id="st4">★</span><span id="st5">★</span>
                 </div>
-                <span class="text-<?=$class;?>"><?php echo ($messageReview) ?? ""; ?></span><br>
-                <input id="rating" type="hidden" name="rating" value="" />
-                <button type="submit" name="submitRev" class="btn btn-primary">Create Review</button>
-            </form>
+                <form class="col-12 col-md-8" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
+                    <div class="my-2">
+                        <input class="form-control mb-2" type="text" name="title" placeholder="Leave a title here" id="reviewTitle">
+                        <textarea class="form-control mb-2" type="text" name="review" placeholder="Leave a review here" id="reviewText"></textarea>
+                    </div>
+                    <div class="my-2 text-<?=$class;?>"><?php echo ($messageReview) ?? ""; ?></div>
+                    <input id="rating" type="hidden" name="rating" value="" />
+                    <button type="submit" name="submitRev" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create Review</button>
+                </form>
+            </div>
             <?php
                 }
             ?>
+
         </div>
+    </div>
+
+    <div class="container">
         <hr>
-        <div id="qAndA">
-            <h3>Q&A</h3>
-            <div id="questions"><?= $question;?></div>
+        <div id="qAndA" class="py-4">
+            <div class="col-12 fs_6 text-uppercase my-2 text-center">Q&A</div>
+            <div id="questions" class="row justify-content-center"><?= $question;?></div>
             <?php
                 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
             ?>
@@ -331,12 +358,12 @@
             ?>
         </div>
     </div>
+
     <?php 
         require_once '../../php/components/footer.php';
         footer("../../");
         require_once '../../php/components/boot-javascript.php';
     ?>
     <script src="../../script/review.js"></script>
-    <?php require_once '../../php/components/boot-javascript.php'?>
 </body>
 </html>

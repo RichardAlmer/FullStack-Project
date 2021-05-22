@@ -365,6 +365,8 @@ $conn->close();
             <h1>question</h1><div><?= $htmlQuestion ?></div>
             <h1>answer</h1><div><?= $htmlAnswer ?></div>
             <h1>review</h1><div><?= $htmlReview ?></div>
+            <h1>user</h1><div><?= $htmlUser ?></div>
+            
             <h1>cart_item</h1><div><?= $htmlCartItem ?></div>
             <h1>purchase</h1><div><?= $htmlPurchase ?></div>
             <h1>purchase_item</h1><div><?= $htmlPurchaseItem ?></div>

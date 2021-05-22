@@ -52,12 +52,8 @@ $products = getAllProducts();
 
     <div class="row row_width py-5">
 
-
-
         <?php foreach ($products as $product) : ?>
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">
-
-
                 <div class="square">
                     <img src="img/product_images/<?= $product['image'] ?>" class="content" alt="">
                 </div>
@@ -67,8 +63,6 @@ $products = getAllProducts();
                     <p class="col-12 my-1"><?= $product['name'] ?></p>
                     <div class="col-12 fw-bold my-3">€<?= $product['price'] ?></div>
                 </div>
-
-
             </div>
         <?php endforeach; ?>
     </div>

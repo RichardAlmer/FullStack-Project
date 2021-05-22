@@ -63,7 +63,7 @@ $products = getAllProducts();
                 </div>
                 <div class="row py-3 text-center">
                     <div class="col-12 fs-5 my-2">Rolex watch</div>
-                    <a href="/" class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
+                    <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
                     <p class="col-12 my-1"><?= $product['name'] ?></p>
                     <div class="col-12 fw-bold my-3">€<?= $product['price'] ?></div>
                 </div>

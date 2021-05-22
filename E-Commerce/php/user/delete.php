@@ -1,4 +1,5 @@
 <?php
+/*
 session_start();
 if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
     header("Location: ../../index.php");
@@ -7,7 +8,7 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
 if (isset($_SESSION["user"])) {
     header("Location: ../product/product-catalog.php");
     exit;
-}
+}*/
 
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';

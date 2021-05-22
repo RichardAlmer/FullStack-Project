@@ -58,9 +58,9 @@ $products = getAllProducts();
                     <img src="img/product_images/<?= $product['image'] ?>" class="content" alt="">
                 </div>
                 <div class="row py-3 text-center">
-                    <div class="col-12 fs-5 my-2">Rolex watch</div>
+                    <div class="col-12 fs-5 my-2"><?= $product['name'] ?></div>
                     <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
-                    <p class="col-12 my-1"><?= $product['name'] ?></p>
+                    
                     <div class="col-12 fw-bold my-3">€<?= $product['price'] ?></div>
                 </div>
             </div>

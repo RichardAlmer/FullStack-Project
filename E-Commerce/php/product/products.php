@@ -11,7 +11,7 @@ if(mysqli_num_rows($resultCategories) > 0) {
     }
 }
 
-$sql = ("SELECT * FROM product");
+$sql = ("SELECT * FROM product ORDER BY pk_product_id DESC");
 $result = mysqli_query($conn ,$sql);
 $tbody=''; 
 if(mysqli_num_rows($result) > 0) {     
@@ -24,11 +24,24 @@ if(mysqli_num_rows($result) > 0) {
             <td>" . $row['name'] . "</td>
             <td>" . $row['category'] . "</td>
             <td>" . $row['brand'] . "</td>
-            <th>" . $row['discount_procent'] . " %</th>
+            <th>" . $row['discount_procent'] . "%</th>
             <td>" . $row['status'] . "</td>
-            <td>".$data['count']." Reviews <a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-warning btn-sm' type='button'>View Reviews</button></a></td>
-            <td><a href='update.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
-            <a href='delete.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
+            <td>";
+        
+        if ($data['count'] == 0) {
+            $tbody .= "<a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'>
+                        <button class='btn btn-light btn-sm' type='button'>No Reviews</button></a> ";
+        } 
+        else if ($data['count'] == 1) {
+            $tbody .= "<a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'>
+                        <button class='btn btn-warning btn-sm' type='button'>View ".$data['count']." Review</button></a> ";
+        } else {
+            $tbody .= "<a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'>
+                        <button class='btn btn-warning btn-sm' type='button'>View ".$data['count']." Review(s)</button></a> ";
+        }
+        $tbody .= "<a href='update.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
+                <a href='delete.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a>
+            </td>
         </tr>";
     };
 } else  {
@@ -70,7 +83,6 @@ $conn->close();
                         <th>Brand</th>
                         <th>Discount</th>
                         <th>Status</th>
-                        <th>Reviews</th>
                         <th>Action</th>
                     </tr>
                 </thead>

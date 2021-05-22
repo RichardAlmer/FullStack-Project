@@ -16,13 +16,6 @@ $passError = '';
 $name = $description = $brand = $picture = $price = $category = $status = $discountProcent = '';
 $nameError = $descriptionError = $brandError = $pictureError = $priceError = $categoryError = '';
 
-//status dropdown
-// $statusList = ["active", "deactive"];
-// $statusOptions = "";
-// foreach ($statusList as $status) {
-//     $statusOptions .= "<option value='$status'>" . ucfirst($status) . "</option>";
-// }
-
 function sanitizeUserInput ($fieldInput, $fieldName) {
     // --- sanitize user input to prevent sql injection --- //
     $fieldInput = trim($_POST[$fieldName]);     
@@ -42,12 +35,11 @@ if (isset($_POST['btnCreate'])) {
     $brand = sanitizeUserInput($brand, 'brand');
     $price = sanitizeUserInput($price, 'price');
     $category = sanitizeUserInput($category, 'category');
-    $status = $_POST['status'];                    //throws error
-    $discountProcent = $_POST['discountProcent'];  //throws error
- 
+    $discountProcent = $_POST['discountProcent'];
+    $status = $_POST['status'];                  
+   
     $uploadError = '';
-    $picture = file_upload($_FILES['picture'], 'product');
-
+  
     // validation of required fields and input type where needed
     if (empty($name)) {
         $error = true;
@@ -64,21 +56,19 @@ if (isset($_POST['btnCreate'])) {
     if (empty($price)) {
         $error = true;
         $priceError = "Please enter a price for the product.";
-    } 
-    // else if (!preg_match("/^[0-9]+$/", $price)) {
-    //     $error = true;
-    //     $nameError = "Category must contain only letters and no spaces.";
-    // }
+    } else if (!preg_match("/^[0-9]+(?:\.[0-9]{0,2})?$/", $price)) {
+        $error = true;
+        $priceError = "Price must be currency value.";
+    }
     if (empty($category)) {
         $error = true;
         $categoryError = "Please enter a category for the product.";
     } else if (!preg_match("/^[a-zA-Z]+$/", $category)) {
         $error = true;
-        $nameError = "Category must contain only letters and no spaces.";
+        $categoryError = "Category must contain only letters and no spaces.";
     }
 
     // if there's no error, continue to create product
-    // $picture->fileName
     if (!$error) {
         $uploadError = '';
         $picture = file_upload($_FILES['picture'], 'product');
@@ -87,18 +77,17 @@ if (isset($_POST['btnCreate'])) {
         VALUES('$name', '$description', '$brand', '$picture->fileName', '$price', '$category', '$status', '$discountProcent')";
         
         $result = $conn->query($sql);
-        //$res = mysqli_query($conn, $query);
 
         if ($result) {
             $class = "alert alert-success";
             $message = "The record was successfully created";
             $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
-            //header("refresh:3;url=users.php");
+            header("refresh:3;url=products.php");
         } else {
             $class = "alert alert-danger";
             $message = "Error while creating record : <br>" . $conn->error;
             $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
-            //header("refresh:3;url=create.php");
+            header("refresh:3;url=create.php");
         }
     }
 }

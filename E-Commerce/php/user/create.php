@@ -212,121 +212,119 @@ $conn->close();
             </div>
 
             <form class="my-3" method="post" enctype="multipart/form-data">
-                <table class="table">
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">First Name</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName ?>" maxlength="100" />
-                        </div>
-                        <span class="text-danger"> <?php echo $firstNameError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">First Name</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName ?>" maxlength="100" />
                     </div>
+                    <span class="text-danger"> <?php echo $firstNameError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Last Name</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName ?>" maxlength="100" />
-                        </div>
-                        <span class="text-danger"> <?php echo $lastNameError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Last Name</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName ?>" maxlength="100" />
                     </div>
+                    <span class="text-danger"> <?php echo $lastNameError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Email</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="email" name="email" placeholder="Email" value="<?php echo $email ?>" maxlength="100" />
-                        </div>
-                        <span class="text-danger"> <?php echo $emailError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Email</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="email" name="email" placeholder="Email" value="<?php echo $email ?>" maxlength="100" />
                     </div>
+                    <span class="text-danger"> <?php echo $emailError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Password</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="password" name="password" placeholder="Password" maxlength="255" />
-                            <span class="text-danger"> <?php echo $passwordError; ?> </span>
-                        </div>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Password</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="password" name="password" placeholder="Password" maxlength="255" />
+                        <span class="text-danger"> <?php echo $passwordError; ?> </span>
                     </div>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Date of birth</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="date" name="birthDate" placeholder="Date of birth" value="<?php echo $birthDate ?>" />
-                        </div>
-                        <span class="text-danger"> <?php echo $birthDateError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Date of birth</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="date" name="birthDate" placeholder="Date of birth" value="<?php echo $birthDate ?>" />
                     </div>
+                    <span class="text-danger"> <?php echo $birthDateError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Picture</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="file" name="picture" />
-                        </div>
-                        <span class="text-danger"> <?php echo $pictureError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Picture</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="file" name="picture" />
                     </div>
+                    <span class="text-danger"> <?php echo $pictureError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Street</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="text" name="street" placeholder="Street" value="<?php echo $street ?>" maxlength="255" />
-                        </div>
-                        <span class="text-danger"> <?php echo $streetError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Street</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="street" placeholder="Street" value="<?php echo $street ?>" maxlength="255" />
                     </div>
+                    <span class="text-danger"> <?php echo $streetError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">ZIP-Code</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="text" name="zipCode" placeholder="ZIP-Code" value="<?php echo $zipCode ?>" maxlength="12" />
-                        </div>
-                        <span class="text-danger"> <?php echo $zipCodeError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">ZIP-Code</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="zipCode" placeholder="ZIP-Code" value="<?php echo $zipCode ?>" maxlength="12" />
                     </div>
+                    <span class="text-danger"> <?php echo $zipCodeError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">City</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="text" name="city" placeholder="City" value="<?php echo $city ?>" maxlength="120" />
-                        </div>
-                        <span class="text-danger"> <?php echo $cityError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">City</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="city" placeholder="City" value="<?php echo $city ?>" maxlength="120" />
                     </div>
+                    <span class="text-danger"> <?php echo $cityError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Country</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="text" name="country" placeholder="Country" value="<?php echo $country ?>" maxlength="50" />
-                        </div>
-                        <span class="text-danger"> <?php echo $countryError; ?> </span>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Country</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="text" name="country" placeholder="Country" value="<?php echo $country ?>" maxlength="50" />
                     </div>
+                    <span class="text-danger"> <?php echo $countryError; ?> </span>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Role</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <select class="form-select" name="role" aria-label="Default select example">
-                                <?php echo $roleOptions; ?>
-                            </select>
-                        </div>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Role</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <select class="form-select" name="role" aria-label="Default select example">
+                            <?php echo $roleOptions; ?>
+                        </select>
                     </div>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Status</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <select class="form-select" name="status" aria-label="Default select example">
-                                <?php echo $statusOptions; ?>
-                            </select>
-                        </div>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Status</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <select class="form-select" name="status" aria-label="Default select example">
+                            <?php echo $statusOptions; ?>
+                        </select>
                     </div>
+                </div>
 
-                    <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Banned Until:</div>
-                        <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="datetime-local" name="bannedUntil" placeholder="Banned until" />
-                        </div>
+                <div class="row py-2 align-items-center">
+                    <div class="col-12 col-md-3 fw-bold py-2">Banned Until:</div>
+                    <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <input class="form-control" type="datetime-local" name="bannedUntil" placeholder="Banned until" />
                     </div>
+                </div>
 
-                    <div class="row py-4">
-                        <div class="">
-                            <a href="users.php">
-                                <button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">Back</button>
-                            </a>
-                            <button name="btnCreate" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit">Create User</button>
-                        </div>
+                <div class="row py-4">
+                    <div class="">
+                        <a href="users.php">
+                            <button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">Back</button>
+                        </a>
+                        <button name="btnCreate" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit">Create User</button>
                     </div>
-                </table>
+                </div>
             </form>
         </div>
     </div>

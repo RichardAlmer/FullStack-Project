@@ -276,7 +276,7 @@
     <div class="container">
         <div id="product" class="my-5 py-5">
             <div class="col-12 fs_6 text-uppercase my-2">About product</div>
-
+            <div class="my-2 text-<?=$class;?>"><?php echo ($messageC) ?? ""; ?></div>
             <div class="row my-4">
                 <div class="col-12 col-md-6">
                     <img id="proImg" src="../../img/product_images/<?php echo $image ?>" alt="<?php echo $image ?>">
@@ -296,11 +296,15 @@
                     <div id="desc" class="col-12"><?php echo $description ?></div>
 
                     <?php
-                        if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
+                        if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
+                            if($status == 'active'){
                     ?>
-                        <button id="addToCartBtn" type="button" class="btn btn bg_gray bg_hover rounded-pill col-12 py-2 px-4 text-white my-5">Add to Cart</button>
+                    <form class="col-12 col-md-8" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
+                        <input type="hidden" name="productId" value="<?php echo $_GET['id'] ?>" />
+                        <button id="addToCartBtn" type="submit" name="cartBtn" class="btn btn bg_gray bg_hover rounded-pill col-12 py-2 px-4 text-white my-5">Add to Cart</button>
+                    </form>
                     <?php
-                        }
+                        }}
                     ?>
 
                 </div>

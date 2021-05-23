@@ -62,7 +62,7 @@ $conn->close();
     <body>
         <?php 
             require_once '../../php/components/header.php';
-            navbar("../../", "../");
+            navbar("../../", "../"); 
         ?>
 
         <div class="container">

@@ -3,6 +3,7 @@
 function discountedPrice($price, $discount_procent) {
     return $price / 100 * (100-$discount_procent);
 }
+
 function getStars($rating) {
     $stars = "";
     switch($rating){

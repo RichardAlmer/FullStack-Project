@@ -15,7 +15,7 @@
 
     //$id = $_GET['id'];
     // $sql = "SELECT pk_review_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id WHERE review.fk_product_id = {$id} ORDER BY create_datetime DESC";
-    $sql = "SELECT pk_review_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id ORDER BY create_datetime DESC";
+    $sql = "SELECT pk_review_id, fk_user_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id ORDER BY create_datetime DESC";
     $result = mysqli_query($conn ,$sql);
     $tbody='';
     if(mysqli_num_rows($result)  > 0) {    
@@ -23,6 +23,7 @@
             $stars = getStars(round($row['rating']));
             $tbody .= "<tr>
                     <td>".$row['create_datetime']."</td>
+                    <td>".$row['fk_user_id']."</td>
                     <td>".$row['name']."</td>
                     <td>".$row['title']."</td>
                     <td>".$stars."</td>
@@ -66,6 +67,7 @@
                 <thead class='bg_maincolor'>
                     <tr>
                         <th class="border-0">Created on</th>
+                        <th class="border-0">By</th>
                         <th class="border-0">Product Name</th>
                         <th class="border-0">Review Title</th>
                         <th class="border-0">Rating</th>

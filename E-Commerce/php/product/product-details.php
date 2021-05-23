@@ -330,7 +330,7 @@
             ?>
             <form class="col-12 col-md-8 text-center" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
                 <div class="my-2">
-                    <textarea class="form-control" type="text" name="question" placeholder="Leave a question here" id="questionText" style="width: 80vw"></textarea>
+                    <textarea class="form-control" type="text" name="question" placeholder="Leave a question here" id="questionText"></textarea>
                 </div>
                 <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
                 <button type="submit" name="submitQ" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create Question</button>

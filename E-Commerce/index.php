@@ -25,9 +25,9 @@ $products = getAllProducts();
     require_once 'php/components/header.php';
     navbar("");
     ?>
-    <div class="container my-1 p-md-5">
+    <div class="container my-1 p-md-2">
         <div class="row px-md-5">
-            <div class="py-5 col-12 col-lg-6">
+            <div class="py-2 col-12 col-lg-6">
                 <div class="text-uppercase banner_text fw-bold">Find your <br><span class="my_text_maincolor">perfect gift</span> <br>here</div>
                 <div class="my_text_lightgray my-4">More than 10 000 products to buy from home now</div>
                 <div class="btn bg_gray rounded-pill my-4 col-12 col-md-6 py-3">
@@ -43,7 +43,7 @@ $products = getAllProducts();
     </div>
 
     <div class="container">
-        <div class="row my-5">
+        <div class="row my-2">
             <div class="col-12 text-center fs_6 text-uppercase my-2">Our bestsellers. <span class="my_text_maincolor">Discover more</span></div>
             <div class="col-12 text-center my_text_lightgray">Find thing you'll love</div>
         </div>
@@ -61,7 +61,7 @@ $products = getAllProducts();
                     <div class="col-12 fs-5 my-2"><?= $product['name'] ?></div>
                     <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
 
-                    <div class="col-12 fw-bold my-3">€<?= $product['price'] - $product['price'] * $product['discount_procent']/100 ?></div>
+                    <div class="col-12 fw-bold my-3">€<?= $product['price'] - $product['price'] * $product['discount_procent'] / 100 ?></div>
                     <div class="col-12 my_text_maincolor">Price with Discount: -<?= $product['discount_procent'] ?>%</div>
                 </div>
             </div>

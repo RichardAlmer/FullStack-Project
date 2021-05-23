@@ -18,6 +18,8 @@
     if ($result->num_rows == 1) {
         $name = $data['name'];
         $price = $data['price'];
+        $brand = $data['brand'];
+        $category = $data['category'];
         $image = $data['image'];
     } else {
         header("location: ../error.php");
@@ -44,53 +46,78 @@
      
 <!DOCTYPE html>
 <html lang= "en">
-<head>
-    <meta  charset="UTF-8">
-    <meta name="viewport"  content="width=device-width, initial-scale=1.0">
-    <title>Delete Product</title>
-    <?php require_once '../components/boot.php' ?>
-    <link rel='stylesheet' type='text/css' href='../../style/main-style.css'>
-    <style type= "text/css">
-        fieldset {
-            margin: auto;
-            margin-top: 100px;
-            width: 70% ;
-        }    
-        .img-thumbnail{
-            width: 70px !important;
-                height: 70px !important;
-        }    
-    </style>
-</head>
-<body>
-    <div id="container">
-        <?php require_once '../components/header.php'; 
-        navbar("../../", "../");?>
-        <fieldset>
-            <legend class='h2 mb-3'> Delete request <img class='img-thumbnail rounded-circle' src='../../img/product_images/<?php echo $image ?>' alt="<?php echo $name ?>"></legend>
-            <?php if($message !== ""){ ?>
-                <div class="container">
-                    <div class="alert alert-<?=$class;?>" role="alert">
-                        <p><?=$message;?></p >
-                        <a href ='products.php'><button class= "btn btn-success" type='button'>Back</button></a>
-                    </div>
-                </div >
-            <?php } ?>
-            <?php if($message === ""){ ?>
-                <h5>You have selected the data below: </h5>
-                <table class="table w-75 mt-3">
-                    <tr>
-                        <td><?php echo $name?></td>
-                    </tr>
-                </table>
-                <h3 class="mb-4">Do you really want to delete this product?</h3>
-                <form action ="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>"  method="post">
-                    <input type="hidden" name="id" value ="<?php echo $id ?>"/>
-                    <a href="products.php?id=<?php echo $id ?>"><button class="btn btn-warning" type="button">No, go back!</button></a>
-                    <button class="btn btn-danger" type="submit" name="submitP"> Yes, delete it! </button>
-                </form>
-            <?php } ?>
-        </fieldset>
-    </div>
-</body>
+    <head>
+        <meta  charset="UTF-8">
+        <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+        <title>Delete Product</title>
+        <?php require_once '../components/boot.php' ?>
+        <link rel='stylesheet' type='text/css' href='../../style/main-style.css'>
+        <style type= "text/css">
+            .img-thumbnail {
+                width: 10rem;
+                height: 10rem;
+            }   
+        </style>
+    </head>
+    <body>
+        <?php 
+            require_once '../components/header.php'; 
+            navbar("../../", "../");
+        ?>
+
+        <div id="container" class="container">
+            <div class="my-5 py-5">
+                <div class="col-12 fs_6 text-uppercase my-2">Delete request</div>
+                <div class='col-12'> 
+                    <img class='img-thumbnail rounded-circle' src='../../img/product_images/<?php echo $image ?>' alt="<?php echo $name ?>">
+                </div>
+
+                <?php if($message !== ""){ ?>
+                    <div class="container">
+                        <div class="alert alert-<?=$class;?>" role="alert">
+                            <p><?=$message;?></p >
+                            <a href ='products.php'><button class= "btn btn-success" type='button'>Back</button></a>
+                        </div>
+                    </div >
+                <?php } ?>
+
+                <?php if($message === ""){ ?>
+                    <table class="table">
+                        <div class="row py-2 align-items-center">
+                            <div class="col-12 col-md-3 fw-bold py-2">Name</div>
+                            <div class="col-12 col-md-9 pb-3 py-md-2"><?php echo $name?></div>
+                        </div>
+
+                        <div class="row py-2 align-items-center">
+                            <div class="col-12 col-md-3 fw-bold py-2">Brand</div>
+                            <div class="col-12 col-md-9 pb-3 py-md-2"><?php echo $brand?></div>
+                        </div>
+
+                        <div class="row py-2 align-items-center">
+                            <div class="col-12 col-md-3 fw-bold py-2">Price</div>
+                            <div class="col-12 col-md-9 pb-3 py-md-2"><?php echo $price?></div>
+                        </div>
+
+                        <div class="row py-2 align-items-center">
+                            <div class="col-12 col-md-3 fw-bold py-2">Category</div>
+                            <div class="col-12 col-md-9 pb-3 py-md-2"><?php echo $category?></div>
+                        </div>
+                    </table>
+
+                    <div class="fs-5 mb-4">Do you really want to <span class="my_text_maincolor">delete this product?</span></div>
+                    <form action ="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>"  method="post">
+                        <input type="hidden" name="id" value ="<?php echo $id ?>"/>
+                        <a href="products.php?id=<?php echo $id ?>"><button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">No, go back!</button></a>
+                        <button class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit" name="submitP"> Yes, delete it! </button>
+                    </form>
+                <?php } ?>
+            </div>
+        </div>
+
+        <?php 
+            require_once '../../php/components/footer.php';
+            footer("../../");
+            require_once '../../php/components/boot-javascript.php';
+        ?>
+    </body>
 </html>

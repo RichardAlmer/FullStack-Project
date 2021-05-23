@@ -118,12 +118,6 @@ $conn->close();
     <?php require_once '../components/boot.php' ?>
     <link rel='stylesheet' type='text/css' href='../../style/main-style.css'>
     <style type="text/css">
-        fieldset {
-            margin: auto;
-            margin-top: 100px;
-            width: 60%;
-        }
-
         .img-thumbnail {
             width: 10rem;
             height: 10rem;

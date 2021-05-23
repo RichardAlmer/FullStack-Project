@@ -30,17 +30,17 @@ if(mysqli_num_rows($result) > 0) {
         
         if ($data['count'] == 0) {
             $tbody .= "<a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'>
-                        <button class='btn btn-light btn-sm' type='button'>No Reviews</button></a> ";
+                        <button class='col-12 col-md-5 btn bg-white bg_hover rounded-pill py-2 px-md-4' type='button'>No Reviews</button></a> ";
         } 
         else if ($data['count'] == 1) {
             $tbody .= "<a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'>
-                        <button class='btn btn-warning btn-sm' type='button'>View ".$data['count']." Review</button></a> ";
+                        <button class='col-12 col-md-5 btn bg-dark bg_hover rounded-pill py-2 px-md-4 text-white' type='button'>View ".$data['count']." Review</button></a> ";
         } else {
             $tbody .= "<a href='../admin/reviews.php?id=" . $row['pk_product_id'] . "'>
-                        <button class='btn btn-warning btn-sm' type='button'>View ".$data['count']." Review(s)</button></a> ";
+                        <button class='col-12 col-md-5 btn bg-dark bg_hover rounded-pill py-2 px-md-4 text-white' type='button'>View ".$data['count']." Review(s)</button></a> ";
         }
-        $tbody .= "<a href='update.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
-                <a href='delete.php?id=" . $row['pk_product_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a>
+        $tbody .= "<a href='update.php?id=" . $row['pk_product_id'] . "'><button class='col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-4 text-white' type='button'>Update</button></a>
+                <a href='delete.php?id=" . $row['pk_product_id'] . "'><button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-4 text-white' type='button'>Delete</button></a>
             </td>
         </tr>";
     };
@@ -69,38 +69,37 @@ $conn->close();
     navbar("../../", "../");
     ?>
 
-    <div id="container">
-        <div id="content">
-            <h1>Manage Products</h1>
+    <div id="container" class="container">
+        <div id="content" class="my-5 pt-5">
+            <div class="col-12 col-md-4 fs_6 text-uppercase my-2">Manage Products</div>
 
-            <a href="create.php"><button class='btn btn-primary' type="button">Add Product</button></a>
+            <a href='../admin/dashboard.php' class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-4">Back to dashboard</a>
+
+            <a href="create.php"><button class='col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-4' type="button">Add Product</button></a>
 
             <table class='table table-striped'>
-                <thead class='table-success'>
+                <thead class='bg_maincolor'>
                     <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Brand</th>
-                        <th>Discount</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th class="border-0">Name</th>
+                        <th class="border-0">Category</th>
+                        <th class="border-0">Brand</th>
+                        <th class="border-0">Discount</th>
+                        <th class="border-0">Status</th>
+                        <th class="border-0">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?= $tbody ?>
                 </tbody>
             </table>
-
-            <a href='../admin/dashboard.php'>Back to dashboard</a>
         </div>
     </div>
 
-    <?php
-        require_once '../components/footer.php';
-
+    <?php 
+        require_once '../../php/components/footer.php';
+        footer("../../");
+        require_once '../../php/components/boot-javascript.php';
     ?>
-
-    <?php require_once '../components/boot-javascript.php' ?>
 
 </body>
 

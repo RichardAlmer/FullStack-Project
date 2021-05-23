@@ -8,8 +8,6 @@ function getAllProducts()
     return $result;
 }
 $products = getAllProducts();
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +25,7 @@ $products = getAllProducts();
     require_once 'php/components/header.php';
     navbar("");
     ?>
-    <div class="container my-5 p-md-5">
+    <div class="container my-1 p-md-5">
         <div class="row px-md-5">
             <div class="py-5 col-12 col-lg-6">
                 <div class="text-uppercase banner_text fw-bold">Find your <br><span class="my_text_maincolor">perfect gift</span> <br>here</div>
@@ -45,13 +43,13 @@ $products = getAllProducts();
     </div>
 
     <div class="container">
-        <div class="row my-4">
+        <div class="row my-1">
             <div class="col-12 text-center fs_6 text-uppercase my-2">Our bestsellers. <span class="my_text_maincolor">Discover more</span></div>
             <div class="col-12 text-center my_text_lightgray">Find thing you'll love</div>
         </div>
     </div>
 
-    <div class="row row_width py-5">
+    <div class="row row_width py-1">
 
         <?php foreach ($products as $product) : ?>
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">
@@ -63,8 +61,8 @@ $products = getAllProducts();
                     <div class="col-12 fs-5 my-2"><?= $product['name'] ?></div>
                     <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
 
-                    <div class="col-12 fw-bold my-3">€<?= $product['price'] ?></div>
-                    <div class="col-12 my_text_maincolor my-1">Discount: -<?= $product['discount_procent'] ?>%</div>
+                    <div class="col-12 fw-bold my-3">€<?= $product['price'] - $product['price'] * $product['discount_procent']/100 ?></div>
+                    <div class="col-12 my_text_maincolor">Preis with Discount: -<?= $product['discount_procent'] ?>%</div>
                 </div>
             </div>
         <?php endforeach; ?>

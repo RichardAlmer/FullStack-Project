@@ -278,15 +278,9 @@ $conn->close();
     <link rel="stylesheet" href="../../style/main-style.css" />
     <link rel="stylesheet" href="../../style/updateUser.css">
     <style type="text/css">
-        fieldset {
-            margin: auto;
-            margin-top: 100px;
-            width: 60%;
-        }
-
         .img-thumbnail {
-            width: 150px !important;
-            height: 150px !important;
+            width: 10rem;
+            height: 10rem;
         }
     </style>
 </head>
@@ -307,7 +301,9 @@ $conn->close();
                 <p><?php echo ($uploadError) ?? ''; ?></p>
             </div>
 
-            <img class='img-thumbnail rounded-circle' src='../../img/user_images/<?php echo $picture ?>' alt="<?php echo $firstName ?>">
+            <div class="col-12">
+                <img class='img-thumbnail rounded-circle' src='../../img/user_images/<?php echo $picture ?>' alt="<?php echo $firstName ?>">
+            </div>
 
             <form class="my-3" method="post" enctype="multipart/form-data">
                 <table class="table">

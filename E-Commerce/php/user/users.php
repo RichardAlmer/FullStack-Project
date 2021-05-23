@@ -26,13 +26,13 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $tbody .= "
         <tr>
-            <td><img class='img-thumbnail' src='../../img/user_images/" . $row['profile_image'] . "' alt=" . $row['first_name'] . "></td>
+            <td><img class='img-thumbnail rounded-circle' src='../../img/user_images/" . $row['profile_image'] . "' alt=" . $row['first_name'] . "></td>
             <td>" . $row['first_name'] . " " . $row['last_name'] . "</td>
             <td>" . $row['birthdate'] . "</td>
             <td>" . $row['email'] . "</td>
             <td>" . $row['banned_until'] . "</td>
-            <td><a href='update.php?id=" . $row['pk_user_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Update</button></a>
-            <a href='delete.php?id=" . $row['pk_user_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
+            <td><a href='update.php?id=" . $row['pk_user_id'] . "'><button class='col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-4 text-white' type='button'>Update</button></a>
+            <a href='delete.php?id=" . $row['pk_user_id'] . "'><button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-4 text-white' type='button'>Delete</button></a></td>
         </tr>";
     }
 } else {
@@ -51,6 +51,12 @@ $conn->close();
     <title>Manage Users</title>
     <?php require_once '../components/boot.php' ?>
     <link rel="stylesheet" href="../../style/main-style.css" />
+    <style type="text/css">
+        .img-thumbnail {
+            width: 10rem;
+            height: 10rem;
+        }
+    </style>
 </head>
 
 <body>

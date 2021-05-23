@@ -49,7 +49,7 @@ $products = getAllProducts();
         </div>
     </div>
 
-    <div class="row row_width py-1">
+    <div class="row row_width py-2">
 
         <?php foreach ($products as $product) : ?>
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">

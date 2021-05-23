@@ -55,6 +55,7 @@ $products = getAllProducts();
         <?php foreach ($products as $product) : ?>
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">
                 <div class="square">
+                <a href='php/product/product-details.php?id=" <?= $product['pk_product_id'] ?>"'>
                     <img src="img/product_images/<?= $product['image'] ?>" class="content" alt="">
                 </div>
                 <div class="row py-3 text-center">

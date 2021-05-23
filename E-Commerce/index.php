@@ -9,6 +9,7 @@ function getAllProducts()
 }
 $products = getAllProducts();
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,6 +64,7 @@ $products = getAllProducts();
                     <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
 
                     <div class="col-12 fw-bold my-3">€<?= $product['price'] ?></div>
+                    <div class="col-12 my_text_maincolor my-1">Discount: -<?= $product['discount_procent'] ?>%</div>
                 </div>
             </div>
         <?php endforeach; ?>

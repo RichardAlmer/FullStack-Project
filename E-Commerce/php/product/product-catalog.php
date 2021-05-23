@@ -1,6 +1,7 @@
 <?php
 
 require_once '../components/db_connect.php';
+require_once 'actions/helper-functions.php';
 
 // get category filter links
 $sqlCategories = ("SELECT DISTINCT category FROM product");
@@ -18,8 +19,13 @@ $result = mysqli_query($conn ,$sql);
 $resultHtml=''; 
 $currentPrice='';
 if(mysqli_num_rows($result) > 0) {     
-    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
-        $currentPrice = $row['price'] / 100 * (100-$row['discount_procent']);
+    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){      
+        $currentPrice = discountedPrice($row['price'],$row['discount_procent']);
+
+        $sqlRating = "SELECT AVG(rating) AS rating FROM review WHERE fk_product_id = $row[pk_product_id]";
+        $resultRating = mysqli_query($conn ,$sqlRating);
+        $dataRating = $resultRating->fetch_assoc();
+        $stars = getStars(round($dataRating['rating']));
         $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-2 box_height'>
                         <a href='product-details.php?id=" .$row['pk_product_id']."'>
                             <div class='square'>
@@ -33,7 +39,7 @@ if(mysqli_num_rows($result) > 0) {
         if ($row['discount_procent'] != '0') {
             $resultHtml .= "<span class='my_text_maincolor'>(-{$row['discount_procent']}%)</span>";
         }
-        $resultHtml .= "</div><div class='col-12 fw-bold my-3'>Rating:  
+        $resultHtml .= "</div><div class='col-12 fw-bold my-3'>".$stars."
         </div></div></a></div>";  
     };
 } else  {
@@ -63,7 +69,7 @@ $conn->close();
             <div class="row my-5 pt-5">
                 <div class="col-12 col-md-4 fs_6 text-uppercase my-2">All products</div>
                 <div class="col-12 col-md-2 fs_6 my-2">
-                    <input type="text" class="form-control" onkeyup="showResult(this.value)" name="search" id="search" aria-describedby="searchHelp" placeholder="Search for product name">
+                    <input type="text" class="form-control" onkeyup="showResult(this.value)" name="search" id="search" aria-describedby="searchHelp" placeholder="Search for product">
                 </div>
                 <div class="col-12 col-md-6 my-2 text-end">
                     <a href="" class="col-12 col-md-auto my-2 px-1">

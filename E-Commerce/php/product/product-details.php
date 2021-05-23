@@ -1,5 +1,7 @@
 <?php
     require_once '../components/db_connect.php';
+    require_once 'actions/helper-functions.php';
+    
 
     session_start();
 
@@ -58,24 +60,7 @@
     $review='';
     if(mysqli_num_rows($result) > 0) {    
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $stars = "";
-            switch($row['rating']){
-                case 1:
-                    $stars = "★";
-                    break;
-                case 2:
-                    $stars = "★★";
-                    break;
-                case 3:
-                    $stars = "★★★";
-                    break;
-                case 4:
-                    $stars = "★★★★";
-                    break;
-                case 5:
-                    $stars = "★★★★★";
-                    break;
-            }
+            $stars = getStars($row['rating']);
             $review .= " 
                 <div class='col-12 col-md-8 my-4'>
                     <div class='row align-items-center'>
@@ -96,26 +81,14 @@
     $avgRating = "";
     if(mysqli_num_rows($result) > 0) {    
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $stars = "";
+            
             $average = round($row['AVG(rating)']);
-            switch($average){
-                case 1:
-                    $stars = "★";
-                    break;
-                case 2:
-                    $stars = "★★";
-                    break;
-                case 3:
-                    $stars = "★★★";
-                    break;
-                case 4:
-                    $stars = "★★★★";
-                    break;
-                case 5:
-                    $stars = "★★★★★";
-                    break;
+            $stars = getStars($average);
+            if ($row['COUNT(rating)'] > 0) {
+                $avgRating .= $stars." | ".$row['COUNT(rating)'];  
+            } else {
+                $avgRating .= $stars;  
             }
-            $avgRating .= $stars." | ".$row['COUNT(rating)'];  
         }
     }
 
@@ -132,10 +105,10 @@
 
             if ($conn->query($sql) === true ) {
                 $class = "success";
-                $messageQA = "The comment was successfully created";
+                $messageQA = "The question was successfully posted.";
             } else {
                 $class = "danger";
-                $messageQA = "Error while creating comment. Try again: <br>" . $conn->error;
+                $messageQA = "Error while posting question. Try again: <br>" . $conn->error;
             }
         } else {
             $class = "danger";
@@ -154,14 +127,14 @@
 
             if ($conn->query($sql) === true ) {
                 $class = "success";
-                $messageA = "The answer was successfully created";
+                $messageA = "The answer was successfully posted.";
             } else {
                 $class = "danger";
-                $messageA = "Error while creating comment. Try again: <br>" . $conn->error;
+                $messageA = "Error while posting answer. Try again: <br>" . $conn->error;
             }
         } else {
             $class = "danger";
-            $messageA = "Fill in the field!";
+            $messageA = "Enter a question in the field above.";
         }
     }    
 
@@ -286,10 +259,13 @@
                 <div class="col-12 col-md-6">
                     <div class="row align-items-center">
                         <div id="name" class="col-12 col-md-10 py-3 py-md-0 fs-4"><?php echo $name ?></div>
-                        <div class="col-12 col-md-2 my_text_maincolor fw-bold"><?php echo $status ?></div>
+                        <div class="col-12 col-md-2 my_text_maincolor fw-bold"><?php echo ($status === 'deactive') ? "deactive" : "" ?></div>
                     </div>
                     <div class="col-12 my-3 fs-5"><?php echo $avgRating ?></div>
-                    <div class="col-12 fs_6 my_text_maincolor fw-bold"><?php echo $price ?>€</div>
+                    <div class="col-12 fs_6 fw-bold">
+                        <span class="my_text_maincolor"><?php echo discountedPrice($price, $discount_procent); ?>€</span>    
+                        <span class="text-danger text-decoration-line-through"> <?php echo ($discount_procent == 0) ? "" : " (".$price."€)"; ?></span>    
+                    </div>
                     <div class="col-12 my_text_lightgray fs_7 mb-4">Price without shipping</div>
                     <div class="col-12"><span class="my_text_lightgray">from </span><a href=""><?php echo $brand ?></a></div>
                     <div class="col-12 my-2"><a class="my_text_maincolor" href=""><?php echo $category ?></a></div>
@@ -302,7 +278,8 @@
                     ?>
                     <form class="col-12 col-md-8" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
                         <input type="hidden" name="productId" value="<?php echo $_GET['id'] ?>" />
-                        <button id="addToCartBtn" type="submit" name="cartBtn" class="btn btn bg_gray bg_hover rounded-pill col-12 py-2 px-4 text-white my-5">Add to Cart</button>
+                        <button id="addToCartBtn" type="submit" name="cartBtn" class="btn btn bg_gray bg_hover rounded-pill col-md-auto py-2 px-4 text-white my-5">Add to Cart</button>
+                                                                                                                            
                     </form>
                     <?php
                         }}
@@ -345,19 +322,19 @@
 
     <div class="container">
         <hr>
-        <div id="qAndA" class="py-4">
+        <div id="qAndA" class="row my-5 py-3 justify-content-center">
             <div class="col-12 fs_6 text-uppercase my-2 text-center">Q&A</div>
             <div id="questions" class="row justify-content-center"><?= $question;?></div>
             <?php
                 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
             ?>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
-                    <div class="mb-3">
-                        <textarea class="form-control" type="text" name="question" placeholder="Leave a question here" id="questionText" style="width: 80vw"></textarea>
-                    </div>
-                    <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
-                    <button type="submit" name="submitQ" class="btn btn-primary">Create Question</button>
-                </form>
+            <form class="col-12 col-md-8 text-center" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
+                <div class="my-2">
+                    <textarea class="form-control" type="text" name="question" placeholder="Leave a question here" id="questionText" style="width: 80vw"></textarea>
+                </div>
+                <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
+                <button type="submit" name="submitQ" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create Question</button>
+            </form>
             <?php
                 }
             ?>

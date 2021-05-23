@@ -55,10 +55,11 @@ if (isset($_POST['btnRegister'])) {
     $uploadError = '';
     $profile_image = file_upload($_FILES['profile_image']);
 
+    
     // basic name validation
     if (empty($first_name) || empty($last_name)) {
         $error = true;
-        $fnameError = "Please enter your full name and surname";
+        $fnameError = "Please enter your full name and surname.";
     } else if (strlen($first_name) < 3 || strlen($last_name) < 3) {
         $error = true;
         $fnameError = "Name and surname must have at least 3 characters.";
@@ -70,7 +71,7 @@ if (isset($_POST['btnRegister'])) {
     //basic email validation
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = true;
-        $emailError = "Please enter valid email address.";
+        $emailError = "Please enter a valid email address.";
     } else {
         // checks whether the email exists or not
         $query = "SELECT email FROM user WHERE email='$email'";
@@ -78,7 +79,7 @@ if (isset($_POST['btnRegister'])) {
         $count = mysqli_num_rows($result);
         if ($count != 0) {
             $error = true;
-            $emailError = "Provided Email is already in use.";
+            $emailError = "Provided email is already in use.";
         }
     }
     //checks if the date input was left empty
@@ -88,24 +89,24 @@ if (isset($_POST['btnRegister'])) {
     }
     if (empty($address)) {
         $error = true;
-        $addressError = "Please enter the Adress.";
+        $addressError = "Please enter the address.";
     }
     if (empty($city)) {
         $error = true;
-        $cityError = "Please enter the City.";
+        $cityError = "Please enter the city.";
     }
     if (empty($postcode)) {
         $error = true;
-        $postcodeError = "Please enter the ZIP-Code.";
+        $postcodeError = "Please enter a postcode.";
     }
     if (empty($country)) {
         $error = true;
-        $countryError = "Please enter the Country.";
+        $countryError = "Please enter the country.";
     }
     // password validation
     if (empty($pass)) {
         $error = true;
-        $passError = "Please enter password.";
+        $passError = "Please enter a password.";
     } else if (strlen($pass) < 6) {
         $error = true;
         $passError = "Password must have at least 6 characters.";
@@ -122,7 +123,7 @@ if (isset($_POST['btnRegister'])) {
 
         if ($res) {
             $errTyp = "success";
-            $errMSG = "Successfully registered, you may login now";
+            $errMSG = "Successfully registered, you may <a href='login.php'>login</a> now.";
             $uploadError = ($profile_image->error != 0) ? $profile_image->ErrorMessage : '';
         } else {
             $errTyp = "danger";
@@ -181,7 +182,7 @@ $conn->close();
 
                     <div class="col-12 my-3">
                         <label for="email" class="form-label">E-Mail</label>
-                        <input id="email" type="email" name="email" class="form-control" placeholder="Enter your E-mail" maxlength="100" value="<?php echo $email ?>" />
+                        <input id="email" type="email" name="email" class="form-control" placeholder="Enter your e-mail" maxlength="100" value="<?php echo $email ?>" />
                         <span class="text-danger"> <?php echo $emailError; ?> </span>
                     </div>
 
@@ -218,7 +219,7 @@ $conn->close();
 
                     <div class="col-12 my-3">
                         <label for="postcode" class="form-label">Your postcode</label>
-                        <input id="postcode" type="text" name="postcode" class="form-control" placeholder="Enter your ZIP Code" maxlength="12" value="<?php echo $postcode ?>" />
+                        <input id="postcode" type="text" name="postcode" class="form-control" placeholder="Enter your postcode" maxlength="12" value="<?php echo $postcode ?>" />
                         <span class="text-danger"> <?php echo $postcodeError; ?> </span>
                     </div>
 
@@ -231,7 +232,7 @@ $conn->close();
                     <button type="submit" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3 mb-2" name="btnRegister">Register</button>
 
                     <div class="btn btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-md-3">
-                        <a href="index.php">Login in Here...</a>
+                        <a href="login.php">Login</a>
                     </div>
                 </form>
             </div>

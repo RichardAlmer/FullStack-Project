@@ -35,7 +35,7 @@
             $review = $_POST['review'];
             $rating = $_POST['rating'];
             $title = $_POST['title'];
-            $date = date('d-m-y h:i:s');
+            $date = date('y-m-d h:i:s');
             $product_id = $_GET['id'];
             
             $sql = "INSERT INTO review (rating, title, comment, create_datetime, fk_product_id, fk_user_id) VALUES ($rating, '$title', '$review', '$date', $product_id, $userId)";
@@ -49,13 +49,13 @@
             }
         } else {
             $class = "danger";
-            $messageReview = "Fill in all fields and don't forget the Stars!";
+            $messageReview = "Fill in all fields and don't forget the stars!";
         }
     }
 
     // Print Reviews
     $id = $_GET['id'];
-    $sql = "SELECT review.rating, review.title, review.comment, review.create_datetime, product.name, user.first_name FROM review INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
+    $sql = "SELECT review.rating, review.title, review.comment, DATE_FORMAT(review.create_datetime, '%d.%m.%Y %H:%i') AS create_datetime, product.name, user.first_name FROM review INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id}";
     $result = mysqli_query($conn ,$sql);
     $review='';
     if(mysqli_num_rows($result) > 0) {    
@@ -98,55 +98,55 @@
     if (isset($_POST['submitQ'])) {
         if($_POST['question']){
             $question = $_POST['question'];
-            $date = date('d-m-y h:i:s');
+            $date = date('y-m-d h:i:s');
             $product_id = $_GET['id'];
         
             $sql = "INSERT INTO question (question, create_datetime, fk_product_id, fk_user_id) VALUES ('$question', '$date', $product_id, $userId)"; 
 
             if ($conn->query($sql) === true ) {
                 $class = "success";
-                $messageQA = "The question was successfully posted.";
+                $messageQA = "The question was successfully added.";
             } else {
                 $class = "danger";
                 $messageQA = "Error while posting question. Try again: <br>" . $conn->error;
             }
         } else {
             $class = "danger";
-            $messageQA = "Fill in the field!";
+            $messageQA = "Fill in your question in the field above.";
         }
     }
 
-    // Cretate Answer
+    // Create Answer
     if (isset($_POST['submitA'])) {
         if($_POST['answer']){
             $answer = $_POST['answer'];
             $questionId = $_POST['questionId'];
-            $date = date('d-m-y h:i:s');
+            $date = date('y-m-d h:i:s');
         
             $sql = "INSERT INTO answer (answer, create_datetime, fk_question_id, fk_user_id) VALUES ('$answer', '$date', $questionId, $userId)"; 
 
             if ($conn->query($sql) === true ) {
                 $class = "success";
-                $messageA = "The answer was successfully posted.";
+                $messageA = "The answer was successfully added.";
             } else {
                 $class = "danger";
                 $messageA = "Error while posting answer. Try again: <br>" . $conn->error;
             }
         } else {
             $class = "danger";
-            $messageA = "Enter a question in the field above.";
+            $messageA = "Enter an answer in the field above.";
         }
     }    
 
     // Print Question
     $messageA = "";
-    $sql = "SELECT question.pk_question_id, question.question, question.create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id} ORDER BY create_datetime DESC";
+    $sql = "SELECT question.pk_question_id, question.question, DATE_FORMAT(question.create_datetime, '%d.%m.%Y %H:%i') AS create_datetime, product.name, user.first_name FROM question INNER JOIN product ON fk_product_id = pk_product_id INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_product_id = {$id} ORDER BY create_datetime DESC";
     $result = mysqli_query($conn ,$sql);
     $question = "";
     $answer = "";
     if(mysqli_num_rows($result) > 0) {    
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $sqlA = "SELECT answer.answer, answer.fk_question_id, answer.create_datetime, user.first_name FROM answer INNER JOIN user ON answer.fk_user_id = pk_user_id WHERE answer.fk_question_id = $row[pk_question_id] ORDER BY create_datetime DESC";
+            $sqlA = "SELECT answer.answer, answer.fk_question_id, DATE_FORMAT(answer.create_datetime, '%d.%m.%Y %H:%i') AS create_datetime, user.first_name FROM answer INNER JOIN user ON answer.fk_user_id = pk_user_id WHERE answer.fk_question_id = $row[pk_question_id] ORDER BY create_datetime DESC";
             $resultA = mysqli_query($conn ,$sqlA);
             $aId = "";
             while($rowA = mysqli_fetch_array($resultA, MYSQLI_ASSOC)){
@@ -249,7 +249,7 @@
     ?>
     <div class="container">
         <div id="product" class="my-5 py-5">
-            <div class="col-12 fs_6 text-uppercase my-2">About product</div>
+            <div class="col-12 fs_6 text-uppercase my-2">About product </div>
             <div class="my-2 text-<?=$class;?>"><?php echo ($messageC) ?? ""; ?></div>
             <div class="row my-4">
                 <div class="col-12 col-md-6">
@@ -278,7 +278,7 @@
                     ?>
                     <form class="col-12 col-md-8" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">
                         <input type="hidden" name="productId" value="<?php echo $_GET['id'] ?>" />
-                        <button id="addToCartBtn" type="submit" name="cartBtn" class="btn btn bg_gray bg_hover rounded-pill col-md-auto py-2 px-4 text-white my-5">Add to Cart</button>
+                        <button id="addToCartBtn" type="submit" name="cartBtn" class="btn btn bg_gray bg_hover rounded-pill col-md-auto py-2 px-4 text-white my-5">Add to cart</button>
                                                                                                                             
                     </form>
                     <?php
@@ -310,7 +310,7 @@
                     </div>
                     <div class="my-2 text-<?=$class;?>"><?php echo ($messageReview) ?? ""; ?></div>
                     <input id="rating" type="hidden" name="rating" value="" />
-                    <button type="submit" name="submitRev" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create Review</button>
+                    <button type="submit" name="submitRev" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create review</button>
                 </form>
             </div>
             <?php
@@ -333,7 +333,7 @@
                     <textarea class="form-control" type="text" name="question" placeholder="Leave a question here" id="questionText"></textarea>
                 </div>
                 <span class="text-<?=$class;?>"><?php echo ($messageQA) ?? ''; ?></span><br>
-                <button type="submit" name="submitQ" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create Question</button>
+                <button type="submit" name="submitQ" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create question</button>
             </form>
             <?php
                 }

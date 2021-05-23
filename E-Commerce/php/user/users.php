@@ -9,6 +9,7 @@ if (isset($_SESSION["user"])) {
     exit;
 }
 
+
 require_once '../components/db_connect.php';
 
 $userId = $_SESSION['admin'];
@@ -35,7 +36,7 @@ if ($result->num_rows > 0) {
         </tr>";
     }
 } else {
-    $tbody = "<tr><td colspan='5'><center>No Data Available</center></td></tr>";
+    $tbody = "<tr><td colspan='6'><center>No Data Available</center></td></tr>";
 }
 
 $conn->close();
@@ -49,39 +50,38 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Users</title>
     <?php require_once '../components/boot.php' ?>
-    <link rel='stylesheet' type='text/css' href='../../main-style.css'>
+    <link rel="stylesheet" href="../../style/main-style.css" />
 </head>
 
 <body>
 
     <?php
-    require_once '../components/header.php';
-    navbar("../../", "../");
+        require_once '../components/header.php';
+        navbar("../../", "../");
     ?>
 
-    <div id="container">
-        <div id="content">
-            <h1>Manage Users</h1>
+    <div id="container" class="container">
+        <div id="content" class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Manage Users</div>
 
-            <a href="create.php"><button class='btn btn-primary' type="button">Add User</button></a>
+            <a href='../admin/dashboard.php' class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-4">Back to dashboard</a>
+            <a href="create.php"><button class='col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-4' type="button">Add User</button></a>
 
             <table class='table table-striped'>
-                <thead class='table-success'>
+                <thead class='bg_maincolor'>
                     <tr>
-                        <th>Picture</th>
-                        <th>Name</th>
-                        <th>Date of birth</th>
-                        <th>Email</th>
-                        <th>Banned until</th>
-                        <th>Action</th>
+                        <th class="border-0">Picture</th>
+                        <th class="border-0">Name</th>
+                        <th class="border-0">Date of birth</th>
+                        <th class="border-0">Email</th>
+                        <th class="border-0">Banned until</th>
+                        <th class="border-0">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?= $tbody ?>
                 </tbody>
             </table>
-
-            <a href='dashboard.php'>Back to dashboard</a>
         </div>
     </div>
 

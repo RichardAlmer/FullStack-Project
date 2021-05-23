@@ -1,5 +1,6 @@
 <?php
     require_once '../components/db_connect.php';
+    require_once '../product/actions/helper-functions.php';
 
     session_start();
     if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
@@ -8,33 +9,18 @@
     }
     if (isset($_SESSION["user"])) {
         header("Location: ../product/product-catalog.php");
+        require_once 'actions/helper-functions.php';
         exit;
     }
 
-    $id = $_GET['id'];
-    $sql = "SELECT pk_review_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id WHERE review.fk_product_id = {$id} ORDER BY create_datetime DESC";
+    //$id = $_GET['id'];
+    // $sql = "SELECT pk_review_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id WHERE review.fk_product_id = {$id} ORDER BY create_datetime DESC";
+    $sql = "SELECT pk_review_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id ORDER BY create_datetime DESC";
     $result = mysqli_query($conn ,$sql);
     $tbody='';
     if(mysqli_num_rows($result)  > 0) {    
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $stars = "";
-            switch($row['rating']){
-                case 1:
-                    $stars = "★";
-                    break;
-                case 2:
-                    $stars = "★★";
-                    break;
-                case 3:
-                    $stars = "★★★";
-                    break;
-                case 4:
-                    $stars = "★★★★";
-                    break;
-                case 5:
-                    $stars = "★★★★★";
-                    break;
-            }
+            $stars = getStars(round($row['rating']));
             $tbody .= "<tr>
                     <td>".$row['create_datetime']."</td>
                     <td>".$row['name']."</td>
@@ -55,8 +41,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Reviews</title>
-    <?php require_once '../components/boot.php'?>
-    <!-- <link rel='stylesheet' type='text/css' href='../../main.css'> -->
+    <?php require_once '../../php/components/boot.php'?>
+    <link rel="stylesheet" href="../../style/main-style.css" />
     <style type= "text/css">
         .manageProduct {          
             margin: auto;
@@ -71,7 +57,7 @@
 
         }
         tr {
-            text-align: center;
+            text-align: left;
         }
     </style>
 </head>

@@ -26,7 +26,7 @@
                     <td>".$row['name']."</td>
                     <td>".$row['title']."</td>
                     <td>".$stars."</td>
-                    <td><a href='../product/product-details.php?id=".$row['pk_product_id']."'><button class='btn btn-warning btn-sm' type='button'>View</button></a><a href='delete-review.php?id=".$row['pk_review_id']."'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
+                    <td><a href='../product/product-details.php?id=".$row['pk_product_id']."'><button class='col-12 col-md-auto btn bg-dark bg_hover rounded-pill py-2 px-md-4 text-white me-1' type='button'>View</button></a><a href='delete-review.php?id=".$row['pk_review_id']."'><button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-4 text-white' type='button'>Delete</button></a></td>
                 </tr>";
         };
     } else {
@@ -44,45 +44,46 @@
     <?php require_once '../../php/components/boot.php'?>
     <link rel="stylesheet" href="../../style/main-style.css" />
     <style type= "text/css">
-        .manageProduct {          
-            margin: auto;
-        }
         .img-thumbnail {
             width: 70px !important;
             height: 70px !important;
         }
-        td {          
-            text-align: left;
-            vertical-align: middle;
-
-        }
-        tr {
-            text-align: left;
-        }
     </style>
 </head>
 <body>
-    <div id="container">
-        <?php require_once '../components/header.php'; 
-        navbar("../../", "../");?>
-        <div id="content">
-            <h1>Manage Reviews</h1>
+    <?php
+        require_once '../components/header.php';
+        navbar("../../", "../");
+    ?>
+
+    <div id="container"  class="container">
+        <div id="content" class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Manage Reviews</div>
+            <a href="dashboard.php"><button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-4' type="button">Back to dashboard</button></a>
+            <a href='../product/products.php' class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-4">Back to Manage Products</a>
+
             <table class='table table-striped'>
-            <thead class='table-success'>
+                <thead class='bg_maincolor'>
                     <tr>
-                        <th>Created on</th>
-                        <th>Product Name</th>
-                        <th>Review Title</th>
-                        <th>Rating</th>
-                        <th>Action</th>
+                        <th class="border-0">Created on</th>
+                        <th class="border-0">Product Name</th>
+                        <th class="border-0">Review Title</th>
+                        <th class="border-0">Rating</th>
+                        <th class="border-0">Action</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     <?= $tbody;?>
                 </tbody>
             </table>
-            <a href='../product/products.php'>Back to Manage Products</a>
         </div>
     </div>
+
+    <?php 
+        require_once '../components/footer.php';
+        footer("../../");
+        require_once '../components/boot-javascript.php';
+    ?>
 </body>
 </html>

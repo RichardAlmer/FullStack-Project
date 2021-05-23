@@ -18,12 +18,12 @@
     $result = mysqli_query($conn ,$sql);     
 
     $htmlResult="<table class='table table-striped'>
-                    <thead class='table-success'>
+                    <thead class='bg_maincolor'>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Category</th>
-                            <th>Brand</th>
-                            <th>Quantity</th>
+                            <th class='border-0'>Product Name</th>
+                            <th class='border-0'>Category</th>
+                            <th class='border-0'>Brand</th>
+                            <th class='border-0'>Quantity</th>
                         </tr>
                     </thead>
                     <tbody>"; 
@@ -67,12 +67,17 @@
     <div id="container" class="container">
         <div id="content" class="my-5 py-5">
             <div class="col-12 fs_6 text-uppercase my-2">Statistics</div>
+            <a href="dashboard.php"><button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-4' type="button">Back to dashboard</button></a>
             <table>
                 <?= $htmlResult ?>
             </table>
-            <a href='dashboard.php'>Back to dashboard</a>
         </div>
     </div>
+    <?php 
+        require_once '../components/footer.php';
+        footer("../../");
+        require_once '../components/boot-javascript.php';
+    ?>
 </body>
 
 </html>

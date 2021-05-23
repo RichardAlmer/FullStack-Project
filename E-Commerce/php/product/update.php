@@ -134,8 +134,8 @@ $conn->close();
 <body>
 
     <?php
-    require_once '../components/header.php';
-    navbar("../../", "../");
+        require_once '../components/header.php';
+        navbar("../../", "../");
     ?>
 
     <div class="container">

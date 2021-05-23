@@ -125,8 +125,8 @@ $conn->close();
         }
 
         .img-thumbnail {
-            width: 70px !important;
-            height: 70px !important;
+            width: 10rem;
+            height: 10rem;
         }
     </style>
 </head>
@@ -139,91 +139,109 @@ $conn->close();
     ?>
 
     <div class="container">
-        <div class="<?php echo $class; ?>" role="alert">
-            <p><?php echo ($message) ?? ''; ?></p>
-            <p><?php echo ($uploadError) ?? ''; ?></p>
-        </div>
-        
-        <h2>Update Product</h2>
+        <div class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Update Product</div>
 
-        <img class='img-thumbnail rounded-circle' src='../../img/product_images/<?php echo $picture ?>' alt="<?php echo $name ?>">
+            <div class="<?php echo $class; ?>" role="alert">
+                <p><?php echo ($message) ?? ''; ?></p>
+                <p><?php echo ($uploadError) ?? ''; ?></p>
+            </div>
 
-        <form method="post" enctype="multipart/form-data">
-            <table class="table">
-                <tr>
-                    <th>Name</th>
-                    <td>
-                        <input class="form-control" type="text" name="name" placeholder="Name" value="<?php echo $name ?>" />
-                        <span class="text-danger"> <?php echo $nameError; ?> </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Picture</th>
-                    <td>
-                        <input class="form-control" type="file" name="picture" />
-                        <span class="text-danger"> <?php echo $pictureError; ?> </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>
-                        <textarea rows="3" name="description" class="form-control" placeholder=""><?php echo $description ?></textarea>    
-                        <span class="text-danger"> <?php echo $descriptionError; ?> </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Brand</th>
-                    <td>
-                        <input class="form-control" type="text" name="brand" placeholder="Brand of product" value="<?php echo $brand ?>" />
-                        <span class="text-danger"> <?php echo $brandError; ?> </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Price</th>
-                    <td>
-                        <input class="form-control" type="text" name="price" placeholder="Price of product" value="<?php echo $price ?>" />
-                        <span class="text-danger"> <?php echo $priceError; ?> </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Category</th>
-                    <td>
-                        <input class="form-control" type="text" name="category" placeholder="Category of product" value="<?php echo $category ?>" />
-                        <span class="text-danger"> <?php echo $categoryError; ?> </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Discount</th>
-                    <td>
-                        <select class="form-select" aria-label="Default select example" name="discountProcent">
-                            <option value="0" <?php echo ( $discountProcent == '0') ? 'selected' : '' ?>>none</option>
-                            <option value="10" <?php echo ( $discountProcent == '10') ? 'selected' : '' ?>>10% off</option>
-                            <option value="15" <?php echo ( $discountProcent == '15') ? 'selected' : '' ?>>15% off</option>
-                            <option value="20" <?php echo ( $discountProcent == '20') ? 'selected' : '' ?>>20% off</option>
-                            <option value="25" <?php echo ( $discountProcent == '25') ? 'selected' : '' ?>>25% off</option>
-                            <option value="50" <?php echo ( $discountProcent == '50') ? 'selected' : '' ?>>50% off</option>
-                            <option value="75" <?php echo ( $discountProcent == '75') ? 'selected' : '' ?>>75% off</option>
+            <div class="col-12">
+                <img class='img-thumbnail rounded-circle' src='../../img/product_images/<?php echo $picture ?>' alt="<?php echo $name ?>">
+            </div>
+
+            <form class="my-3" method="post" enctype="multipart/form-data">
+                <table class="table">
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Name</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                            <input class="form-control" type="text" name="name" placeholder="Name" value="<?php echo $name ?>" />
+                            <span class="text-danger"> <?php echo $nameError; ?> </span>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Picture</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                            <input class="form-control" type="file" name="picture" />
+                            <span class="text-danger"> <?php echo $pictureError; ?> </span>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Description</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                            <textarea rows="3" name="description" class="form-control" placeholder=""><?php echo $description ?></textarea>    
+                            <span class="text-danger"> <?php echo $descriptionError; ?> </span>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Brand</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                            <input class="form-control" type="text" name="brand" placeholder="Brand of product" value="<?php echo $brand ?>" />
+                            <span class="text-danger"> <?php echo $brandError; ?> </span>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Price</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                            <input class="form-control" type="text" name="price" placeholder="Price of product" value="<?php echo $price ?>" />
+                            <span class="text-danger"> <?php echo $priceError; ?> </span>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Category</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                            <input class="form-control" type="text" name="category" placeholder="Category of product" value="<?php echo $category ?>" />
+                            <span class="text-danger"> <?php echo $categoryError; ?> </span>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Discount</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                            <select class="form-select" aria-label="Default select example" name="discountProcent">
+                                <option value="0" <?php echo ( $discountProcent == '0') ? 'selected' : '' ?>>none</option>
+                                <option value="10" <?php echo ( $discountProcent == '10') ? 'selected' : '' ?>>10% off</option>
+                                <option value="15" <?php echo ( $discountProcent == '15') ? 'selected' : '' ?>>15% off</option>
+                                <option value="20" <?php echo ( $discountProcent == '20') ? 'selected' : '' ?>>20% off</option>
+                                <option value="25" <?php echo ( $discountProcent == '25') ? 'selected' : '' ?>>25% off</option>
+                                <option value="50" <?php echo ( $discountProcent == '50') ? 'selected' : '' ?>>50% off</option>
+                                <option value="75" <?php echo ( $discountProcent == '75') ? 'selected' : '' ?>>75% off</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-12 col-md-3 fw-bold py-2">Status</div>
+                        <div class="col-12 col-md-9 pb-3 py-md-2">
+                        <select class="form-select" aria-label="Default select example" name="status">
+                            <option value="active" <?php echo ( $status == 'active') ? 'selected' : '' ?>>active</option>
+                            <option value="deactive" <?php echo ( $status == 'deactive') ? 'selected' : '' ?>>deactive</option>    
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>
-                    <select class="form-select" aria-label="Default select example" name="status">
-                        <option value="active" <?php echo ( $status == 'active') ? 'selected' : '' ?>>active</option>
-                        <option value="deactive" <?php echo ( $status == 'deactive') ? 'selected' : '' ?>>deactive</option>    
-                    </select>
-                    </td>
-                </tr>
-                <tr>
-                    <input type="hidden" name="id" value="<?php echo $data['pk_product_id'] ?>" />
-                    <input type="hidden" name="picture" value="<?php echo $picture ?>" />
-                    <td><a href="products.php"><button class="btn btn-warning" type="button">Back</button></a></td>
-                    <td><button name="btnSave" class="btn btn-success" type="submit">Save Changes</button></td>
-                </tr>
-            </table>
-        </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="hidden" name="id" value="<?php echo $data['pk_product_id'] ?>" />
+                        <input type="hidden" name="picture" value="<?php echo $picture ?>" />
+                        <a href="products.php"><button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">Back</button></a>
+                        <button name="btnSave" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit">Save Changes</button>
+                    </div>
+                </table>
+            </form>
+        </div>
     </div>
+
+    <?php 
+        require_once '../../php/components/footer.php';
+        footer("../../");
+        require_once '../../php/components/boot-javascript.php';
+    ?>
 </body>
 
 </html>

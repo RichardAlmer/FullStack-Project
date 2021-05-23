@@ -264,7 +264,7 @@
                     <div class="col-12 my-3 fs-5"><?php echo $avgRating ?></div>
                     <div class="col-12 fs_6 fw-bold">
                         <span class="my_text_maincolor"><?php echo discountedPrice($price, $discount_procent); ?>€</span>    
-                        <span class="text-danger"> <?php echo ($discount_procent == 0) ? "" : " (".$price."€)"; ?></span>    
+                        <span class="text-danger text-decoration-line-through"> <?php echo ($discount_procent == 0) ? "" : " (".$price."€)"; ?></span>    
                     </div>
                     <div class="col-12 my_text_lightgray fs_7 mb-4">Price without shipping</div>
                     <div class="col-12"><span class="my_text_lightgray">from </span><a href=""><?php echo $brand ?></a></div>

@@ -43,7 +43,7 @@ $products = getAllProducts();
     </div>
 
     <div class="container">
-        <div class="row my-1">
+        <div class="row my-5">
             <div class="col-12 text-center fs_6 text-uppercase my-2">Our bestsellers. <span class="my_text_maincolor">Discover more</span></div>
             <div class="col-12 text-center my_text_lightgray">Find thing you'll love</div>
         </div>

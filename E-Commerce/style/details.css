@@ -42,12 +42,10 @@
 form{
     text-align: center;
 }
-
+*/
 #st1, #st2, #st3, #st4, #st5{
     cursor: default !important;
-    color:gray;
 }
-*/
 
 .answerForm{
     display: none;

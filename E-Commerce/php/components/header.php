@@ -1,7 +1,8 @@
 <?php 
+session_start();
 function navbar($level1="", $level2="", $id=""){
-
-    echo '<header class="my-4">
+    if(!isset($_SESSION["admin"]) && !isset($_SESSION["user"])){
+        echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">
             <div class="container container-fluid">
                 <a class="navbar-brand" href="'.$level1.'">
@@ -20,28 +21,37 @@ function navbar($level1="", $level2="", $id=""){
                         <li class="nav-item px-2">
                             <a class="nav-link my_text" href="'.$level1.'php/product/product-catalog.php">Products</a>
                         </li>
-                        <?php
-                            if (!isset($_SESSION["admin"]) && !isset($_SESSION["user"])) {
-                        ?>
-
                         <li class="nav-item px-2">
                             <a class="nav-link my_text" href="'.$level1.'php/login.php">Login</a>
                         </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>';
+    } else if (!isset($_SESSION["admin"]) && isset($_SESSION["user"])){
+        echo '<header class="my-4">
+        <nav class="navbar navbar-expand-lg navbar-light my_bg">
+            <div class="container container-fluid">
+                <a class="navbar-brand" href="'.$level1.'">
+                    <img class="logo" src="'.$level1.'img/general_images/logo.png" alt="">
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                        <?php } ?>
-
-                        <?php if ( isset($_SESSION["admin"]) || isset($_SESSION["user"])) { ?>
-                            <li class="nav-item px-2">
-                                <a class="nav-link my_text" href="'.$level2.'logout.php?logout&level='.$level2.'">Logout</a>
-                            </li>
-                        <?php } ?>
-
-                        <?php if ( isset($_SESSION["admin"])) { ?>
-                            <li class="nav-item px-2">
-                                <a class="nav-link my_text" href="'.$level1.'php/admin/dashboard.php">Admin Dashboard</a>
-                            </li>
-                        <?php } ?>
-
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level1.'/">Home</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level1.'php/product/product-catalog.php">Products</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level2.'logout.php?logout&level='.$level2.'">Logout</a>
+                        </li>
                         <li class="nav-item px-2">
                             <a class="nav-link text-dark" href="../cart/cart.php">
                                 <img class="cart_img" src="'.$level1.'img/general_images/cart.png" alt="cart">
@@ -57,4 +67,46 @@ function navbar($level1="", $level2="", $id=""){
             </div>
         </nav>
     </header>';
+    } else if(isset($_SESSION["admin"]) && !isset($_SESSION["user"])){
+        echo '<header class="my-4">
+        <nav class="navbar navbar-expand-lg navbar-light my_bg">
+            <div class="container container-fluid">
+                <a class="navbar-brand" href="'.$level1.'">
+                    <img class="logo" src="'.$level1.'img/general_images/logo.png" alt="">
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level1.'/">Home</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level1.'php/product/product-catalog.php">Products</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level2.'logout.php?logout&level='.$level2.'">Logout</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level1.'php/admin/dashboard.php">Admin Dashboard</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link text-dark" href="../cart/cart.php">
+                                <img class="cart_img" src="'.$level1.'img/general_images/cart.png" alt="cart">
+                            </a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link text-dark" href="'.$level1.'php/user/profile.php?id='.$id.'">
+                                <img class="cart_img" src="'.$level1.'img/user_images/default-user.jpg" alt="profile">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>';
+    }
 }

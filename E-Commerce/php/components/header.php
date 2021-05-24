@@ -24,6 +24,9 @@ function navbar($level1="", $level2="", $id=""){
                         <li class="nav-item px-2">
                             <a class="nav-link my_text" href="'.$level1.'php/login.php">Login</a>
                         </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link my_text" href="'.$level1.'php/register.php">Register</a>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -9,7 +9,6 @@ if (isset($_SESSION["user"])) {
     exit;
 }
 
-
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
@@ -121,9 +120,6 @@ if (isset($_POST["btnSave"])) {
     $bannedUntilNew = $_POST['bannedUntilNew'];
     $intoDB = "";
 
-    // var_dump(!empty($bannedUntil)); //if no date = false
-    // var_dump(!empty($bannedUntilNew)); //if date = true
-
     //IF there is a new bannedUntil value, the old one is overwritten!
     if (!empty($bannedUntilNew)) {
         $intoDB = $bannedUntilNew;
@@ -212,7 +208,7 @@ if (isset($_POST["btnSave"])) {
         $pictureArray = file_upload($_FILES['picture']); //file_upload() called
         $picture = $pictureArray->fileName;
 
-        //if banned until is empty then insert NULL into db
+        //if banned until is empty (like when never used or unbanned) then insert NULL into db
         if (empty($intoDB)) {
             if ($pictureArray->error === 0) {
                 ($_POST["picture"] == "default-user.jpg") ?: unlink("../../img/user_images/{$_POST["picture"]}");
@@ -247,7 +243,6 @@ if (isset($_POST["btnSave"])) {
 
 //Unban
 if (isset($_POST["btnUnban"])) {
-    echo "unban says hi!";
     $userId = $_POST["id"];
 
     $sql = "UPDATE user SET banned_until = NULL WHERE pk_user_id = '$userId'";
@@ -274,7 +269,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update User</title>
-    <?php require_once '../components/boot.php'?>
+    <?php require_once '../components/boot.php' ?>
     <link rel="stylesheet" href="../../style/main-style.css" />
     <link rel="stylesheet" href="../../style/updateUser.css">
     <style type="text/css">
@@ -354,7 +349,7 @@ $conn->close();
                         </div>
                         <span class="text-danger"> <?php echo $pictureError; ?> </span>
                     </div>
-                    
+
                     <div class="row py-2 align-items-center">
                         <div class="col-12 col-md-3 fw-bold py-2">Street</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
@@ -366,10 +361,11 @@ $conn->close();
                     <div class="row py-2 align-items-center">
                         <div class="col-12 col-md-3 fw-bold py-2">ZIP-Code</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="text" name="zipCode" placeholder="ZIP-Code" value="<?php echo $zipCode ?>" maxlength="12" /></div>
+                            <input class="form-control" type="text" name="zipCode" placeholder="ZIP-Code" value="<?php echo $zipCode ?>" maxlength="12" />
+                        </div>
                         <span class="text-danger"> <?php echo $zipCodeError; ?> </span>
                     </div>
-                    
+
                     <div class="row py-2 align-items-center">
                         <div class="col-12 col-md-3 fw-bold py-2">City</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
@@ -426,7 +422,7 @@ $conn->close();
 
                     <div>
                         <input type="hidden" name="id" value="<?php echo $data['pk_user_id'] ?>" />
-                        <input type="hidden" name="bannedUntil" value="<?php echo $bannedUntil ?>" />
+                        <input type="hidden" name="bannedUntil" value="<?php echo $data['banned_until'] ?>" />
                         <input type="hidden" name="picture" value="<?php echo $picture ?>" />
                         <a href="users.php"><button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">Back</button></a>
                         <button name="btnSave" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit">Save Changes</button>
@@ -435,10 +431,10 @@ $conn->close();
             </form>
         </div>
     </div>
-    <?php 
-        require_once '../components/footer.php';
-        footer("../../");
-        require_once '../components/boot-javascript.php';
+    <?php
+    require_once '../components/footer.php';
+    footer("../../");
+    require_once '../components/boot-javascript.php';
     ?>
 </body>
 

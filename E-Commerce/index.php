@@ -23,6 +23,7 @@ $products = getAllProducts();
 <body>
     <?php
     require_once 'php/components/header.php';
+    $id = "";
     if(isset($_SESSION['admin'])){
         $id = $_SESSION['admin'];
     } else if(isset($_SESSION['user'])) {

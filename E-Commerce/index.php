@@ -23,7 +23,12 @@ $products = getAllProducts();
 <body>
     <?php
     require_once 'php/components/header.php';
-    navbar("");
+    if(isset($_SESSION['admin'])){
+        $id = $_SESSION['admin'];
+    } else if(isset($_SESSION['user'])) {
+        $id = $_SESSION['user'];
+    }
+    navbar("", "", $id);
     ?>
     <div class="container my-1 p-md-2">
         <div class="row px-md-5">

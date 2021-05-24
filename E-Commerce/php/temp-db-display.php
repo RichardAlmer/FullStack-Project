@@ -156,7 +156,6 @@ $htmlUser="<table class='table table-striped'>
                         <th>address</th>
                         <th>city</th>
                         <th>postcode</th>
-                        <th>city</th>
                         <th>country</th>
                         <th>birthdate</th>
                         <th>status</th>

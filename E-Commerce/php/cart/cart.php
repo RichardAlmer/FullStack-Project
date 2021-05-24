@@ -217,7 +217,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="purchase.php"><button type="button" class="btn btn-primary">Purchase</button></a></td>
+                        <td><a href="purchase.php"><button type="button" class="btn btn-primary">Checkout</button></a></td>
                     </tr>
                 </tbody>
             </table>

@@ -1,5 +1,6 @@
 <?php
     require_once '../components/db_connect.php';
+    require_once '../components/emailService.php';
 
     session_start();
     if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
@@ -144,8 +145,10 @@
             $class3 = "danger";
             $message3 = "Error delete. Try again: <br>" . $conn->error;
         }
+
         $sqlId = "SELECT pk_purchase_id FROM purchase WHERE create_datetime = '{$date}' AND fk_user_id = {$userId}";
         $result = $conn->query($sqlId);
+
         if ($result->num_rows == 1){
             $data = $result->fetch_assoc();
             $purchaseId = $data['pk_purchase_id'];
@@ -160,6 +163,10 @@
             $class2 = "danger";
             $message2 = "Error Item. Try again: <br>" . $conn->error;
         }
+
+        //send email notification
+        purchaseNotification($purchaseId);
+
         Header('Location: '.$_SERVER['PHP_SELF']);
     }
     $conn->close();
@@ -230,7 +237,7 @@
             <form class='my-3' method='post' action='<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>' autocomplete='off'>
                 <input type='hidden' name='productId' value='<?php echo $productId ?>'/>
                 <input type='hidden' name='userId' value='<?php echo $userId ?>'/>
-                <button id='buyBtn' type="sumbit" name="buyBtn" class="btn btn-primary">Buy that shit!</button>
+                <button id='buyBtn' type="sumbit" name="buyBtn" class="btn btn-primary">Purchase</button>
             </form>
         </div>
         <div id="products">
@@ -298,8 +305,10 @@
         </div>
         <?php }else{ ?>
         <div>
-            <p>Your Order was Successfull</p>
-            <p>Thank you for shopping with us!</p>
+            <h2>Thank you for shopping with us!</h2>
+            <h1>Your Order was Successfull</h1>
+            <p>An notification has been send to your email address.</p>
+            <a href="../product/product-catalog.php" class="btn btn-primary">Continue Shopping</a>
         </div>  
         <?php } ?>
     </div>

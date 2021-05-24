@@ -12,6 +12,8 @@
         $userId = $_SESSION['user'];
     }
     
+    $id = $_GET['id'];
+
     if ($_GET['id']) {
         $id = $_GET['id'];
         $sql = "SELECT * FROM product WHERE pk_product_id = {$id}";
@@ -30,28 +32,69 @@
     }
     
     // Create Review
-    if (isset($_POST['submitRev'])) { 
-        if ($_POST['review']&&$_POST['rating']){
-            $review = $_POST['review'];
-            $rating = $_POST['rating'];
-            $title = $_POST['title'];
-            $date = date('y-m-d h:i:s');
-            $product_id = $_GET['id'];
-            
-            $sql = "INSERT INTO review (rating, title, comment, create_datetime, fk_product_id, fk_user_id) VALUES ($rating, '$title', '$review', '$date', $product_id, $userId)";
-
-            if ($conn->query($sql) === true ) {
-                $class = "success";
-                $messageReview = "The review was successfully created";
-            } else {
-                $class = "danger";
-                $messageReview = "Error while creating review. Try again: <br>" . $conn->error;
-            }
-        } else {
-            $class = "danger";
-            $messageReview = "Fill in all fields and don't forget the stars!";
+    $userPurchase = array();
+    $productPurchase = array();
+    $bought = false;
+    $sqlR = "SELECT DISTINCT fk_product_id, fk_user_id FROM purchase_item INNER JOIN purchase ON fk_purchase_id = pk_purchase_id WHERE fk_product_id = {$id}";
+    $resultR = mysqli_query($conn ,$sqlR);
+    if(mysqli_num_rows($resultR) > 0) {
+        while($rowR = mysqli_fetch_array($resultR, MYSQLI_ASSOC)){
+            array_push($productPurchase, $rowR['fk_product_id']);
+            array_push($userPurchase, $rowR['fk_user_id']);
         }
     }
+    for($i = 0; $i < count($userPurchase); $i++){
+        if($userPurchase[$i] == $userId && $productPurchase[$i] == $id){
+            $bought = true;
+            break;
+        }
+    }
+
+    $userReview = array();
+    $productReview = array();
+    $wroteReview = false;
+    $sqlU = "SELECT DISTINCT fk_product_id, fk_user_id FROM review WHERE fk_product_id = {$id}";
+    $resultU = mysqli_query($conn ,$sqlU);
+    if(mysqli_num_rows($resultU) > 0) {
+        while($rowU = mysqli_fetch_array($resultU, MYSQLI_ASSOC)){
+            array_push($productReview, $rowU['fk_product_id']);
+            array_push($userReview, $rowU['fk_user_id']);
+        }
+    }
+    for($i = 0; $i < count($userReview); $i++){
+        if($userReview[$i] == $userId && $productReview[$i] == $id){
+            $wroteReview = true;
+            break;
+        }
+    }
+    
+    if (isset($_POST['submitRev'])) {
+        if($bought && !$wroteReview){
+            if ($_POST['review'] && $_POST['rating']){
+                $review = $_POST['review'];
+                $rating = $_POST['rating'];
+                $title = $_POST['title'];
+                $date = date('y-m-d h:i:s');
+                $product_id = $_GET['id'];
+                
+                $sql = "INSERT INTO review (rating, title, comment, create_datetime, fk_product_id, fk_user_id) VALUES ($rating, '$title', '$review', '$date', $product_id, $userId)";
+    
+                if ($conn->query($sql) === true ) {
+                    $class = "success";
+                    $messageReview = "The review was successfully created";
+                } else {
+                    $class = "danger";
+                    $messageReview = "Error while creating review. Try again: <br>" . $conn->error;
+                }
+            } else {
+                $class = "danger";
+                $messageReview = "Fill in all fields and don't forget the stars!";
+            } 
+        } else {
+            $class = "danger";
+            $messageReview = "You have to buy the product to leave a review or You have already written a review for this product!";
+        } 
+    } 
 
     // Print Reviews
     $id = $_GET['id'];
@@ -309,7 +352,7 @@
                         <input class="form-control mb-2" type="text" name="title" placeholder="Leave a title here" id="reviewTitle">
                         <textarea class="form-control mb-2" type="text" name="review" placeholder="Leave a review here" id="reviewText"></textarea>
                     </div>
-                    <div class="my-2 text-<?=$class;?>"><?php echo ($messageReview) ?? ""; ?></div>
+                    <div class="text-<?=$class;?> my-2"><?php echo ($messageReview) ?? ""; ?></div>
                     <input id="rating" type="hidden" name="rating" value="" />
                     <button type="submit" name="submitRev" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create review</button>
                 </form>

@@ -205,6 +205,14 @@
             <p><?php echo $country ?></p>
             <!-- <button id='addressBtn' type="button" class="btn btn-primary">Change Delivery Address</button> -->
         </div>
+        <div id="payment">
+            <select class="form-select  w-25" aria-label="Default select example">
+                <option selected>Payment Methods</option>
+                <option value="dd">Direct Debit</option>
+                <option value="cc">Credit Card</option>
+                <option value="pp">PayPal</option>
+            </select>
+        </div>
         <div id="priceList">
             <h3>List of Items</h3>
             <div class="manageProduct w-50 mt-3">

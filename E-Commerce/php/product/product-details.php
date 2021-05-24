@@ -3,8 +3,6 @@
     require_once 'actions/helper-functions.php';
     
 
-    session_start();
-
     $userId = '';
     if(isset($_SESSION['admin'])){
         $userId = $_SESSION['admin'];

@@ -81,7 +81,7 @@ if (isset($_POST["submit"])) {
     } else if (strlen($firstName) < 3 || strlen($lastName) < 3) {
         $error = true;
         $fnameError = "Name and surname must have at least 3 characters.";
-    } else if (!preg_match("/^[a-zA-Z]+$/", $first_name) || !preg_match("/^[a-zA-Z]+$/", $last_name)) {
+    } else if (!preg_match("/^[a-zA-Z]+$/", $firstName) || !preg_match("/^[a-zA-Z]+$/", $lastName)) {
         $error = true;
         $fnameError = "Name and surname must contain only letters and no spaces.";
     }

@@ -100,7 +100,7 @@ if (isset($_POST["btnCreate"])) {
         $count = mysqli_num_rows($result);
         if ($count != 0) {
             $error = true;
-            $emailError = "Provided Email is already in use.";
+            $emailError = "Provided email is already in use.";
         }
     }
 
@@ -128,7 +128,7 @@ if (isset($_POST["btnCreate"])) {
     //checks if the ZIP-Code input was left empty
     if (empty($zipCode)) {
         $error = true;
-        $zipCodeError = "Please enter a ZIP-Code.";
+        $zipCodeError = "Please enter a postcode.";
     }
 
     //checks if the city input was left empty
@@ -222,17 +222,17 @@ $conn->close();
 
             <form class="my-3" method="post" enctype="multipart/form-data">
                 <div class="row py-2 align-items-center">
-                    <div class="col-12 col-md-3 fw-bold py-2">First Name</div>
+                    <div class="col-12 col-md-3 fw-bold py-2">First name</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName ?>" maxlength="100" />
+                        <input class="form-control" type="text" name="firstName" placeholder="First name" value="<?php echo $firstName ?>" maxlength="100" />
                     </div>
                     <span class="text-danger"> <?php echo $firstNameError; ?> </span>
                 </div>
 
                 <div class="row py-2 align-items-center">
-                    <div class="col-12 col-md-3 fw-bold py-2">Last Name</div>
+                    <div class="col-12 col-md-3 fw-bold py-2">Last name</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName ?>" maxlength="100" />
+                        <input class="form-control" type="text" name="lastName" placeholder="Last name" value="<?php echo $lastName ?>" maxlength="100" />
                     </div>
                     <span class="text-danger"> <?php echo $lastNameError; ?> </span>
                 </div>
@@ -278,7 +278,7 @@ $conn->close();
                 </div>
 
                 <div class="row py-2 align-items-center">
-                    <div class="col-12 col-md-3 fw-bold py-2">ZIP-Code</div>
+                    <div class="col-12 col-md-3 fw-bold py-2">Postcode</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="zipCode" placeholder="ZIP-Code" value="<?php echo $zipCode ?>" maxlength="12" />
                     </div>
@@ -320,7 +320,7 @@ $conn->close();
                 </div>
 
                 <div class="row py-2 align-items-center">
-                    <div class="col-12 col-md-3 fw-bold py-2">Banned Until:</div>
+                    <div class="col-12 col-md-3 fw-bold py-2">Banned until:</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="datetime-local" name="bannedUntil" placeholder="Banned until" />
                     </div>

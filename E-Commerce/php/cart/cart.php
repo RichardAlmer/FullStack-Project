@@ -121,12 +121,12 @@
             array_push($allPrice, $price);
             if($productId == $row['fk_product_id']){
                 $item .= "
-                    <div class='col-12 col-md-4 col-lg-2'>
+                    <div class='col-12 col-lg-2 py-2'>
                         <a href='../product/product-details.php?id=".$productId."'><img class='img-thumbnail rounded-circle' src='../../img/product_images/".$row['image']."'></a>
                     </div>
                     <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" .$row['name']."</div>
                     <div class='col-12 col-md-4 col-lg-1 py-2 py-md-3 py-lg-0'>" .$row['status']."</div>
-                    <div class='col-12 col-md-3 col-lg-2 py-2 py-md-3 py-lg-0'>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>
                         <div class='row'>
                             <form class='d-none' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>
                                 <input type='hidden' name='itemId' value='$itemId'/>
@@ -148,9 +148,9 @@
                             </form>
                         </div>
                     </div>
-                    <div class='col-12 col-md-3 col-lg-2 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor'>" .$row['discount_procent']."% | ".$amount."€</span></div>
-                    <div class='col-12 col-md-3 col-lg-1 py-2 py-md-3 py-lg-0'>" .$price."€</div>
-                    <div class='col-12 col-md-3 col-lg-2 py-2 py-md-3 py-lg-0'>" .$discountPrice."€</div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor'>" .$row['discount_procent']."% | ".$amount."€</span></div>
+                    <div class='col-12 col-md-4 col-lg-1 py-2 py-md-3 py-lg-0'>" .$price."€</div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" .$discountPrice."€</div>
                 ";
                 $quantity = "";
                 $itemId = "";
@@ -178,12 +178,16 @@
 <body>
     <?php 
         require_once '../../php/components/header.php';
+        $id = "";
+        $session = "";
         if(isset($_SESSION['admin'])){
             $id = $_SESSION['admin'];
+            $session = "admin";
         } else if(isset($_SESSION['user'])) {
             $id = $_SESSION['user'];
+            $session = "user";
         }
-        navbar("../../", "../", $id);
+        navbar("../../", "../", "../", $id, $session);
     ?>
     <div class="container">
         <div class="my-5 py-5">
@@ -205,35 +209,22 @@
                     <div class='row my-3 align-items-center text-center text-md-start'>
                         <?= $item;?>
                     </div>
-                    <div>
 
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>-<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</td>
-                            <td><?php echo array_sum($allPrice) ?>€</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Total: </td>
-                            <td><b><?php echo array_sum($allDiscountPrice) ?>€</b></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="purchase.php"><button type="button" class="btn btn-primary">Checkout</button></a></td>
-                        </tr>
+                    <hr>
+
+                    <div class='fw-bold row my-3 text-center text-md-end'>
+                        <div class="col-12 py-1">
+                            <div>Subtotal: <?php echo array_sum($allPrice) ?>€</div>
+                        </div>
+                        <div class="col-12 py-1">
+                            <div class='my_text_maincolor'>Discount: -<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</div>
+                        </div>
+                        <div class="col-12 py-1">
+                            <div class="text-uppercase fs-5">Total: <?php echo array_sum($allDiscountPrice) ?>€</b></div>
+                        </div>
+                        <div>
+                            <a href="purchase.php"><button type="button" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-4 text-white my-4">Checkout</button></a>
+                        </div>
                     </div>
                 </table>
             </div>

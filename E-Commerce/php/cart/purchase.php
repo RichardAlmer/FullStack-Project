@@ -184,12 +184,16 @@
 <body>
     <?php 
         require_once '../../php/components/header.php';
+        $id = "";
+        $session = "";
         if(isset($_SESSION['admin'])){
             $id = $_SESSION['admin'];
+            $session = "admin";
         } else if(isset($_SESSION['user'])) {
             $id = $_SESSION['user'];
+            $session = "user";
         }
-        navbar("../../", "../", $id);
+        navbar("../../", "../", "../", $id, $session);
     ?>
     <div class="container">
         <h1>Purchase</h1>

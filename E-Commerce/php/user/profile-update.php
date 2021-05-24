@@ -86,21 +86,8 @@ if (isset($_POST["submit"])) {
         $fnameError = "Name and surname must contain only letters and no spaces.";
     }
 
-    //basic email validation
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = true;
-        $emailError = "Please enter a valid email address.";
-    } else {
-        // checks whether the email exists or not
-        $query = "SELECT email FROM user WHERE email='$email'";
-        $result = mysqli_query($conn, $query);
-        $count = mysqli_num_rows($result);
-        if ($count != 0) {
-            $error = true;
-            $emailError = "Provided email is already in use.";
-        }
-    }
-    //checks if the date input was left empty
+
+    //checks if the other inputs was left empty
     if (empty($birthdate)) {
         $error = true;
         $birthdateError = "Please enter your date of birth.";

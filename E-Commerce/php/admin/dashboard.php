@@ -1,13 +1,13 @@
 <?php
-    // session_start();
-    // if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
-    //     header("Location: ../../index.php");
-    //     exit;
-    // }
-    // if (isset($_SESSION["user"])) {
-    //     header("Location: ../product/product-catalog.php");
-    //     exit;
-    // }
+    session_start();
+    if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+        header("Location: ../../index.php");
+        exit;
+    }
+    if (isset($_SESSION["user"])) {
+        header("Location: ../product/product-catalog.php");
+        exit;
+    }
     ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,16 @@
 <body>
     <?php
         require_once '../components/header.php';
-        navbar("../../", "../");
+        $id = "";
+        $session = "";
+        if(isset($_SESSION['admin'])){
+            $id = $_SESSION['admin'];
+            $session = "admin";
+        } else if(isset($_SESSION['user'])) {
+            $id = $_SESSION['user'];
+            $session = "user";
+        }
+        navbar("../../", "../", "../", $id, $session);
     ?>
 
     <div id="container" class="container">

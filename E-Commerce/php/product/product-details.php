@@ -292,7 +292,7 @@
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("../../", "../", $id, $session);
+        navbar("../../", "../", "../", $id, $session);
     ?>
     <div class="container">
         <div id="product" class="my-5 py-5">

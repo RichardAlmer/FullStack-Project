@@ -95,7 +95,16 @@ $conn->close();
 <body>
     <?php
     require_once 'components/header.php';
-    navbar("../");
+    $id = "";
+        $session = "";
+        if(isset($_SESSION['admin'])){
+            $id = $_SESSION['admin'];
+            $session = "admin";
+        } else if(isset($_SESSION['user'])) {
+            $id = $_SESSION['user'];
+            $session = "user";
+        }
+        navbar("../", "", "", $id, $session);
     ?>
 
     <div class="container py-5">

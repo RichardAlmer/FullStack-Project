@@ -33,7 +33,7 @@ $products = getAllProducts();
         $id = $_SESSION['user'];
         $session = "user";
     }
-    navbar("", "", $id, $session);
+    navbar("", "php/", "../", $id, $session);
     ?>
     <div class="container my-1 p-md-2">
         <div class="row px-md-5">

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // To Do: Session Stuff ------------------------------------------------
 
 require_once '../components/db_connect.php';
@@ -48,7 +48,16 @@ if ($_GET['id']) {
 <body>
     <?php 
         require_once '../components/header.php';
-        navbar("../../");
+        $id = "";
+        $session = "";
+        if(isset($_SESSION['admin'])){
+            $id = $_SESSION['admin'];
+            $session = "admin";
+        } else if(isset($_SESSION['user'])) {
+            $id = $_SESSION['user'];
+            $session = "user";
+        }
+        navbar("../../", "../", "../", $id, $session);
     ?>
     <div id="container" class="container">
         <div class="row my-5 py-5">

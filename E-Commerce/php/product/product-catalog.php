@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../components/db_connect.php';
 require_once 'actions/helper-functions.php';
 
@@ -62,7 +62,16 @@ $conn->close();
     <body>
         <?php 
             require_once '../../php/components/header.php';
-            navbar("../../", "../"); 
+            $id = "";
+            $session = "";
+            if(isset($_SESSION['admin'])){
+                $id = $_SESSION['admin'];
+                $session = "admin";
+            } else if(isset($_SESSION['user'])) {
+                $id = $_SESSION['user'];
+                $session = "user";
+            }
+            navbar("../../", "../", "../", $id, $session);
         ?>
 
         <div class="container">

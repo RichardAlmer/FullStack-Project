@@ -60,7 +60,7 @@ if (isset($_GET['id'])) {
         //banned until
         $bannedUntil = $data['banned_until'];
         $time = strtotime($bannedUntil);
-        $timeResult = date('d-m-y H:i:s', $time);
+        $timeResult = date('Y.m.d H:i:s', $time);
 
         //you cannot ban other admins
         if ($role == 'admin') {
@@ -320,7 +320,7 @@ $conn->close();
             <form class="my-3" method="post" enctype="multipart/form-data">
                 <table class="table">
                     <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">First Name</div>
+                        <div class="col-12 col-md-3 fw-bold py-2">First name</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
                             <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName ?>" maxlength="100" />
                         </div>
@@ -328,7 +328,7 @@ $conn->close();
                     </div>
 
                     <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Last Name</div>
+                        <div class="col-12 col-md-3 fw-bold py-2">Last name</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
                             <input class="form-control" type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName ?>" maxlength="100" />
                         </div>
@@ -376,7 +376,7 @@ $conn->close();
                     </div>
 
                     <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">ZIP-Code</div>
+                        <div class="col-12 col-md-3 fw-bold py-2">Postcode</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
                             <input class="form-control" type="text" name="zipCode" placeholder="ZIP-Code" value="<?php echo $zipCode ?>" maxlength="12" />
                         </div>
@@ -418,7 +418,7 @@ $conn->close();
                     </div>
 
                     <div class="row py-2 align-items-center">
-                        <div class="col-12 col-md-3 fw-bold py-2">Banned Until:</div>
+                        <div class="col-12 col-md-3 fw-bold py-2">Banned until:</div>
 
                         <?php if ($time) { ?>
                             <td>
@@ -433,7 +433,8 @@ $conn->close();
                         <?php } ?>
 
                         <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <input class="form-control" type="datetime-local" name="bannedUntilNew" placeholder="Banned until" />
+                            <input class="form-control" type="datetime-local" name="bannedUntilNew" placeholder="Banned until YYYY-MM-DD HH:MM:SS" />
+
                         </div>
                     </div>
 

@@ -52,10 +52,6 @@ if (isset($_POST['btnRegister'])) {
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
 
-    $uploadError = '';
-    $profile_image = file_upload($_FILES['profile_image']);
-
-    
     // basic name validation
     if (empty($first_name) || empty($last_name)) {
         $error = true;
@@ -116,7 +112,9 @@ if (isset($_POST['btnRegister'])) {
     $password = hash('sha256', $pass);
     // if there's no error, continue to signup
     if (!$error) {
-
+        $uploadError = '';
+        $profile_image = file_upload($_FILES['profile_image'], 'register');
+        
         $query = "INSERT INTO user(first_name, last_name, address, city, postcode, country, password, birthdate, email, profile_image) VALUES('$first_name', '$last_name','$address','$city', '$postcode', '$country', '$password', '$birthdate', '$email', '$profile_image->fileName')";
 
         $res = mysqli_query($conn, $query);
@@ -144,23 +142,23 @@ $conn->close();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration System</title>
-    <?php require_once 'components/boot.php'?>
+    <?php require_once 'components/boot.php' ?>
     <link rel="stylesheet" href="../style/main-style.css" />
 </head>
 
 <body>
-    <?php 
-        require_once 'components/header.php';
-        $id = "";
-        $session = "";
-        if(isset($_SESSION['admin'])){
-            $id = $_SESSION['admin'];
-            $session = "admin";
-        } else if(isset($_SESSION['user'])) {
-            $id = $_SESSION['user'];
-            $session = "user";
-        }
-        navbar("../", "", "", $id, $session);
+    <?php
+    require_once 'components/header.php';
+    $id = "";
+    $session = "";
+    if (isset($_SESSION['admin'])) {
+        $id = $_SESSION['admin'];
+        $session = "admin";
+    } else if (isset($_SESSION['user'])) {
+        $id = $_SESSION['user'];
+        $session = "user";
+    }
+    navbar("../", "", "", $id, $session);
     ?>
     <div class="container">
         <div class="row my-5 py-5">
@@ -174,7 +172,7 @@ $conn->close();
                     </div>
                 <?php } ?>
             </div>
-            
+
             <div class="justify-content-center d-flex">
                 <form class="col-12 col-md-6 flex-column" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" enctype="multipart/form-data">
                     <div class="col-12 my-3">
@@ -182,7 +180,7 @@ $conn->close();
                         <input id="first_name" type="text" name="first_name" class="form-control" placeholder="Enter your first name" maxlength="100" value="<?php echo $first_name ?>" />
                         <span class="text-danger"> <?php echo $fnameError; ?> </span>
                     </div>
-                    
+
                     <div class="col-12 my-3">
                         <label for="last_name" class="form-label">Last name</label>
                         <input id="last_name" type="text" name="last_name" class="form-control" placeholder="Enter your last name" maxlength="100" value="<?php echo $last_name ?>" />
@@ -213,7 +211,7 @@ $conn->close();
                             <span class="text-danger"> <?php echo $picError; ?> </span>
                         </div>
                     </div>
-                    
+
                     <div class="col-12 my-3">
                         <label for="address" class="form-label">Your address</label>
                         <input id="address" type="text" name="address" class="form-control" placeholder="Enter your address" maxlength="255" value="<?php echo $address ?>" />
@@ -247,11 +245,11 @@ $conn->close();
             </div>
         </div>
     </div>
-    
-    <?php 
-        require_once 'components/footer.php';
-        footer("../");
-        require_once 'components/boot-javascript.php';
+
+    <?php
+    require_once 'components/footer.php';
+    footer("../");
+    require_once 'components/boot-javascript.php';
     ?>
 </body>
 

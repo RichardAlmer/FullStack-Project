@@ -26,9 +26,12 @@ function file_upload($image, $source = 'user')
                     $fileNewName = uniqid('') . "." . $fileExtension; // 1233343434.jpg i.e
                     if($source == 'product'){
                         $destination = "../../img/product_images/$fileNewName";
-                    }elseif ($source == 'user'){
+                    } elseif ($source == 'user'){
                         $destination = "../../img/user_images/$fileNewName";
-                    }                    
+                    } elseif ($source == 'register'){
+                        echo "source register says hi";
+                        $destination = "../img/user_images/$fileNewName";
+                    }                        
                     if (move_uploaded_file($fileTmpName, $destination)) {
                         $result->error = 0;
                         $result->fileName = $fileNewName;

@@ -121,30 +121,36 @@
             array_push($allPrice, $price);
             if($productId == $row['fk_product_id']){
                 $item .= "
-                <tr>
-                    <td><a href='../product/product-details.php?id=".$productId."'><img class='img-thumbnail' src='../../img/product_images/".$row['image']."'></a></td>
-                    <td>" .$row['name']."</td>
-                    <td>" .$row['status']."</td>
-                    <td>
-                        <form class='my-3' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>
-                            <input type='hidden' name='itemId' value='$itemId'/>
-                            <button class='del btn btn-primary rounded-circle  my-auto ms-3 fw-bold' type='submit' name='minus'> - </button>".$quantity."
-                        </form>
-                        <form class='my-3' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>
-                            <input type='hidden' name='productId' value='$productId'/>
-                            <input type='hidden' name='userId' value='$userId'/>
-                            <input type='hidden' name='quantity' value='1'/>
-                            <button class='del btn btn-primary rounded-circle  my-auto ms-3 fw-bold' type='submit' name='plus'> + </button>
-                        </form>
-                        <form class='my-3' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>
-                            <input type='hidden' name='productId' value='$productId'/>
-                            <button class='del btn btn-danger rounded-circle  my-auto ms-3 fw-bold' type='submit' name='delete'> X </button>
-                        </form>
-                    </td>
-                    <td>" .$row['discount_procent']."% | ".$amount."€</td>
-                    <td>" .$price."€</td>
-                    <td>" .$discountPrice."€</td>
-                </tr>
+                    <div class='col-12 col-md-4 col-lg-2'>
+                        <a href='../product/product-details.php?id=".$productId."'><img class='img-thumbnail rounded-circle' src='../../img/product_images/".$row['image']."'></a>
+                    </div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" .$row['name']."</div>
+                    <div class='col-12 col-md-4 col-lg-1 py-2 py-md-3 py-lg-0'>" .$row['status']."</div>
+                    <div class='col-12 col-md-3 col-lg-2 py-2 py-md-3 py-lg-0'>
+                        <div class='row'>
+                            <form class='d-none' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>
+                                <input type='hidden' name='itemId' value='$itemId'/>
+                                <button class='col-2 del btn fw-bold fs-3 px-1' type='submit' name='minus'> - </button>
+                            </form>
+
+                            <div class='col-3 fw-bold fs-5 py-3 text-center px-1'><span class='my_text_maincolor border py-2 px-3 rounded-circle'>".$quantity."</span></div>
+
+                            <form class='d-none' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>
+                                <input type='hidden' name='productId' value='$productId'/>
+                                <input type='hidden' name='userId' value='$userId'/>
+                                <input type='hidden' name='quantity' value='1'/>
+                                <button class='col-2 del btn fw-bold fs-3 px-1' type='submit' name='plus'> + </button>
+                            </form>
+
+                            <form class='d-none' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>
+                                <input type='hidden' name='productId' value='$productId'/>
+                                <button class='col-2 del btn fw-bold fs-5 ps-3' type='submit' name='delete'> X </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class='col-12 col-md-3 col-lg-2 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor'>" .$row['discount_procent']."% | ".$amount."€</span></div>
+                    <div class='col-12 col-md-3 col-lg-1 py-2 py-md-3 py-lg-0'>" .$price."€</div>
+                    <div class='col-12 col-md-3 col-lg-2 py-2 py-md-3 py-lg-0'>" .$discountPrice."€</div>
                 ";
                 $quantity = "";
                 $itemId = "";
@@ -162,6 +168,12 @@
     <title>Shopping Cart</title>
     <?php require_once '../../php/components/boot.php'?>
     <link rel="stylesheet" href="../../style/main-style.css" />
+    <style type="text/css">
+        .img-thumbnail {
+            width: 10rem;
+            height: 10rem;
+        }
+    </style>
 </head>
 <body>
     <?php 
@@ -174,59 +186,65 @@
         navbar("../../", "../", $id);
     ?>
     <div class="container">
-    <div class="my-2 text-<?=$class;?>"><?php echo ($message) ?? ""; ?></div>
-        <h1>Cart</h1>
-        <?php if($item !== ""){ ?>
-        <div class="manageProduct w-75 mt-3">
-            <table class='table table-striped'>
-               <thead class='table-success'>
-                    <tr>
-                        <th>Picture</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Quantity</th>
-                        <th>Discount</th>
-                        <th>Price</th>
-                        <th>Discount Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?= $item;?>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</td>
-                        <td><?php echo array_sum($allPrice) ?>€</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Total: </td>
-                        <td><b><?php echo array_sum($allDiscountPrice) ?>€</b></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="purchase.php"><button type="button" class="btn btn-primary">Checkout</button></a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <?php }else{ ?>
-            <div>
-                <h2>Your cart is empty!</h2>
+        <div class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Cart</div>
+            <div class="py-2 text-<?=$class;?>"><?php echo ($message) ?? ""; ?></div>
+
+            <?php if($item !== ""){ ?>
+            <div class="manageProduct">
+                <table class='table table-striped'>
+                    <div class='fw-bold d-none d-lg-flex row my-3'>
+                        <div class="col-12 col-lg-2">Picture</div>
+                        <div class="col-12 col-lg-2">Name</div>
+                        <div class="col-12 col-lg-1">Status</div>
+                        <div class="col-12 col-lg-2">Quantity</div>
+                        <div class="col-12 col-lg-2">Discount</div>
+                        <div class="col-12 col-lg-1">Price</div>
+                        <div class="col-12 col-lg-2">Discount Price</div>
+                    </div>
+                    <div class='row my-3 align-items-center text-center text-md-start'>
+                        <?= $item;?>
+                    </div>
+                    <div>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>-<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</td>
+                            <td><?php echo array_sum($allPrice) ?>€</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total: </td>
+                            <td><b><?php echo array_sum($allDiscountPrice) ?>€</b></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a href="purchase.php"><button type="button" class="btn btn-primary">Checkout</button></a></td>
+                        </tr>
+                    </div>
+                </table>
             </div>
-        <?php } ?>
+
+            <?php }else{ ?>
+                <div>
+                    <h2>Your cart is empty!</h2>
+                </div>
+            <?php } ?>
+
+        </div>
     </div>
     <?php 
         require_once '../../php/components/footer.php';

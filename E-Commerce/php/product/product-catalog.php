@@ -9,7 +9,7 @@ $resultCategories = mysqli_query($conn ,$sqlCategories);
 $categories=''; 
 if(mysqli_num_rows($resultCategories) > 0) {     
     while($row = mysqli_fetch_array($resultCategories, MYSQLI_ASSOC)){ 
-        $categories .= "<div class='my_text'><a href='#' onclick='filterProducts(\"category\", \"".$row['category']."\")'>".$row['category']."</a></div><br/>";
+        $categories .= "<div class='my_text my-3'><a class='my_text' href='#' onclick='filterProducts(\"category\", \"".$row['category']."\")'>".$row['category']."</a></div>";
     }
 }
 
@@ -67,34 +67,37 @@ $conn->close();
 
         <div class="container">
             <div class="row my-5 pt-5">
-                <div class="col-12 col-md-4 fs_6 text-uppercase my-2">All products</div>
-                <div class="col-12 col-md-2 fs_6 my-2">
-                    <input type="text" class="form-control" onkeyup="showResult(this.value)" name="search" id="search" aria-describedby="searchHelp" placeholder="Search for product">
+                <div class="col-12 col-lg-4 fs_6 text-uppercase my-2">All products</div>
+                <div class="col-12 col-lg-3 fs_6 my-3 my-lg-2">
+                    <input type="text" class="form-control rounded-pill px-4" onkeyup="showResult(this.value)" name="search" id="search" aria-describedby="searchHelp" placeholder="Search for product">
                 </div>
-                <div class="col-12 col-md-6 my-2 text-end">
-                    <a href="" class="col-12 col-md-auto my-2 px-1">
-                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
-                            <a href='#' onclick='filterProducts("category","all","rating","DESC")'>Sort by rating</a>
-                        </div>
-                    </a>
-                    <a href="" onclick="showProducts('price', 'desc')" class="col-12 col-md-auto my-2 px-1">
-                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">
-                            <a href='#' onclick='filterProducts("category","all","price","ASC")'>Sort by price</a>
-                        </div>
-                    </a>
+                <div class="col-12 col-lg-5 my-2 text-lg-end mt-3 my-lg-2 justify-content-lg-end">
+                    <div class="row px-3 px-lg-0">
+                        <a href="" class="col-12 col-md-auto my-lg-2 px-1">
+                            <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
+                                <a href='#' onclick='filterProducts("category","all","rating","DESC")'>Sort by rating</a>
+                            </div>
+                        </a>
+                        <a href="" onclick="showProducts('price', 'desc')" class="col-12 col-md-auto my-lg-2 px-1">
+                            <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">
+                                <a href='#' onclick='filterProducts("category","all","price","ASC")'>Sort by price</a>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="container mb-4">
-            <div class="row py-3">
-                <div id="result" class="row col-10">
+            <div class="row py-3 flex-column-reverse flex-lg-row">
+                <div id="result" class="row col-12 col-lg-10">
                     <?php echo $resultHtml; ?>
                 </div>
-                <div class="col-2 py-3">
-                    <div class="fw-bold mb-3">Shop by category</div> 
+
+                <div class="col-12 col-lg-2 py-1 ps-0 ps-lg-4 pe-0">
+                    <div class="fw-bold mb-3 fs-5">Shop by category</div> 
                     <?php echo $categories; ?>
-                    <div class='my_text'><a href='#' onclick='filterProducts("category","all")'>All categories</a></div><br/>
+                    <div class='my_text'><a class='my_text' href='#' onclick='filterProducts("category","all")'>All categories</a></div><br/>
                 </div>
             </div>
         </div>
@@ -127,7 +130,7 @@ $conn->close();
                 xmlhttp.onreadystatechange=function() {
                 if (this.readyState==4 && this.status==200) {
                     document.getElementById("result").innerHTML=this.responseText;
-                    document.getElementById("result").style.border="1px solid #A5ACB2";
+                    //document.getElementById("result").style.border="1px solid #A5ACB2";
                 }
             }
                 xmlhttp.open("GET","actions/product-search.php?search="+str,true);

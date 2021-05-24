@@ -8,19 +8,19 @@ function getStars($rating) {
     $stars = "";
     switch($rating){
         case 1:
-            $stars = "★☆☆☆☆";
+            $stars = "<span class='my_text_maincolor'>★</span>☆☆☆☆";
             break;
         case 2:
-            $stars = "★★☆☆☆";
+            $stars = "<span class='my_text_maincolor'>★★</span>☆☆☆";
             break;
         case 3:
-            $stars = "★★★☆☆";
+            $stars = "<span class='my_text_maincolor'>★★★</span>☆☆";
             break;
         case 4:
-            $stars = "★★★★☆";
+            $stars = "<span class='my_text_maincolor'>★★★★</span>☆";
             break;
         case 5:
-            $stars = "★★★★★";
+            $stars = "<span class='my_text_maincolor'>★★★★★</span>";
             break;
         default:
             $stars = "☆☆☆☆☆";

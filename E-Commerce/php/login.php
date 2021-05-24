@@ -66,7 +66,11 @@ if (isset($_POST['btn-login'])) {
                     $_SESSION['user'] = $userId;
                     header("Location: product/product-catalog.php");
                 } else {
-                    $errMSG = "You are banned until " . $banDate;
+                    if ($bannedUntil != NULL) {
+                        $errMSG = "You are banned until " . $banDate;
+                    } else {
+                        $errMSG = "You are banned.";
+                    }
                 }
             } else {
                 $errMSG = "Incorrect Credentials, Try again...";
@@ -111,7 +115,7 @@ $conn->close();
         <div class="row my-5 py-5">
             <div class="col-12 fs_6 text-uppercase my-2 text-center">Login</div>
 
-            <div class="col-12 text-center my_text_maincolor">
+            <div class="col-12 text-center text-danger">
                 <?php
                 if (isset($errMSG)) {
                     echo $errMSG;

@@ -43,27 +43,33 @@ if (isset($_POST['btn-login'])) {
         $stmt->bind_param("s", $email);
         $work = $stmt->execute();
         $result = $stmt->get_result();
+
         $row = $result->fetch_assoc();
         $count = $result->num_rows;
+        //Email check if account exists if not to else
+        if ($count != 0) {
 
-        // var_dump($row);
+            // var_dump($count);
 
-        $userId = $row['pk_user_id'];
-        $password = $row['password'];
-        $role = $row['role'];
-        $status = $row['status'];
-        $bannedUntil = $row['banned_until'];
-        $banDate = date('d-m-y H:i:s', strtotime($bannedUntil));
+            $userId = $row['pk_user_id'];
+            $password = $row['password'];
+            $role = $row['role'];
+            $status = $row['status'];
+            $bannedUntil = $row['banned_until'];
+            $banDate = date('d-m-y H:i:s', strtotime($bannedUntil));
 
-        if ($count == 1 && $inputPW == $password) {
-            if ($status == 'active' && $role == 'admin') {
-                $_SESSION['admin'] = $userId;
-                header("Location: admin/dashboard.php");
-            } else if ($status == 'active' && $role == 'user' && banChecker($conn, $userId)) {
-                $_SESSION['user'] = $userId;
-                header("Location: product/product-catalog.php");
+            if ($count == 1 && $inputPW == $password) {
+                if ($status == 'active' && $role == 'admin') {
+                    $_SESSION['admin'] = $userId;
+                    header("Location: admin/dashboard.php");
+                } else if ($status == 'active' && $role == 'user' && banChecker($conn, $userId)) {
+                    $_SESSION['user'] = $userId;
+                    header("Location: product/product-catalog.php");
+                } else {
+                    $errMSG = "You are banned until " . $banDate;
+                }
             } else {
-                $errMSG = "You are banned until " . $banDate;
+                $errMSG = "Incorrect Credentials, Try again...";
             }
         } else {
             $errMSG = "Incorrect Credentials, Try again...";

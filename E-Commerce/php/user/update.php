@@ -74,6 +74,8 @@ $firstNameError = $lastNameError = $emailError =  $passwordError = $birthDateErr
 $class = 'd-none';
 if (isset($_POST["btnSave"])) {
 
+    // var_dump($_POST);
+
     $error = false;
 
     // sanitize user input to prevent sql injection
@@ -155,12 +157,18 @@ if (isset($_POST["btnSave"])) {
         }
     }
 
-    // password validation
-    if (empty($pass)) {
-        $passwordNew = $password;
-    } else if (strlen($pass) < 6) {
+    // use old password if no new input
+    if (empty($password)) {
+        $sql = "SELECT * FROM user WHERE pk_user_id = {$userId}";
+        $result = $conn->query($sql);
+        $data = $result->fetch_assoc();
+        $newPassword = $data['password'];
+    } else if (strlen($password) < 6) { //if new input check passw length
         $error = true;
-        $passError = "Password must have at least 6 characters.";
+        $passwordError = "Password must have at least 6 characters.";
+    } else {
+        // password hashing for security
+        $newPassword = hash('sha256', $password);
     }
 
     //checks if the date input was left empty
@@ -198,8 +206,8 @@ if (isset($_POST["btnSave"])) {
         $intoDB = NULL;
     }
 
-    // password hashing for security
-    $password = hash('sha256', $password);
+    // // password hashing for security
+    // $password = hash('sha256', $password);
 
     // if there's no error, continue to signup
     if (!$error) {
@@ -212,16 +220,16 @@ if (isset($_POST["btnSave"])) {
         if (empty($intoDB)) {
             if ($pictureArray->error === 0) {
                 ($_POST["picture"] == "default-user.jpg") ?: unlink("../../img/user_images/{$_POST["picture"]}");
-                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$password', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = NULL, profile_image = '$pictureArray->fileName' WHERE pk_user_id = '$userId'";
+                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$newPassword', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = NULL, profile_image = '$pictureArray->fileName' WHERE pk_user_id = '$userId'";
             } else {
-                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$password', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = NULL WHERE pk_user_id = '$userId'";
+                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$newPassword', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = NULL WHERE pk_user_id = '$userId'";
             }
         } else {
             if ($pictureArray->error === 0) {
                 ($_POST["picture"] == "default-user.jpg") ?: unlink("../../img/user_images/{$_POST["picture"]}");
-                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$password', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = '$intoDB', profile_image = '$pictureArray->fileName' WHERE pk_user_id = '$userId'";
+                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$newPassword', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = '$intoDB', profile_image = '$pictureArray->fileName' WHERE pk_user_id = '$userId'";
             } else {
-                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$password', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = '$intoDB' WHERE pk_user_id = '$userId'";
+                $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', password = '$newPassword', birthdate = '$birthDate', address = '$street', postcode = '$zipCode', city = '$city', country = '$country', role = '$role', status = '$status', banned_until = '$intoDB' WHERE pk_user_id = '$userId'";
             }
         }
 

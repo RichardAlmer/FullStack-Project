@@ -3,7 +3,7 @@
 function banChecker($conn, $userId)
 {
     $banExpired = "";
-    $timeStrg = date('d-m-y H:i:s');
+    $timeStrg = date('y-m-d H:i:s');
     $dateTimeNow = strtotime($timeStrg);
 
     //Get user ban date

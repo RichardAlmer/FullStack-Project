@@ -1,7 +1,7 @@
 <?php 
-session_start();
-function navbar($level1="", $level2="", $id=""){
-    if(!isset($_SESSION["admin"]) && !isset($_SESSION["user"])){
+// session_start();
+function navbar($level1="", $level2="", $id="", $session = ""){
+    if($session == ""){
         echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">
             <div class="container container-fluid">
@@ -16,7 +16,7 @@ function navbar($level1="", $level2="", $id=""){
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
                         <li class="nav-item px-2">
-                            <a class="nav-link my_text" href="'.$level1.'/">Home</a>
+                            <a class="nav-link my_text" href="'.$level1.'">Home</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link my_text" href="'.$level1.'php/product/product-catalog.php">Products</a>
@@ -32,7 +32,7 @@ function navbar($level1="", $level2="", $id=""){
             </div>
         </nav>
     </header>';
-    } else if (!isset($_SESSION["admin"]) && isset($_SESSION["user"])){
+    } else if ($session == "user"){
         echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">
             <div class="container container-fluid">
@@ -47,7 +47,7 @@ function navbar($level1="", $level2="", $id=""){
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
                         <li class="nav-item px-2">
-                            <a class="nav-link my_text" href="'.$level1.'/">Home</a>
+                            <a class="nav-link my_text" href="'.$level1.'">Home</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link my_text" href="'.$level1.'php/product/product-catalog.php">Products</a>
@@ -70,7 +70,7 @@ function navbar($level1="", $level2="", $id=""){
             </div>
         </nav>
     </header>';
-    } else if(isset($_SESSION["admin"]) && !isset($_SESSION["user"])){
+    } else if($session == "admin"){
         echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">
             <div class="container container-fluid">
@@ -85,7 +85,7 @@ function navbar($level1="", $level2="", $id=""){
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
                         <li class="nav-item px-2">
-                            <a class="nav-link my_text" href="'.$level1.'/">Home</a>
+                            <a class="nav-link my_text" href="'.$level1.'">Home</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link my_text" href="'.$level1.'php/product/product-catalog.php">Products</a>

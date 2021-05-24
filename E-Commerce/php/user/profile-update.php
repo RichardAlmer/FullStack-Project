@@ -86,21 +86,8 @@ if (isset($_POST["submit"])) {
         $fnameError = "Name and surname must contain only letters and no spaces.";
     }
 
-    //basic email validation
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = true;
-        $emailError = "Please enter a valid email address.";
-    } else {
-        // checks whether the email exists or not
-        $query = "SELECT email FROM user WHERE email='$email'";
-        $result = mysqli_query($conn, $query);
-        $count = mysqli_num_rows($result);
-        if ($count != 0) {
-            $error = true;
-            $emailError = "Provided email is already in use.";
-        }
-    }
-    //checks if the date input was left empty
+
+    //checks if the other inputs was left empty
     if (empty($birthdate)) {
         $error = true;
         $birthdateError = "Please enter your date of birth.";
@@ -170,41 +157,47 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">First name</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName ?>" />
+                        <span class="text-danger"> <?php echo $fnameError; ?> </span>
                     </div>
                 </div>
 
                 <div class="row py-2 align-items-center">
                     <div class="col-12 col-md-3 fw-bold py-2">Last name</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="lastName" placeholder="First Name" value="<?php echo $lastName ?>" />
+                        <input class="form-control" type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName ?>" />
+                        <span class="text-danger"> <?php echo $lnameError; ?> </span>
                     </div>
                 </div>
 
                 <div class="row py-2 align-items-center">
                     <div class="col-12 col-md-3 fw-bold py-2">Address</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="address" placeholder="First Name" value="<?php echo $address ?>" />
+                        <input class="form-control" type="text" name="address" placeholder="Adress" value="<?php echo $address ?>" />
+                        <span class="text-danger"> <?php echo $addressError; ?> </span>
                     </div>
                 </div>
 
                 <div class="row py-2 align-items-center">
                     <div class="col-12 col-md-3 fw-bold py-2">City</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="city" placeholder="First Name" value="<?php echo $city ?>" />
+                        <input class="form-control" type="text" name="city" placeholder="City" value="<?php echo $city ?>" />
+                        <span class="text-danger"> <?php echo $cityError; ?> </span>
                     </div>
                 </div>
 
                 <div class="row py-2 align-items-center">
                     <div class="col-12 col-md-3 fw-bold py-2">Postcode</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="postcode" placeholder="First Name" value="<?php echo $postcode ?>" />
+                        <input class="form-control" type="text" name="postcode" placeholder="Postcode" value="<?php echo $postcode ?>" />
+                        <span class="text-danger"> <?php echo $postcodeError; ?> </span>
                     </div>
                 </div>
 
                 <div class="row py-2 align-items-center">
                     <div class="col-12 col-md-3 fw-bold py-2">Country</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="country" placeholder="First Name" value="<?php echo $country ?>" />
+                        <input class="form-control" type="text" name="country" placeholder="County" value="<?php echo $country ?>" />
+                        <span class="text-danger"> <?php echo $countryError; ?> </span>
                     </div>
                 </div>
 
@@ -212,6 +205,7 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">Birthdate</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="date" name="birthdate" placeholder="Birthdate" value="<?php echo $birthdate ?>" />
+                        <span class="text-danger"> <?php echo $birthdateError; ?> </span>
                     </div>
                 </div>
 

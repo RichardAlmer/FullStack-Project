@@ -1,5 +1,6 @@
 <?php
 require_once "php/components/db_connect.php";
+session_start();
 function getAllProducts()
 {
     global $conn;
@@ -24,12 +25,15 @@ $products = getAllProducts();
     <?php
     require_once 'php/components/header.php';
     $id = "";
+    $session = "";
     if(isset($_SESSION['admin'])){
         $id = $_SESSION['admin'];
+        $session = "admin";
     } else if(isset($_SESSION['user'])) {
         $id = $_SESSION['user'];
+        $session = "user";
     }
-    navbar("", "", $id);
+    navbar("", "", $id, $session);
     ?>
     <div class="container my-1 p-md-2">
         <div class="row px-md-5">

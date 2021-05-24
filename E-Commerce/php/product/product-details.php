@@ -180,7 +180,7 @@
                         </div>
                         <div class='answer col-12 justify-content-end'>$answer</div>
                     </div>
-                    <hr>
+                    <hr><br/><br/>
                 ";
                 $answer = "";
             } else {
@@ -204,6 +204,7 @@
                             </form>
                         </div>
                     </div>
+                    <hr><br/><br/>
                 ";
             }
         }
@@ -319,7 +320,7 @@
 
         </div>
     </div>
-
+    
     <div class="container">
         <hr>
         <div id="qAndA" class="row my-5 py-3 justify-content-center">

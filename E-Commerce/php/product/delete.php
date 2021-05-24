@@ -83,9 +83,11 @@
 
                 <?php if($message !== ""){ ?>
                     <div class="container">
+                        <div class="row my-5 py-5">
                         <div class="alert alert-<?=$class;?>" role="alert">
                             <p><?=$message;?></p >
-                            <a href ='products.php'><button class= "btn btn-success" type='button'>Back</button></a>
+                            <a href ='products.php'><button class= "col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type='button'>Back</button></a>
+                        </div>
                         </div>
                     </div >
                 <?php } ?>

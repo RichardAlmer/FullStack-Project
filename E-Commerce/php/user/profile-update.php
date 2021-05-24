@@ -6,8 +6,6 @@
 
 require_once '../components/db_connect.php';
 
-
-
 //fetch and populate form
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -25,10 +23,6 @@ if (isset($_GET['id'])) {
     }   
 }
 
-$error = false;
-$firstName = $lastName  = $address = $city = $postcode = $country = $birthdate = '';
-$fnameError = $lnameError = $addressError = $cityError = $postcodeError = $countryError = $birthdateError =  '';
-
 //update on submit
 $class = 'd-none';
 if (isset($_POST["submit"])) {
@@ -40,74 +34,8 @@ if (isset($_POST["submit"])) {
     $country = $_POST['country'];
     $birthdate = $_POST['birthdate'];
     $id = $_POST['ids'];
-
-    $firstName = trim($_POST['first_name']);
-    $firstName = strip_tags($firstName);
-    $firstName = htmlspecialchars($firstName);
-
-    $lastName = trim($_POST['last_name']);
-    $lastName = strip_tags($lastName);
-    $lastName = htmlspecialchars($lastName);
-
-    $address = trim($_POST['address']);
-    $address = strip_tags($address);
-    $address = htmlspecialchars($address);
-
-    $city = trim($_POST['city']);
-    $city = strip_tags($city);
-    $city = htmlspecialchars($city);
-
-    $postcode = trim($_POST['postcode']);
-    $postcode = strip_tags($postcode);
-    $postcode = htmlspecialchars($postcode);
-
-    $country = trim($_POST['country']);
-    $country = strip_tags($country);
-    $country = htmlspecialchars($country);
-
-   
-
-    $birthdate = trim($_POST['birthdate']);
-    $birthdate = strip_tags($birthdate);
-    $birthdate = htmlspecialchars($birthdate);
-
     
     $uploadError = '';    
-
-     // basic name validation
-     if (empty($firstName) || empty($lastName)) {
-        $error = true;
-        $fnameError = "Please enter your full name and surname.";
-    } else if (strlen($firstName) < 3 || strlen($lastName) < 3) {
-        $error = true;
-        $fnameError = "Name and surname must have at least 3 characters.";
-    } else if (!preg_match("/^[a-zA-Z]+$/", $firstName) || !preg_match("/^[a-zA-Z]+$/", $lastName)) {
-        $error = true;
-        $fnameError = "Name and surname must contain only letters and no spaces.";
-    }
-
-
-    //checks if the other inputs was left empty
-    if (empty($birthdate)) {
-        $error = true;
-        $birthdateError = "Please enter your date of birth.";
-    }
-    if (empty($address)) {
-        $error = true;
-        $addressError = "Please enter the address.";
-    }
-    if (empty($city)) {
-        $error = true;
-        $cityError = "Please enter the city.";
-    }
-    if (empty($postcode)) {
-        $error = true;
-        $postcodeError = "Please enter a postcode.";
-    }
-    if (empty($country)) {
-        $error = true;
-        $countryError = "Please enter the country.";
-    }
 
     $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', address = '$address', city = '$city', postcode = '$postcode', country = '$country', birthdate = '$birthdate' 
     WHERE pk_user_id = '$id'";
@@ -157,7 +85,6 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">First name</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName ?>" />
-                        <span class="text-danger"> <?php echo $fnameError; ?> </span>
                     </div>
                 </div>
 
@@ -165,7 +92,6 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">Last name</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName ?>" />
-                        <span class="text-danger"> <?php echo $lnameError; ?> </span>
                     </div>
                 </div>
 
@@ -173,7 +99,6 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">Address</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="address" placeholder="Adress" value="<?php echo $address ?>" />
-                        <span class="text-danger"> <?php echo $addressError; ?> </span>
                     </div>
                 </div>
 
@@ -181,7 +106,6 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">City</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="city" placeholder="City" value="<?php echo $city ?>" />
-                        <span class="text-danger"> <?php echo $cityError; ?> </span>
                     </div>
                 </div>
 
@@ -189,15 +113,13 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">Postcode</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="text" name="postcode" placeholder="Postcode" value="<?php echo $postcode ?>" />
-                        <span class="text-danger"> <?php echo $postcodeError; ?> </span>
                     </div>
                 </div>
 
                 <div class="row py-2 align-items-center">
                     <div class="col-12 col-md-3 fw-bold py-2">Country</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <input class="form-control" type="text" name="country" placeholder="County" value="<?php echo $country ?>" />
-                        <span class="text-danger"> <?php echo $countryError; ?> </span>
+                        <input class="form-control" type="text" name="country" placeholder="Country" value="<?php echo $country ?>" />
                     </div>
                 </div>
 
@@ -205,7 +127,6 @@ $conn->close();
                     <div class="col-12 col-md-3 fw-bold py-2">Birthdate</div>
                     <div class="col-12 col-md-9 pb-3 py-md-2">
                         <input class="form-control" type="date" name="birthdate" placeholder="Birthdate" value="<?php echo $birthdate ?>" />
-                        <span class="text-danger"> <?php echo $birthdateError; ?> </span>
                     </div>
                 </div>
 

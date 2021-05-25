@@ -347,7 +347,7 @@
                 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){ 
             ?>
             <div class="row my-5 py-3 text-center justify-content-center">
-                <div id="stars" class="text-center mb-4 my_text_lightgray">
+                <div id="stars" class="text-center mb-4 my_text_lightgray fs-5">
                     <span id="st1">★</span><span id="st2">★</span><span id="st3">★</span><span id="st4">★</span><span id="st5">★</span>
                 </div>
                 <form class="col-12 col-md-8" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>" autocomplete="off">

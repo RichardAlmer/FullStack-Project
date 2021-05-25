@@ -154,7 +154,7 @@
             $purchaseId = $data['pk_purchase_id'];
         }
         for($i = 0; $i < count($allProductIds); $i++){
-            $sql2 = "INSERT INTO purchase_item (quantity, fk_product_id, fk_purchase_id) VALUES ($allQuantitys[$i], $allProductIds[$i], $purchaseId)";
+            $sql2 = "INSERT INTO purchase_item (quantity, fk_product_id, fk_purchase_id, sold) VALUES ($allQuantitys[$i], $allProductIds[$i], $purchaseId, $allDiscountPrice[$i])";
         }
         if ($conn->query($sql2) === true ) {
             $class2 = "success";

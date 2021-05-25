@@ -4,7 +4,7 @@ require_once '../components/db_connect.php';
 require_once 'actions/helper-functions.php';
 
 // get category filter links
-$sqlCategories = ("SELECT DISTINCT category FROM product");
+$sqlCategories = ("SELECT DISTINCT category FROM product WHERE status = 'active'");
 $resultCategories = mysqli_query($conn ,$sqlCategories);
 $categories=''; 
 if(mysqli_num_rows($resultCategories) > 0) {     

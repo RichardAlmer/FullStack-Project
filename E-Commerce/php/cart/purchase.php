@@ -104,22 +104,18 @@ if (mysqli_num_rows($result) > 0) {
         array_push($allProductIds, $productId);
         if ($productId == $row['fk_product_id']) {
             $item .= "
-                <tr>
-                    <td>" . $row['name'] . "</td>
-                    <td>" . $quantity . "</td>
-                    <td>" . $row['discount_procent'] . "%</td>
-                    <td>" . number_format($price, 2, ',', ' ') . "€</td>
-                </tr>
+                    <div class='col-12 col-md-4 py-2 py-md-3 py-lg-0'>" . $row['name'] . "</div>
+                    <div class='col-12 col-md-2 py-2 py-md-3 py-lg-0'>" . $quantity . "</div>
+                    <div class='col-12 col-md-3 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor'>" . $row['discount_procent'] . "%</span></div>
+                    <div class='col-12 col-md-3 py-2 py-md-3 py-lg-0'>" . number_format($price, 2, ',', ' ') . "€</div>
                 ";
             $itemBill .= "
-                <tr>
-                    <td><img class='img-thumbnail' src='../../img/product_images/" . $row['image'] . "'></td>
-                    <td>" . $row['name'] . "</td>
-                    <td>" . $quantity . "</td>
-                    <td>" . $row['discount_procent'] . "%</td>
-                    <td>" . number_format($price, 2, ',', ' ') . "€</td>
-                    <td>" . number_format($discountPrice, 2, ',', ' ') . "€</td>
-                </tr>
+                    <div class='col-12 col-md-4 col-lg-2 py-2'><img class='img-thumbnail rounded-circle' src='../../img/product_images/" . $row['image'] . "'></div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" . $row['name'] . "</div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor fw-bold'>" . $quantity . "</span></div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor'>" . $row['discount_procent'] . "%</span></div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" . number_format($price, 2, ',', ' ') . "€</div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" . number_format($discountPrice, 2, ',', ' ') . "€</div>
                 ";
             $quantity = "";
             $itemId = "";
@@ -200,137 +196,115 @@ $conn->close();
     navbar("../../", "../", "../", $id, $session);
     ?>
     <div class="container">
-        <h1>Purchase</h1>
-        <div class="my-2 text-<?= $class1; ?>"><?php echo ($message1) ?? ""; ?></div>
-        <div class="my-2 text-<?= $class2; ?>"><?php echo ($message2) ?? ""; ?></div>
-        <div class="my-2 text-<?= $class3; ?>"><?php echo ($message3) ?? ""; ?></div>
-        <?php if ($item !== "") { ?>
-            <div id="address">
-                <h3>Delivery | Billing Address</h3>
-                <p><?php echo $firstName . " " . $lastName ?></p>
-                <p><?php echo $address . "," ?></p>
-                <p><?php echo $city . " - " . $postcode . "," ?></p>
-                <p><?php echo $country ?></p>
-                <!-- <button id='addressBtn' type="button" class="btn btn-primary">Change Delivery Address</button> -->
-            </div>
-            <div id="payment">
-                <select class="form-select  w-25" aria-label="Default select example">
-                    <option selected>Payment Methods</option>
-                    <option value="dd">Direct Debit</option>
-                    <option value="cc">Credit Card</option>
-                    <option value="pp">PayPal</option>
-                </select>
-            </div>
-            <div id="priceList">
-                <h3>List of Items</h3>
-                <div class="manageProduct w-50 mt-3">
-                    <table class='table table-striped'>
-                        <thead class='table-success'>
-                            <tr>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Discount</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?= $item; ?>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>-<?php echo number_format((array_sum($allPrice) - array_sum($allDiscountPrice)), 2, ',', ' ') ?>€</td>
-                                <td><?php echo number_format(array_sum($allPrice), 2, ',', ' ') ?>€</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>Total: </td>
-                                <td><b><?php echo number_format(array_sum($allDiscountPrice), 2, ',', ' ') ?>€</b></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Purchase</div>
+            <div class="my-2 text-<?= $class1; ?>"><?php echo ($message1) ?? ""; ?></div>
+            <div class="my-2 text-<?= $class2; ?>"><?php echo ($message2) ?? ""; ?></div>
+            <div class="my-2 text-<?= $class3; ?>"><?php echo ($message3) ?? ""; ?></div>
+            <?php if ($item !== "") { ?>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div id="address" class="my-3">
+                            <div class="col-12 fw-bold my-4">Delivery | Billing Address</div>
+                            <div class="col-12 my-3"><span class="my_text_maincolor"><?php echo $firstName . " " . $lastName ?> </span><?php echo $address .", ". $city . " - " . $postcode . ", ". $country?></div>
+                            <!-- <button id='addressBtn' type="button" class="btn btn-primary">Change Delivery Address</button> -->
+                        </div>
+                        <div id="payment" class="col-12 col-md-6">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Payment Methods</option>
+                                <option value="dd">Direct Debit</option>
+                                <option value="cc">Credit Card</option>
+                                <option value="pp">PayPal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="priceList" class="col-12 col-lg-6">
+                        <div class="col-12 fw-bold my-4">List of Items</div>
+                        <div class="manageProduct mt-3">
+                            <table class='table table-striped'>
+                                <div class='fw-bold d-none d-lg-flex row my-3'>
+                                    <div class="col-12 col-lg-4">Name</div>
+                                    <div class="col-12 col-lg-2">Quantity</div>
+                                    <div class="col-12 col-lg-3">Discount</div>
+                                    <div class="col-12 col-lg-3">Price</div>
+                                </div>
+                                <div class='row my-3 align-items-center text-center text-md-start'>
+                                    <?= $item; ?>
+                                </div>
+                                <hr>
+                                <div class='fw-bold row my-3 text-center text-md-end'>
+                                    <div class="col-12 py-1">
+                                        <div>Subtotal: <?php echo number_format(array_sum($allPrice), 2, ',', ' ') ?>€</div>
+                                    </div>
+                                    <div class="col-12 py-1">
+                                        <div class='my_text_maincolor'>Discount: -<?php echo number_format((array_sum($allPrice) - array_sum($allDiscountPrice)), 2, ',', ' ') ?>€</div>
+                                    </div>
+                                    <div class="col-12 py-1">
+                                        <div class="text-uppercase fs-5">Total: <?php echo number_format(array_sum($allDiscountPrice), 2, ',', ' ') ?>€</b></div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                        <form class="col-12 col-md-auto text-center text-md-end" method='post' action='<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>' autocomplete='off'>
+                            <input type='hidden' name='productId' value='<?php echo $productId ?>' />
+                            <input type='hidden' name='userId' value='<?php echo $userId ?>' />
+                            <button id='buyBtn' type="sumbit" name="buyBtn" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-4 text-white">Purchase</button>
+                        </form>
+                    </div>
                 </div>
-                <form class='my-3' method='post' action='<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>' autocomplete='off'>
-                    <input type='hidden' name='productId' value='<?php echo $productId ?>' />
-                    <input type='hidden' name='userId' value='<?php echo $userId ?>' />
-                    <button id='buyBtn' type="sumbit" name="buyBtn" class="btn btn-primary">Purchase</button>
-                </form>
-            </div>
-            <div id="products">
-                <h3>Bill</h3>
-                <div class="manageProduct w-75 mt-3">
-                    <table class='table table-striped'>
-                        <thead class='table-success'>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th colspan="2">Bill</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Name: </td>
-                                <td colspan="4"><?php echo $firstName . " " . $lastName ?></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Address: </td>
-                                <td colspan="4"><?php echo $address . "," ?></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td colspan="4"><?php echo $city . " - " . $postcode . "," ?></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td colspan="4"><?php echo $country ?></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th>Picture</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Discount</th>
-                                <th>Price</th>
-                                <th>Discount Price</th>
-                            </tr>
-                            <?= $itemBill; ?>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>-<?php echo number_format((array_sum($allPrice) - array_sum($allDiscountPrice)), 2, ',', ' ') ?>€</td>
-                                <td><?php echo number_format(array_sum($allPrice), 2, ',', ' ') ?>€</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>Total: </td>
-                                <td><b><?php echo number_format(array_sum($allDiscountPrice), 2, ',', ' ') ?>€</b></td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                <div id="products" class="my-5">
+                    <div class="col-12 fs_6 text-uppercase my-2">Bill</div>
+                    <div class="manageProduct mt-3">
+                        <table class='table table-striped'>
+                            <div class="col-12 fw-bold my-4">Bill</div>
+                            <div class='row my-3'>
+                                <div class='col-12 col-md-4 py-2'>Name:</div>
+                                <div class='col-12 col-md-8 py-2'><?php echo $firstName . " " . $lastName ?></div>
+                                <div class='col-12 col-md-4 py-2'>Address:</div>
+                                <div class='col-12 col-md-8 py-2'><?php echo $address . ", ". $city . " - " . $postcode . ", ". $country ?></div>
+                            </div>
+
+                            <div class="col-12 fw-bold my-4">Items</div>
+                            <div class='fw-bold d-none d-lg-flex row my-3 my_text_lightgray'>
+                                <div class="col-lg-2">Picture</div>
+                                <div class="col-lg-2">Name</div>
+                                <div class="col-lg-2">Quantity</div>
+                                <div class="col-lg-2">Discount</div>
+                                <div class="col-lg-2">Price</div>
+                                <div class="col-lg-2">Discount Price</div>
+                            </div>
+                            <div class='row my-3 align-items-center text-center text-lg-start'>
+                                <?= $itemBill; ?>
+                            </div>
+                            <hr>
+                            <div class='fw-bold row my-3 text-center text-md-end'>
+                                <div class="col-12 py-1">
+                                    <div>Subtotal: <?php echo number_format(array_sum($allPrice), 2, ',', ' ') ?>€</div>
+                                </div>
+                                <div class="col-12 py-1">
+                                    <div class='my_text_maincolor'>Discount: -<?php echo number_format((array_sum($allPrice) - array_sum($allDiscountPrice)), 2, ',', ' ') ?>€</div>
+                                </div>
+                                <div class="col-12 py-1">
+                                    <div class="text-uppercase fs-5">Total: <?php echo number_format(array_sum($allDiscountPrice), 2, ',', ' ') ?>€</b></div>
+                                </div>
+                            </div>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        <?php } else { ?>
-            <div>
-                <h2>Thank you for shopping with us!</h2>
-                <h1>Your Order was Successfull</h1>
-                <p><?php echo $_SESSION['emailResponse']['statusMessage'] ?></p>
-                <a href="../product/product-catalog.php" class="btn btn-primary">Continue Shopping</a>
-            </div>
-        <?php
-            //destroy session emailResponse variable
-            unset($_SESSION['emailResponse']);
-            }
-        ?>
+            <?php } else { ?>
+                <div>
+                    <h2>Thank you for shopping with us!</h2>
+                    <h1>Your Order was Successfull</h1>
+                    <p><?php echo $_SESSION['emailResponse']['statusMessage'] ?></p>
+                    <a href="../product/product-catalog.php" class="btn btn-primary">Continue Shopping</a>
+                </div>
+            <?php
+                //destroy session emailResponse variable
+                unset($_SESSION['emailResponse']);
+                }
+            ?>
+        </div>
     </div>
     <?php
     require_once '../../php/components/footer.php';

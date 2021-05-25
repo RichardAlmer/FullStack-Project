@@ -27,6 +27,13 @@ img {
     width: 100%;
 }
 
+/*rewrite bootstrap styles*/
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(6, 215, 160, 0.5);
+}
+
 ::placeholder {
   color: var(--light_gray) !important;
 }
@@ -142,10 +149,10 @@ img {
     height: 100%;
 }
 
-.form-control:focus {
-    box-shadow: 0 0 0 0.25rem rgba(6, 215, 160, 0.6);
+.img-thumbnail {
+    width: 10rem;
+    height: 10rem;
 }
-
 
 /*media*/
 @media (max-width: 575.98px) { 

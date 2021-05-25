@@ -154,6 +154,11 @@ img {
     height: 10rem;
 }
 
+.big-thumbnail {
+    width: 15rem;
+    height: 15rem;
+}
+
 /*media*/
 @media (max-width: 575.98px) { 
     .banner_text {

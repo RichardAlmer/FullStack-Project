@@ -86,7 +86,7 @@ if ($_GET['id']) {
 
                 <div class="row col-12 col-md-4">
                     <?php 
-                        echo "<img class='img-thumbnail rounded-circle' src='../../img/user_images/".$picture."'>";
+                        echo "<img class='img-thumbnail big-thumbnail p-1 rounded-circle' src='../../img/user_images/".$picture."'>";
                     ?>
                 </div>
                 <div class="row col-12 col-md-8 py-5">

@@ -123,6 +123,7 @@ if (isset($_POST['btnRegister'])) {
             $errTyp = "success";
             $errMSG = "Successfully registered, you may <a href='login.php'>login</a> now.";
             $uploadError = ($profile_image->error != 0) ? $profile_image->ErrorMessage : '';
+            header("refresh:3;url=login.php");
         } else {
             $errTyp = "danger";
             $errMSG = "Something went wrong, try again later...";

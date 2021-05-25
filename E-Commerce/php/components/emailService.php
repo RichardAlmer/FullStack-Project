@@ -21,9 +21,10 @@ function purchaseNotification($purchaseId)
     $url = "https://obermayer.codefactory.live/emailAPI.php?id=" . $purchaseId . "";
 
     $jsonStrg = curl_get($url);
-    return var_dump($jsonStrg);
-    // $jsonData = json_decode($jsonStrg, true); ------------------------------> No response object NULL when json decode
-    // return $response;
+    $jsonData = json_decode($jsonStrg, true);
+    // var_dump($jsonData);
+
+    return $jsonData;
 }
 
 // purchaseNotification(1);

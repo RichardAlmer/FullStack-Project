@@ -46,48 +46,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Review</title>
-    <?php require_once '../components/boot.php'?>
+    <?php require_once '../../php/components/boot.php'?>
+    <link rel="stylesheet" href="../../style/main-style.css" />
 </head>
 <body>
-    <div id="container">
+    <div id="container" class="container">
         <?php require_once '../components/header.php'; 
-        $id = "";
-        $session = "";
-        if(isset($_SESSION['admin'])){
-            $id = $_SESSION['admin'];
-            $session = "admin";
-        } else if(isset($_SESSION['user'])) {
-            $id = $_SESSION['user'];
-            $session = "user";
-        }
-        navbar("../../", "../", "../", $id, $session);?>
-        <?php
-            if($message !== ""){
+            $id = "";
+            $session = "";
+            if(isset($_SESSION['admin'])){
+                $id = $_SESSION['admin'];
+                $session = "admin";
+            } else if(isset($_SESSION['user'])) {
+                $id = $_SESSION['user'];
+                $session = "user";
+            }
+            navbar("../../", "../", "../", $id, $session);
         ?>
-        <div class="alert alert-<?=$class;?>" role="alert">
-            <p><?=$message;?></p >
-            <a href ='reviews.php?id=<?php echo $productId ?>'><button class= "btn btn-success" type='button'>Back</button></a>
-        </div>
-        <?php } ?>
-        <?php
-            if($message === ""){
-        ?>
-        <fieldset>
-            <legend class='h2 mb-3'>Delete request</legend>
-            <h5>You have selected the review below:</h5>
-            <table class="table w-75 mt-3" >
+        
+        <div class="my-5 py-5">
+            <div class="col-12 fs_6 text-uppercase my-2">Delete request</div>
+
+            <?php
+                if($message !== ""){
+            ?>
+            <div class="alert alert-<?=$class;?>" role="alert">
+                <p><?=$message;?></p >
+                <a href ='reviews.php?id=<?php echo $productId ?>'><button class= "btn btn-success" type='button'>Back</button></a>
+            </div>
+            <?php } ?>
+            <?php
+                if($message === ""){
+            ?>
+
+            <div class="col-12 fs-5 my-3">You have selected the data below:</div>
+            <table class="table my-3 col-12" >
                 <tr>
                     <td><?php echo $name?></td>
                 </tr>
             </table>
-            <h3 class="mb-4">Do you really want to delete this review?</h3>
+            <div class="fs-5 my-4">Do you really want to delete this review?</div>
             <form action ="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>"  method="post">
                 <input type="hidden" name="id" value ="<?php echo $id ?>"/>
-                <button class="btn btn-danger" type="submit" name="submitR">Yes, delete it!</button>
-                <a href="reviews.php?id=<?php echo $productId ?>"><button class="btn btn-warning" type="button">No, go back!</button></a>
+                <a href="reviews.php?id=<?php echo $productId ?>"><button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">No, go back!</button></a>
+                <button class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit" name="submitR">Yes, delete it!</button>
             </form>
-        </fieldset>
+        </div>
         <?php } ?>
     </div>
+
+    <?php 
+        require_once '../components/footer.php';
+        footer("../../");
+        require_once '../components/boot-javascript.php';
+    ?>
 </body>
 </html>

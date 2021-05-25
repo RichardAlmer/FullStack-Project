@@ -87,17 +87,14 @@ $conn->close();
                 </div>
                 <div class="col-12 col-lg-5 my-2 mt-3 my-lg-2">
                     <div class="row px-2 px-lg-0 justify-content-lg-end">
-                        <a href="" onclick="showProducts('price', 'desc')" class="col-12 col-md-auto my-lg-2 px-1">
-                            <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">
-                                <a href='#' onclick='filterProducts("category","all","price","ASC")'>Sort by price</a>
-                            </div>
-                        </a>
-                        <a href="" class="col-12 col-md-auto my-lg-2 px-1">
-                            <div class="btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
-                            <a href='#' onclick='filterProducts("clear","all","default")'>Clear all filters</a>
-                                
-                            </div>
-                        </a>
+                        <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white me-md-2">
+                            <a href='#' onclick='filterProducts("category","all","price","ASC")'>Sort by price</a>
+                        </div>
+                        
+                        <div class="btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
+                            <a href='#' class="col-12 col-md-auto my-lg-2 px-1" onclick='filterProducts("clear","all","default")'>Clear all filters</a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

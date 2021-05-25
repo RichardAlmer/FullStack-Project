@@ -19,14 +19,18 @@ $result = mysqli_query($conn ,$sql);
 $resultHtml=''; 
 $currentPrice='';
 if(mysqli_num_rows($result) > 0) {     
-    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){      
+    while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){   
+        $price = '';
+        if ($row['discount_procent']) {
+            $price = '€'. $row['price'];
+        }   
         $currentPrice = discountedPrice($row['price'],$row['discount_procent']);
 
         $sqlRating = "SELECT AVG(rating) AS rating FROM review WHERE fk_product_id = $row[pk_product_id]";
         $resultRating = mysqli_query($conn ,$sqlRating);
         $dataRating = $resultRating->fetch_assoc();
         $stars = getStars(round($dataRating['rating']));
-        $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-2 box_height'>
+        $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-3 box_height'>
                         <a href='product-details.php?id=" .$row['pk_product_id']."'>
                             <div class='square'>
                                 <img class='content' src='../../img/product_images/{$row['image']}' alt=''>
@@ -34,13 +38,14 @@ if(mysqli_num_rows($result) > 0) {
                             <div class='row py-3 text-center'>
                                 <div class='col-12 fs-5 my-2'>{$row['name']}</div>
                                 <a href='/' class='col-12 my-1 my_text_maincolor'>{$row['category']}</a>
-                                <a href='/' class='col-12 my-1'>{$row['brand']}</a> 
-                                <div class='col-12 fw-bold my-3'>€{$currentPrice} ";
+                                <a href='/' class='col-12'>{$row['brand']}</a> 
+                                <div class='col-12 fw-bold mt-2'>".$stars."</div>
+                                <div class='col-12 text-decoration-line-through mt-2'>{$price}</div>
+                                <div class='col-12 fw-bold'>€{$currentPrice} ";
         if ($row['discount_procent'] != '0') {
             $resultHtml .= "<span class='my_text_maincolor'>(-{$row['discount_procent']}%)</span>";
         }
-        $resultHtml .= "</div><div class='col-12 fw-bold my-3'>".$stars."
-        </div></div></a></div>";  
+        $resultHtml .= "</div></div></a></div>";  
     };
 } else  {
    $tbody =  "<div><center>No Data Available </center></div>";
@@ -80,16 +85,16 @@ $conn->close();
                 <div class="col-12 col-lg-3 fs_6 my-3 my-lg-2">
                     <input type="text" class="form-control rounded-pill px-4" onkeyup="showResult(this.value)" name="search" id="search" aria-describedby="searchHelp" placeholder="Search for product">
                 </div>
-                <div class="col-12 col-lg-5 my-2 text-lg-end mt-3 my-lg-2 justify-content-lg-end">
-                    <div class="row px-3 px-lg-0">
-                        <a href="" class="col-12 col-md-auto my-lg-2 px-1">
-                            <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
-                                <a href='#' onclick='filterProducts("category","all","rating","DESC")'>Sort by rating</a>
-                            </div>
-                        </a>
+                <div class="col-12 col-lg-5 my-2 mt-3 my-lg-2">
+                    <div class="row px-2 px-lg-0 justify-content-lg-end">
                         <a href="" onclick="showProducts('price', 'desc')" class="col-12 col-md-auto my-lg-2 px-1">
                             <div class="btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white">
                                 <a href='#' onclick='filterProducts("category","all","price","ASC")'>Sort by price</a>
+                            </div>
+                        </a>
+                        <a href="" class="col-12 col-md-auto my-lg-2 px-1">
+                            <div class="btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
+                                <a href='#' onclick='filterProducts("category","all","rating","DESC")'>Clear all filters</a>
                             </div>
                         </a>
                     </div>
@@ -98,12 +103,12 @@ $conn->close();
         </div>
 
         <div class="container mb-4">
-            <div class="row py-3 flex-column-reverse flex-lg-row">
-                <div id="result" class="row col-12 col-lg-10">
+            <div class="row row_width py-3 flex-column-reverse flex-lg-row">
+                <div id="result" class="row row_width px-0 col-12 col-lg-10">
                     <?php echo $resultHtml; ?>
                 </div>
 
-                <div class="col-12 col-lg-2 py-1 ps-0 ps-lg-4 pe-0">
+                <div class="col-12 col-lg-2 py-2 ps-3 ps-lg-4 pe-0">
                     <div class="fw-bold mb-3 fs-5">Shop by category</div> 
                     <?php echo $categories; ?>
                     <div class='my_text'><a class='my_text' href='#' onclick='filterProducts("category","all")'>All categories</a></div><br/>

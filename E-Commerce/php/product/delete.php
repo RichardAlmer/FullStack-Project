@@ -28,8 +28,8 @@
     $class = "";
     $message = "";
     if (isset($_POST['submitP'])) {
-        $id = $_POST[ 'id'];
-        $sql = "DELETE FROM product WHERE pk_product_id = {$id}";
+        
+        $sql = "DELETE FROM product WHERE pk_product_id = {$_GET['id']}";
         if ($conn->query($sql) === TRUE) {
             $class = "success";
             $message = "Successfully Deleted!";
@@ -117,7 +117,7 @@
 
                     <div class="fs-5 mb-4">Do you really want to <span class="my_text_maincolor">delete this product?</span></div>
                     <form action ="<?php echo htmlspecialchars($_SERVER['PHP_SELF']).'?id='.$_GET['id']; ?>"  method="post">
-                        <input type="hidden" name="id" value ="<?php echo $id ?>"/>
+                        
                         <a href="products.php?id=<?php echo $id ?>"><button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">No, go back!</button></a>
                         <button class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit" name="submitP"> Yes, delete it! </button>
                     </form>

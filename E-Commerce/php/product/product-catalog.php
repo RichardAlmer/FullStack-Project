@@ -115,6 +115,7 @@ $conn->close();
         </div>
         
         <script>
+            
             function filterProducts(filter, value, sort="none", order="ASC") {
                 if (filter == "") {
                     document.getElementById("result").innerHTML = "no result";
@@ -134,11 +135,10 @@ $conn->close();
                 }
                 
             }
-
+            
             function showResult(str) {
                 if (str.length==0) {
-                    document.getElementById("result").innerHTML="";
-                    document.getElementById("result").style.border="0px";
+                    filterProducts("clear","all","default");
                     return;
                 }
                 var xmlhttp=new XMLHttpRequest();

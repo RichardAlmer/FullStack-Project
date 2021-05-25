@@ -205,7 +205,7 @@ $conn->close();
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div id="address" class="my-3">
-                            <div class="col-12 fw-bold my-4">Delivery | Billing Address</div>
+                            <div class="col-12 fw-bold my-4">Delivery | Billing address</div>
                             <div class="col-12 my-3"><span class="my_text_maincolor"><?php echo $firstName . " " . $lastName ?> </span><?php echo $address .", ". $city . " - " . $postcode . ", ". $country?></div>
                             <!-- <button id='addressBtn' type="button" class="btn btn-primary">Change Delivery Address</button> -->
                         </div>
@@ -219,7 +219,7 @@ $conn->close();
                         </div>
                     </div>
                     <div id="priceList" class="col-12 col-lg-6">
-                        <div class="col-12 fw-bold my-4">List of Items</div>
+                        <div class="col-12 fw-bold my-4">List of items</div>
                         <div class="manageProduct mt-3">
                             <table class='table table-striped'>
                                 <div class='fw-bold d-none d-lg-flex row my-3'>
@@ -272,7 +272,7 @@ $conn->close();
                                 <div class="col-lg-2">Quantity</div>
                                 <div class="col-lg-2">Discount</div>
                                 <div class="col-lg-2">Price</div>
-                                <div class="col-lg-2">Discount Price</div>
+                                <div class="col-lg-2">Discount price</div>
                             </div>
                             <div class='row my-3 align-items-center text-center text-lg-start'>
                                 <?= $itemBill; ?>

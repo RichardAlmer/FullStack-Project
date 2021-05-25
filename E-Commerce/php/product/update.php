@@ -32,7 +32,7 @@ if (isset($_GET['id'])) {
         $status = $data['status'];
         $discountProcent = $data['discount_procent'];
 
-        echo "picture: " . $picture;
+        // echo "picture: " . $picture;
     }
 }
 

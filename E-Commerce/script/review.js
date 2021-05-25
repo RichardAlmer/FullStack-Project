@@ -8,7 +8,7 @@ var st5 = document.getElementById("st5");
 var rating = document.getElementById("rating");
 
 st1.addEventListener('click', ()=>{
-    st1.style.color = "yellow";
+    st1.style.color = "var(--main_color)";
     st2.style.color = "gray";
     st3.style.color = "gray";
     st4.style.color = "gray";
@@ -17,8 +17,8 @@ st1.addEventListener('click', ()=>{
 });
 
 st2.addEventListener('click', ()=>{
-    st1.style.color = "yellow";
-    st2.style.color = "yellow";
+    st1.style.color = "var(--main_color)";
+    st2.style.color = "var(--main_color)";
     st3.style.color = "gray";
     st4.style.color = "gray";
     st5.style.color = "gray";
@@ -26,29 +26,29 @@ st2.addEventListener('click', ()=>{
 });
 
 st3.addEventListener('click', ()=>{
-    st1.style.color = "yellow";
-    st2.style.color = "yellow";
-    st3.style.color = "yellow";
+    st1.style.color = "var(--main_color)";
+    st2.style.color = "var(--main_color)";
+    st3.style.color = "var(--main_color)";
     st4.style.color = "gray";
     st5.style.color = "gray";
     rating.value = "3";
 });
 
 st4.addEventListener('click', ()=>{
-    st1.style.color = "yellow";
-    st2.style.color = "yellow";
-    st3.style.color = "yellow";
-    st4.style.color = "yellow";
+    st1.style.color = "var(--main_color)";
+    st2.style.color = "var(--main_color)";
+    st3.style.color = "var(--main_color)";
+    st4.style.color = "var(--main_color)";
     st5.style.color = "gray";
     rating.value = "4";
 });
 
 st5.addEventListener('click', ()=>{
-    st1.style.color = "yellow";
-    st2.style.color = "yellow";
-    st3.style.color = "yellow";
-    st4.style.color = "yellow";
-    st5.style.color = "yellow";
+    st1.style.color = "var(--main_color)";
+    st2.style.color = "var(--main_color)";
+    st3.style.color = "var(--main_color)";
+    st4.style.color = "var(--main_color)";
+    st5.style.color = "var(--main_color)";
     rating.value = "5";
 });
 

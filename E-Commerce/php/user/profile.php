@@ -102,8 +102,8 @@ if ($_GET['id']) {
             </div>
             
             <div class="container">
-                <a href="javascript:history.back()">
-                    <button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type="button">Back</button>
+                <a href="">
+                    <button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type="button" onclick="goBack()">Back</button>
                 </a>
 
                 <a href='profile-update.php?id="<?php echo $id ?>"'>
@@ -118,6 +118,11 @@ if ($_GET['id']) {
         footer("../../");
         require_once '../components/boot-javascript.php';
     ?>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 
 </html>

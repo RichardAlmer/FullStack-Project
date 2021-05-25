@@ -74,7 +74,8 @@ $products = getAllProducts();
                     <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
                     <a class="col-12"><?= $product['brand'] ?></a>
                     <div class="col-12 text-decoration-line-through mt-2">€<?= $product['price']?></div>
-                    <div class="col-12 fw-bold">€<?= $product['price'] - $product['price'] * $product['discount_procent'] / 100 .' <span class="my_text_maincolor">(-'. $product['discount_procent']?>%)</span></div>
+
+                    <div class="col-12 fw-bold">€<?= number_format(($product['price'] - $product['price'] * $product['discount_procent'] / 100), 2, ',', ' ') .' <span class="my_text_maincolor">(-'. $product['discount_procent'] ?>%)</div>
                 </div>
             </div>
         <?php endforeach; ?>

@@ -1,6 +1,9 @@
 <?php
 session_start();
-// To Do: Session Stuff ------------------------------------------------
+if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+    header("Location: ../../index.php");
+    exit;
+}
 
 // To Do - Nice have: Update image ------------------------------------------------
 
@@ -23,31 +26,69 @@ if (isset($_GET['id'])) {
     }   
 }
 
+function sanitizeUserInput ($fieldInput, $fieldName) {
+    $fieldInput = trim($_POST[$fieldName]);     
+    $fieldInput = strip_tags($fieldInput);       
+    $fieldInput = htmlspecialchars($fieldInput);  
+    return $fieldInput;
+}
+
 //update on submit
 $class = 'd-none';
 if (isset($_POST["submit"])) {
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $address = $_POST['address'];
-    $city = $_POST['city'];
-    $postcode = $_POST['postcode'];
-    $country = $_POST['country'];
+    $firstName = sanitizeUserInput($firstName, 'firstName');
+    $lastName = sanitizeUserInput($lastName, 'lastName');
+    $address = sanitizeUserInput($address, 'address');
+    $city = sanitizeUserInput($city, 'city');
+    $postcode = sanitizeUserInput($postcode, 'postcode');
+    $country = sanitizeUserInput($country, 'country');
     $birthdate = $_POST['birthdate'];
     $id = $_POST['ids'];
-    
-    $uploadError = '';    
+    $error = false;
 
-    $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', address = '$address', city = '$city', postcode = '$postcode', country = '$country', birthdate = '$birthdate' 
-    WHERE pk_user_id = '$id'";
-    
-    if ($conn->query($sql) === true) {     
-        $class = "alert alert-success";
-        $message = "The record was successfully updated.";
-        header("refresh:3;url=profile.php?id={$id}");
-    } else {
-        $class = "alert alert-danger";
-        $message = "Error while updating record: <br>" . $conn->error;
-        header("refresh:3;url=profile.php?id={$id}");
+    if (empty($firstName)) {
+        $error = true;
+        $nameError = "Please enter a first name.";
+    } 
+    if (empty($lastName)) {
+        $error = true;
+        $lastNameError = "Please enter a last name.";
+    } 
+    if (empty($address)) {
+        $error = true;
+        $addressError = "Please enter a address.";
+    } 
+    if (empty($city)) {
+        $error = true;
+        $cityError = "Please enter a city.";
+    }
+    if (empty($postcode)) {
+        $error = true;
+        $postcodeError = "Please enter a postcode.";
+    }
+    if (empty($country)) {
+        $error = true;
+        $countryError = "Please enter a country.";
+    }
+    if (empty($birthdate)) {
+        $error = true;
+        $birthdateError = "Please enter a birthdate.";
+    }
+    if(!$error){
+        $uploadError = '';    
+
+        $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', address = '$address', city = '$city', postcode = '$postcode', country = '$country', birthdate = '$birthdate' 
+        WHERE pk_user_id = '$id'";
+        
+        if ($conn->query($sql) === true) {     
+            $class = "alert alert-success";
+            $message = "The record was successfully updated.";
+            header("refresh:3;url=profile.php?id={$id}");
+        } else {
+            $class = "alert alert-danger";
+            $message = "Error while updating record: <br>" . $conn->error;
+            header("refresh:3;url=profile.php?id={$id}");
+        }
     }
 }
 

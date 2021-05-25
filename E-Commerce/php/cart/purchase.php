@@ -107,7 +107,7 @@
                     <td>".$row['name']."</td>
                     <td>".$quantity."</td>
                     <td>".$row['discount_procent']."%</td>
-                    <td>".$price."€</td>
+                    <td>".number_format($price, 2, ',', ' ')."€</td>
                 </tr>
                 ";
                 $itemBill .= "
@@ -116,8 +116,8 @@
                     <td>".$row['name']."</td>
                     <td>".$quantity."</td>
                     <td>".$row['discount_procent']."%</td>
-                    <td>".$price."€</td>
-                    <td>".$discountPrice."€</td>
+                    <td>".number_format($price, 2, ',', ' ')."€</td>
+                    <td>".number_format($discountPrice, 2, ',', ' ')."€</td>
                 </tr>
                 ";
                 $quantity = "";
@@ -234,14 +234,14 @@
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>-<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</td>
-                            <td><?php echo array_sum($allPrice) ?>€</td>
+                            <td>-<?php echo number_format((array_sum($allPrice) - array_sum($allDiscountPrice)), 2, ',', ' ') ?>€</td>
+                            <td><?php echo number_format(array_sum($allPrice), 2, ',', ' ') ?>€</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td>Total: </td>
-                            <td><b><?php echo array_sum($allDiscountPrice) ?>€</b></td>
+                            <td><b><?php echo number_format(array_sum($allDiscountPrice), 2, ',', ' ') ?>€</b></td>
                         </tr>
                     </tbody>
                 </table>
@@ -299,8 +299,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>-<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</td>
-                            <td><?php echo array_sum($allPrice) ?>€</td>
+                            <td>-<?php echo number_format((array_sum($allPrice) - array_sum($allDiscountPrice)), 2, ',', ' ') ?>€</td>
+                            <td><?php echo number_format(array_sum($allPrice), 2, ',', ' ') ?>€</td>
                             <td></td>
                         </tr>
                         <tr>
@@ -309,7 +309,7 @@
                             <td></td>
                             <td></td>
                             <td>Total: </td>
-                            <td><b><?php echo array_sum($allDiscountPrice) ?>€</b></td>
+                            <td><b><?php echo number_format(array_sum($allDiscountPrice), 2, ',', ' ') ?>€</b></td>
                         </tr>
                     </tbody>
                 </table>

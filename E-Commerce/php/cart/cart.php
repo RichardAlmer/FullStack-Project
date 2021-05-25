@@ -230,8 +230,11 @@
             </div>
 
             <?php }else{ ?>
-                <div>
-                    <h2>Your cart is empty!</h2>
+                <div class="my-5">
+                    <div class="col-12 fs_6 text-uppercase my-2">Your cart is empty!</div>
+                    <div class="col-12 col-md-2 my-5 py-2">
+                        <img src="../../img/general_images/cart.png" alt="">
+                    </div>
                 </div>
             <?php } ?>
 

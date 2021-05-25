@@ -1,6 +1,17 @@
 <?php
 session_start();
-// To Do: Session Stuff ------------------------------------------------
+
+$userId = '';
+if(isset($_SESSION['admin'])){
+    $userId = $_SESSION['admin'];
+} else if(isset($_SESSION['user'])){
+    $userId = $_SESSION['user'];
+}
+
+if ($_GET['id'] != $userId) {
+    header("Location: ../error.php");
+    exit;
+}
 
 require_once '../components/db_connect.php';
 
@@ -106,7 +117,7 @@ if ($_GET['id']) {
                     <button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type="button" onclick="goBack()">Back</button>
                 </a>
 
-                <a href='profile-update.php?id="<?php echo $id ?>"'>
+                <a href='profile-update.php?id=<?php echo $id ?>'>
                     <button class='col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type='button'>Update</button>
                 </a>
             </div>

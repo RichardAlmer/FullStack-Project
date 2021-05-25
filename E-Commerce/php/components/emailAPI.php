@@ -90,19 +90,24 @@ if (!empty($_GET['id'])) {
 
         // Send email
         if (mail($receiver, $subject, $message, implode("\r\n", $header))) {
-            response(200, "Email send", $rows);
+            response(200, "A notificaton has been send to your email addresss.", $rows);
+            // response(200, "Email error");
         } else {
-            response(200, "Email error", $rows);
+            response(200, "Email error, please contact our support.", $rows);
+            // response(200, "Email error");
         }
     } else {
         response(200, "DB Error:" . $conn->error, null);
+        // response(200, "DB Error:" . $conn->error);
     }
 } else {
     response(400, "Invalid request", null);
+    // response(400, "Invalid request");
 }
 
 //returning JSON response
 function response($status, $statusMessage, $data)
+// function response($status, $statusMessage)
 {
     //array
     $response['status'] = $status;

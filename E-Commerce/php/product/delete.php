@@ -69,7 +69,7 @@
         $sql = "SELECT fk_product_id FROM purchase_item WHERE fk_product_id = {$_GET['id']}";
         $result = mysqli_query($conn ,$sql);
         if(mysqli_num_rows($result) > 0) {
-            $sql = "UPDATE product SET status = 'deactive' WHERE pk_product_id = {$_GET['id']}";
+            $sql = "UPDATE product SET status = 'deleted' WHERE pk_product_id = {$_GET['id']}";
             if ($conn->query($sql) === TRUE) {
                 $class = "success";
                 $message = "Product Successfully Updated!";

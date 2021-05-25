@@ -71,7 +71,7 @@ $products = getAllProducts();
                     <div class="col-12 fs-5 my-2"><?= $product['name'] ?></div>
                     <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
 
-                    <div class="col-12 fw-bold my-3">€<?= $product['price'] - $product['price'] * $product['discount_procent'] / 100 ?></div>
+                    <div class="col-12 fw-bold my-3">€<?= number_format(($product['price'] - $product['price'] * $product['discount_procent'] / 100), 2, ',', ' ') ?></div>
                     <div class="col-12 my_text_maincolor">Price with Discount: -<?= $product['discount_procent'] ?>%</div>
                 </div>
             </div>

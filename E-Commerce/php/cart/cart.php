@@ -148,9 +148,9 @@
                             </form>
                         </div>
                     </div>
-                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor'>" .$row['discount_procent']."% | ".$amount."€</span></div>
-                    <div class='col-12 col-md-4 col-lg-1 py-2 py-md-3 py-lg-0'>" .$price."€</div>
-                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" .$discountPrice."€</div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'><span class='my_text_maincolor'>" .$row['discount_procent']."% | ".number_format($amount, 2, ',', ' ')."€</span></div>
+                    <div class='col-12 col-md-4 col-lg-1 py-2 py-md-3 py-lg-0'>" .number_format($price, 2, ',', ' ')."€</div>
+                    <div class='col-12 col-md-4 col-lg-2 py-2 py-md-3 py-lg-0'>" .number_format($discountPrice, 2, ',', ' ')."€</div>
                 ";
                 $quantity = "";
                 $itemId = "";
@@ -214,13 +214,13 @@
 
                     <div class='fw-bold row my-3 text-center text-md-end'>
                         <div class="col-12 py-1">
-                            <div>Subtotal: <?php echo array_sum($allPrice) ?>€</div>
+                            <div>Subtotal: <?php echo number_format(array_sum($allPrice), 2, ',', ' ') ?>€</div>
                         </div>
                         <div class="col-12 py-1">
-                            <div class='my_text_maincolor'>Discount: -<?php echo (array_sum($allPrice) - array_sum($allDiscountPrice)) ?>€</div>
+                            <div class='my_text_maincolor'>Discount: -<?php echo number_format((array_sum($allPrice) - array_sum($allDiscountPrice)), 2, ',', ' ') ?>€</div>
                         </div>
                         <div class="col-12 py-1">
-                            <div class="text-uppercase fs-5">Total: <?php echo array_sum($allDiscountPrice) ?>€</b></div>
+                            <div class="text-uppercase fs-5">Total: <?php echo number_format(array_sum($allDiscountPrice), 2, ',', ' ') ?>€</b></div>
                         </div>
                         <div>
                             <a href="purchase.php"><button type="button" class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-4 text-white my-4">Checkout</button></a>

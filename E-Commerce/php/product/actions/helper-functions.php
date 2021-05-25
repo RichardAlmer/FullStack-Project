@@ -1,7 +1,7 @@
 <?php 
 
 function discountedPrice($price, $discount_procent) {
-    return $price / 100 * (100-$discount_procent);
+    return number_format(($price / 100 * (100-$discount_procent)), 2, ',', ' ');
 }
 
 function getStars($rating) {

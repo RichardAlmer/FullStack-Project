@@ -11,12 +11,12 @@
         exit;
     }
 
-    $sql = "SELECT product.name, product.category, product.brand, purchase_item.fk_product_id, SUM(purchase_item.quantity) AS quantity 
+    $sql = "SELECT product.name, product.category, product.brand, product.status, purchase_item.fk_product_id, purchase_item.sold, SUM(purchase_item.quantity) AS quantity 
     FROM purchase_item 
-    INNER JOIN product ON purchase_item.fk_product_id = product.pk_product_id
-    GROUP BY purchase_item.fk_product_id
+    INNER JOIN product ON purchase_item.fk_product_id = product.pk_product_id 
+    GROUP BY purchase_item.fk_product_id, purchase_item.sold 
     ORDER BY quantity DESC";
-    $result = mysqli_query($conn ,$sql);     
+    $result = mysqli_query($conn, $sql);
 
     $htmlResult="<table class='table table-striped'>
                     <thead class='bg_maincolor'>
@@ -24,6 +24,8 @@
                             <th class='border-0'>Product Name</th>
                             <th class='border-0'>Category</th>
                             <th class='border-0'>Brand</th>
+                            <th class='border-0'>Product Status</th>
+                            <th class='border-0'>Price</th>
                             <th class='border-0'>Quantity</th>
                         </tr>
                     </thead>
@@ -35,6 +37,8 @@
                 <td>" . $row['name'] . "</td>
                 <td>" . $row['category'] . "</td>
                 <td>" . $row['brand'] . "</td>
+                <td>" . $row['status'] . "</td>
+                <td>" . number_format($row['sold'], 2, ',', ' ') . "€</td>
                 <th>" . $row['quantity'] . "</th>
             </tr>";
         };

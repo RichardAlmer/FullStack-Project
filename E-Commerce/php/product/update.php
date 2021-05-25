@@ -13,7 +13,6 @@ require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
 $error = false;
-$name = $description = $brand = $picture = $price = $category = $status = $discountProcent = '';
 $nameError = $descriptionError = $brandError = $pictureError = $priceError = $categoryError = '';
 
 //fetch and populate form
@@ -32,13 +31,16 @@ if (isset($_GET['id'])) {
         $category = $data['category'];
         $status = $data['status'];
         $discountProcent = $data['discount_procent'];
+
+        echo "picture: " . $picture;
     }
 }
 
-function sanitizeUserInput ($fieldInput, $fieldName) {
+function sanitizeUserInput($fieldInput, $fieldName)
+{
     // --- sanitize user input to prevent sql injection --- //
-    $fieldInput = trim($_POST[$fieldName]);     
-    $fieldInput = strip_tags($fieldInput);       
+    $fieldInput = trim($_POST[$fieldName]);
+    $fieldInput = strip_tags($fieldInput);
     $fieldInput = htmlspecialchars($fieldInput);  // htmlspecialchars converts special characters to HTML entities
     return $fieldInput;
 }
@@ -46,26 +48,34 @@ function sanitizeUserInput ($fieldInput, $fieldName) {
 //update on submit
 $class = 'd-none';
 if (isset($_POST["btnSave"])) {
+
+    $id = $_POST['id'];
+
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $brand = $_POST['brand'];
     $price = $_POST['price'];
     $category = $_POST['category'];
     $status = $_POST['status'];
     $discountProcent = $_POST['discountProcent'];
-    //$picture = $_POST['picture'];
-    $id = $_POST['id']; 
-    
-     // validation of required fields and input type where needed
-     if (empty($name)) {
+
+    // echo "POST picture: " . $picture . "<br>";
+    // echo "imageFILE: " . var_dump($_FILES['picture']) . "<br>";
+    // echo "imageFILE: " . var_dump($_POST) . "<br>";
+
+    // validation of required fields and input type where needed
+    if (empty($name)) {
         $error = true;
         $nameError = "Please enter a name for the product.";
-    } 
+    }
     if (empty($description)) {
         $error = true;
         $descriptionError = "Please enter a description for the product.";
-    } 
+    }
     if (empty($brand)) {
         $error = true;
         $brandError = "Please enter a brand for the product.";
-    } 
+    }
     if (empty($price)) {
         $error = true;
         $priceError = "Please enter a price for the product.";
@@ -83,15 +93,17 @@ if (isset($_POST["btnSave"])) {
 
     // if there's no error, continue to create product
     if (!$error) {
-        $uploadError = ''; 
+        $uploadError = '';
         $picture = file_upload($_FILES['picture'], 'product');
+        if ($picture->error == 0) {
+            $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status', image = '$picture->fileName' WHERE pk_product_id = '$id'";
+        } else {
+            $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status' WHERE pk_product_id = '$id'";
+        }
 
-        $sql = "UPDATE product SET name = '$name', description = '$description', brand = '$brand', image = '$picture->fileName', price = '$price', category = '$category', discount_procent = '$discountProcent', status = '$status' 
-        WHERE pk_product_id = '$id'";
-        
         $result = $conn->query($sql);
 
-        if ($result) {     
+        if ($result) {
             $class = "alert alert-success";
             $message = "The record was successfully updated.";
             $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
@@ -128,17 +140,17 @@ $conn->close();
 <body>
 
     <?php
-        require_once '../components/header.php';
-        $id = "";
-        $session = "";
-        if(isset($_SESSION['admin'])){
-            $id = $_SESSION['admin'];
-            $session = "admin";
-        } else if(isset($_SESSION['user'])) {
-            $id = $_SESSION['user'];
-            $session = "user";
-        }
-        navbar("../../", "../", "../", $id, $session);
+    require_once '../components/header.php';
+    $id = "";
+    $session = "";
+    if (isset($_SESSION['admin'])) {
+        $id = $_SESSION['admin'];
+        $session = "admin";
+    } else if (isset($_SESSION['user'])) {
+        $id = $_SESSION['user'];
+        $session = "user";
+    }
+    navbar("../../", "../", "../", $id, $session);
     ?>
 
     <div class="container">
@@ -175,7 +187,7 @@ $conn->close();
                     <div class="row py-2 align-items-center">
                         <div class="col-12 col-md-3 fw-bold py-2">Description</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
-                            <textarea rows="3" name="description" class="form-control" placeholder=""><?php echo $description ?></textarea>    
+                            <textarea rows="3" name="description" class="form-control" placeholder=""><?php echo $description ?></textarea>
                             <span class="text-danger"> <?php echo $descriptionError; ?> </span>
                         </div>
                     </div>
@@ -208,13 +220,13 @@ $conn->close();
                         <div class="col-12 col-md-3 fw-bold py-2">Discount</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
                             <select class="form-select" aria-label="Default select example" name="discountProcent">
-                                <option value="0" <?php echo ( $discountProcent == '0') ? 'selected' : '' ?>>none</option>
-                                <option value="10" <?php echo ( $discountProcent == '10') ? 'selected' : '' ?>>10% off</option>
-                                <option value="15" <?php echo ( $discountProcent == '15') ? 'selected' : '' ?>>15% off</option>
-                                <option value="20" <?php echo ( $discountProcent == '20') ? 'selected' : '' ?>>20% off</option>
-                                <option value="25" <?php echo ( $discountProcent == '25') ? 'selected' : '' ?>>25% off</option>
-                                <option value="50" <?php echo ( $discountProcent == '50') ? 'selected' : '' ?>>50% off</option>
-                                <option value="75" <?php echo ( $discountProcent == '75') ? 'selected' : '' ?>>75% off</option>
+                                <option value="0" <?php echo ($discountProcent == '0') ? 'selected' : '' ?>>none</option>
+                                <option value="10" <?php echo ($discountProcent == '10') ? 'selected' : '' ?>>10% off</option>
+                                <option value="15" <?php echo ($discountProcent == '15') ? 'selected' : '' ?>>15% off</option>
+                                <option value="20" <?php echo ($discountProcent == '20') ? 'selected' : '' ?>>20% off</option>
+                                <option value="25" <?php echo ($discountProcent == '25') ? 'selected' : '' ?>>25% off</option>
+                                <option value="50" <?php echo ($discountProcent == '50') ? 'selected' : '' ?>>50% off</option>
+                                <option value="75" <?php echo ($discountProcent == '75') ? 'selected' : '' ?>>75% off</option>
                             </select>
                         </div>
                     </div>
@@ -222,10 +234,10 @@ $conn->close();
                     <div class="row py-2 align-items-center">
                         <div class="col-12 col-md-3 fw-bold py-2">Status</div>
                         <div class="col-12 col-md-9 pb-3 py-md-2">
-                        <select class="form-select" aria-label="Default select example" name="status">
-                            <option value="active" <?php echo ( $status == 'active') ? 'selected' : '' ?>>active</option>
-                            <option value="deactive" <?php echo ( $status == 'deactive') ? 'selected' : '' ?>>deactive</option>    
-                        </select>
+                            <select class="form-select" aria-label="Default select example" name="status">
+                                <option value="active" <?php echo ($status == 'active') ? 'selected' : '' ?>>active</option>
+                                <option value="deactive" <?php echo ($status == 'deactive') ? 'selected' : '' ?>>deactive</option>
+                            </select>
                         </div>
                     </div>
 
@@ -240,10 +252,10 @@ $conn->close();
         </div>
     </div>
 
-    <?php 
-        require_once '../../php/components/footer.php';
-        footer("../../");
-        require_once '../../php/components/boot-javascript.php';
+    <?php
+    require_once '../../php/components/footer.php';
+    footer("../../");
+    require_once '../../php/components/boot-javascript.php';
     ?>
 </body>
 

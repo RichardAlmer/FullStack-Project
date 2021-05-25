@@ -102,7 +102,7 @@ if ($_GET['id']) {
             </div>
             
             <div class="container">
-                <a href="#">
+                <a href="">
                     <button class='col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1' type="button" onclick="goBack()">Back</button>
                 </a>
 

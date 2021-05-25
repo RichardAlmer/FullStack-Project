@@ -295,9 +295,9 @@ $conn->close();
             <?php } else { ?>
                 <div>
                     <h2>Thank you for shopping with us!</h2>
-                    <h1>Your Order was Successfull</h1>
+                    <h1>Your order was successfull.</h1>
                     <p><?php echo $_SESSION['emailResponse']['statusMessage'] ?></p>
-                    <a href="../product/product-catalog.php" class="btn btn-primary">Continue Shopping</a>
+                    <a href="../product/product-catalog.php" class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-4">Continue Shopping</a>
                 </div>
             <?php
                 //destroy session emailResponse variable

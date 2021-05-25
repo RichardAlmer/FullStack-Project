@@ -53,6 +53,7 @@ FOREIGN KEY (`fk_user_id`) REFERENCES user(`pk_user_id`)
 CREATE TABLE `purchase_item` (
 `pk_purchase_item_id` INT(11) NOT NULL AUTO_INCREMENT,
 `quantity` INT(11) NOT NULL DEFAULT 1,
+`sold` FLOAT NOT NULL,
 `fk_product_id` INT(11) NOT NULL,
 `fk_purchase_id` INT(11) NOT NULL,
 PRIMARY KEY (`pk_purchase_item_id`),

@@ -139,7 +139,7 @@
                                 <input type='hidden' name='productId' value='$productId'/>
                                 <input type='hidden' name='userId' value='$userId'/>
                                 <input type='hidden' name='quantity' value='1'/>
-                                <button class='col-2 del btn fw-bold fs-3 px-1' type='submit' name='plus'> + </button>
+                                <button class='col-2 del btn fw-bold fs-3 px-3' type='submit' name='plus'> + </button>
                             </form>
 
                             <form class='d-none' method='post' action='".htmlspecialchars($_SERVER['PHP_SELF'])."' autocomplete='off'>

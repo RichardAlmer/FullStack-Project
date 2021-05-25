@@ -69,7 +69,7 @@ if (isset($_POST['btn-login'])) {
                     if ($bannedUntil != NULL) {
                         $errMSG = "You are banned until " . $banDate;
                     } else {
-                        $errMSG = "You are banned.";
+                        $errMSG = "Your account is deactivated, please contact our support.";
                     }
                 }
             } else {

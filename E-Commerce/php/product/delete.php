@@ -38,10 +38,10 @@
         $sql = "DELETE FROM review WHERE fk_product_id = {$_GET['id']}";
         if ($conn->query($sql) === TRUE) {
             $class2 = "success";
-            $message2 = "Review Successfully Deleted!";
+            $message2 = "Reviews of product successfully deleted!";
         } else {
             $class2 = "danger";
-            $message2 = "The Review was not deleted due to: <br>" . $conn->error;
+            $message2 = "Review was not deleted due to: <br>" . $conn->error;
         }
         $sql = "SELECT pk_question_id FROM question WHERE fk_product_id = {$_GET['id']}";
         $result = mysqli_query($conn ,$sql);
@@ -50,20 +50,20 @@
                 $sql1 = "DELETE FROM answer WHERE fk_question_id = {$row['pk_question_id']}";
                 if ($conn->query($sql1) === TRUE) {
                     $class4 = "success";
-                    $message4 = "Answer Successfully Deleted!";
+                    $message4 = "Answers successfully deleted!";
                 } else {
                     $class4 = "danger";
-                    $message4 = "The Answer was not deleted due to: <br>" . $conn->error;
+                    $message4 = "Answer was not deleted due to: <br>" . $conn->error;
                 }
             }
         }
         $sql = "DELETE FROM question WHERE fk_product_id = {$_GET['id']}";
         if ($conn->query($sql) === TRUE) {
             $class3 = "success";
-            $message3 = "Question Successfully Deleted!";
+            $message3 = "Questions of product successfully deleted!";
         } else {
             $class3 = "danger";
-            $message3 = "The Question was not deleted due to: <br>" . $conn->error;
+            $message3 = "Question was not deleted due to: <br>" . $conn->error;
         }
 
         $sql = "SELECT fk_product_id FROM purchase_item WHERE fk_product_id = {$_GET['id']}";
@@ -72,17 +72,17 @@
             $sql = "UPDATE product SET status = 'deleted' WHERE pk_product_id = {$_GET['id']}";
             if ($conn->query($sql) === TRUE) {
                 $class = "success";
-                $message = "Product Successfully Updated!";
+                $message = "Product successfully updated!";
             } else {
                 $class = "danger";
-                $message = "The Product was not updated due to: <br>" . $conn->error;
+                $message = "The product was not updated due to: <br>" . $conn->error;
             }
         } else {
             ($image == "default-product.jpg") ?: unlink("../../img/product_images/$image");
             $sql = "DELETE FROM product WHERE pk_product_id = {$_GET['id']}";
             if ($conn->query($sql) === TRUE) {
                 $class = "success";
-                $message = "Successfully Deleted! <br>You are redirected in 3 seconds.";
+                $message = "Successfully deleted! <br>You are redirected in 3 seconds.";
                 header("refresh:3;products.php");
             } else {
                 $class = "danger";

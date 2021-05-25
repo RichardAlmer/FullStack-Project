@@ -4,7 +4,7 @@ session_start();
 function getAllProducts()
 {
     global $conn;
-    $result = mysqli_query($conn, "SELECT * FROM product where discount_procent != 0 ORDER BY RAND()
+    $result = mysqli_query($conn, "SELECT * FROM product WHERE discount_procent != 0 AND status = 'active' ORDER BY RAND()
     LIMIT 6");
     return $result;
 }
@@ -64,20 +64,23 @@ $products = getAllProducts();
     <div class="row row_width py-3 mb-5">
 
         <?php foreach ($products as $product) : ?>
+            
             <div class="col-12 col-md-4 col-lg-2 py-2 box_height">
+            <a href='php/product/product-details.php?id=<?= $product['pk_product_id'] ?>'>
                 <div class="square">
-                    <a href='php/product/product-details.php?id=" <?= $product['pk_product_id'] ?>"'>
-                        <img src="img/product_images/<?= $product['image'] ?>" class="content" alt="">
+                    <img src="img/product_images/<?= $product['image'] ?>" class="content" alt="">
                 </div>
                 <div class="row py-3 text-center">
                     <div class="col-12 fs-5 my-2"><?= $product['name'] ?></div>
-                    <a class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></a>
-                    <a class="col-12"><?= $product['brand'] ?></a>
+                    <div class="col-12 my-1 my_text_maincolor"><?= $product['category'] ?></div>
+                    <div class="col-12"><?= $product['brand'] ?></div>
                     <div class="col-12 text-decoration-line-through mt-2">€<?= $product['price']?></div>
 
                     <div class="col-12 fw-bold">€<?= number_format(($product['price'] - $product['price'] * $product['discount_procent'] / 100), 2, ',', ' ') .' <span class="my_text_maincolor">(-'. $product['discount_procent'] ?>%)</div>
                 </div>
+                </a>
             </div>
+            
         <?php endforeach; ?>
     </div>
     <?php

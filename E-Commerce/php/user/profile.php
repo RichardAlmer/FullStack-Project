@@ -35,7 +35,7 @@ if ($_GET['id']) {
         $country = $data['country'];
         $birthdate = $data['birthdate'];
         $role = $data['role'];
-        //$image = $data['image'];
+        $picture = $data['profile_image'];
     } else {
         header("location: ../error.php");
     }
@@ -86,12 +86,7 @@ if ($_GET['id']) {
 
                 <div class="row col-12 col-md-4">
                     <?php 
-                        if ($role == 'admin') {
-                            echo "<img src='../../img/user_images/default-admin.jpg'>";
-                        } else {
-                            echo "<img src='../../img/user_images/default-user.jpg'>";
-                        }
-                    
+                        echo "<img class='img-thumbnail rounded-circle' src='../../img/user_images/".$picture."'>";
                     ?>
                 </div>
                 <div class="row col-12 col-md-8 py-5">

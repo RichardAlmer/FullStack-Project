@@ -168,12 +168,6 @@
     <title>Shopping Cart</title>
     <?php require_once '../../php/components/boot.php'?>
     <link rel="stylesheet" href="../../style/main-style.css" />
-    <style type="text/css">
-        .img-thumbnail {
-            width: 10rem;
-            height: 10rem;
-        }
-    </style>
 </head>
 <body>
     <?php 

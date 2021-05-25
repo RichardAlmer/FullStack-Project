@@ -1,11 +1,20 @@
 <?php
 session_start();
+$userId = '';
+if(isset($_SESSION['admin'])){
+    $userId = $_SESSION['admin'];
+} else if(isset($_SESSION['user'])){
+    $userId = $_SESSION['user'];
+}
+
+if ($_GET['id'] != $userId) {
+    header("Location: ../error.php");
+    exit;
+}
 if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
     header("Location: ../../index.php");
     exit;
 }
-
-// To Do - Nice have: Update image ------------------------------------------------
 
 require_once '../components/db_connect.php';
 

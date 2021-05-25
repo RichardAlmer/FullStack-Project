@@ -44,17 +44,21 @@ if (isset($_GET['id'])) {
 }
 
 //Delete
+//protect super admin from deletion
  if (isset($_POST["btnDelete"])) {
 
     $userId = $_POST['id'];
 
     $picture = $_POST['picture'];
     ($picture =="default-user.jpg")?: unlink("../../img/user_images/$picture");
-    $sql = "DELETE FROM user WHERE pk_user_id = {$userId}";
-    if ($conn->query($sql) === TRUE) {
+    $sql = "DELETE FROM user WHERE pk_user_id = {$userId} AND ROLE != 'superadmin'";
+    if ($conn->query($sql) === TRUE && ($_POST['role'] === 'user' || $_POST['role'] === 'admin')) {
         $class = "alert alert-success";
         $message = "Successfully Deleted!";
         header("refresh:3;url=users.php");
+    } elseif($conn->query($sql) === TRUE && $_POST['role'] === 'superadmin') {
+        $class = "alert alert-danger";
+        $message = "You are not allowed to delete this user!";
     } else {
         $class = "alert alert-danger";
         $message = "The entry was not deleted due to: <br>" . $conn->error;
@@ -137,6 +141,7 @@ $conn->close();
             <div class="fs-5 my-4">Do you really want to delete this user?</div>
             <form method="post">
                 <input type="hidden" name="id" value="<?php echo $userId ?>" />
+                <input type="hidden" name="role" value="<?php echo $role ?>" />
                 <input type="hidden" name="picture" value="<?php echo $picture ?>" />
                 <a href="users.php"><button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="button">No, go back!</button></a>
                 <button class="col-12 col-md-auto btn bg_gray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type="submit" name="btnDelete">Yes, delete it!</button>

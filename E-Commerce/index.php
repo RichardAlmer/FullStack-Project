@@ -37,7 +37,7 @@ $products = getAllProducts();
     ?>
     <div class="container my-1 p-md-2">
         <div class="row px-md-5 my-5 pt-5">
-            <div class="py-2 col-12 col-lg-6">
+            <div class="py-5 col-12 col-lg-6">
                 <div class="text-uppercase banner_text fw-bold">Find your <br><span class="my_text_maincolor">perfect gift</span> <br>here</div>
                 <div class="my_text_lightgray my-4">More than 10 000 products to buy from home now</div>
                 

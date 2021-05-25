@@ -72,7 +72,7 @@
             ?>
             <div class="alert alert-<?=$class;?>" role="alert">
                 <p><?=$message;?></p >
-                <a href ='reviews.php?id=<?php echo $productId ?>'><button class= "btn btn-success" type='button'>Back</button></a>
+                <a href ='reviews.php?id=<?php echo $productId ?>'><button class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-1" type='button'>Back</button></a>
             </div>
             <?php } ?>
             <?php

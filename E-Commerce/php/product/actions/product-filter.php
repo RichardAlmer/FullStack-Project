@@ -33,9 +33,18 @@ $currentPrice='';
 while($row = mysqli_fetch_array($result)) {
 
   //$currentPrice = $row['price'] / 100 * (100-$row['discount_procent']);
+  $price = '';
+  if ($row['discount_procent']) {
+      $price = '€'. number_format($row['price'], 2, ',', ' ');
+  }   
   $currentPrice = discountedPrice($row['price'],$row['discount_procent']);
 
-  $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-2 box_height'>
+  $sqlRating = "SELECT AVG(rating) AS rating FROM review WHERE fk_product_id = $row[pk_product_id]";
+  $resultRating = mysqli_query($conn ,$sqlRating);
+  $dataRating = $resultRating->fetch_assoc();
+  $stars = getStars(round($dataRating['rating']));
+
+  $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-3 box_height'>
                   <a href='product-details.php?id=" .$row['pk_product_id']."'>
                       <div class='square'>
                           <img class='content' src='../../img/product_images/{$row['image']}' alt=''>
@@ -43,8 +52,10 @@ while($row = mysqli_fetch_array($result)) {
                       <div class='row py-3 text-center'>
                           <div class='col-12 fs-5 my-2'>{$row['name']}</div>
                           <a href='/' class='col-12 my-1 my_text_maincolor'>{$row['category']}</a>
-                          <a href='/' class='col-12 my-1'>{$row['brand']}</a> 
-                          <div class='col-12 fw-bold my-3'>€{$currentPrice} ";
+                          <a href='/' class='col-12'>{$row['brand']}</a> 
+                          <div class='col-12 fw-bold mt-2'>".$stars."</div>
+                          <div class='col-12 text-decoration-line-through mt-2'>{$price}</div>
+                          <div class='col-12 fw-bold'>€{$currentPrice} ";
   if ($row['discount_procent'] != '0') {
       $resultHtml .= "<span class='my_text_maincolor'>(-{$row['discount_procent']}%)</span>";
   }

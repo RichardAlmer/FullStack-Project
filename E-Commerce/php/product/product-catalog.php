@@ -22,7 +22,7 @@ if(mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){   
         $price = '';
         if ($row['discount_procent']) {
-            $price = '€'. $row['price'];
+            $price = '€'. number_format($row['price'], 2, ',', ' ');
         }   
         $currentPrice = discountedPrice($row['price'],$row['discount_procent']);
 

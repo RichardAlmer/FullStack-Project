@@ -94,7 +94,8 @@ $conn->close();
                         </a>
                         <a href="" class="col-12 col-md-auto my-lg-2 px-1">
                             <div class="btn bg_lightgray bg_hover rounded-pill col-12 col-md-auto py-2 px-3 text-white my-1 my-md-0">
-                                <a href='#' onclick='filterProducts("category","all","rating","DESC")'>Clear all filters</a>
+                            <a href='#' onclick='filterProducts("clear","all","default")'>Clear all filters</a>
+                                
                             </div>
                         </a>
                     </div>
@@ -131,6 +132,9 @@ $conn->close();
                     xmlhttp.open("GET", "actions/product-filter.php?filter="+filter+"&value="+value+"&sort="+sort+"&order="+order, true);
                     xmlhttp.send();
                 }
+                if (filter == "clear") {
+                    document.getElementById("search").value="";
+                }
                 
             }
 
@@ -144,7 +148,6 @@ $conn->close();
                 xmlhttp.onreadystatechange=function() {
                 if (this.readyState==4 && this.status==200) {
                     document.getElementById("result").innerHTML=this.responseText;
-                    //document.getElementById("result").style.border="1px solid #A5ACB2";
                 }
             }
                 xmlhttp.open("GET","actions/product-search.php?search="+str,true);

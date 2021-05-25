@@ -10,7 +10,7 @@ mysqli_select_db($conn,"ajax_demo");
 
 $sql="SELECT * FROM product WHERE status = 'active'";
 
-if ($filter === 'category' && $value !== 'all') {
+if (($filter === 'category' || $filter === 'clear') && $value !== 'all') {
   $sql .= " AND category = '".$value."'";
   
 } 
@@ -18,9 +18,10 @@ if ($sort === 'price') {
   // To Do Calculate price after discount ------------------------------------------
   $sql .= " ORDER BY price ".$order."";
 }
-if ($sort === 'rating') {
+if ($sort === 'default') {
   // To Do Calculate average rating of products ------------------------------------------
-
+  $sql .= " ORDER BY pk_product_id DESC";
+  
 }
 
 $result = mysqli_query($conn,$sql);

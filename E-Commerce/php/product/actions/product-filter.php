@@ -5,6 +5,7 @@ $sort = $_GET['sort'];
 $order = $_GET['order'];
 
 require_once '../../components/db_connect.php';
+require_once 'helper-functions.php';
 
 mysqli_select_db($conn,"ajax_demo");
 
@@ -15,7 +16,7 @@ if (($filter === 'category' || $filter === 'clear') && $value !== 'all') {
   
 } 
 if ($sort === 'price') {
-  // To Do Calculate price after discount ------------------------------------------
+  // To Do Calculate price after discount ----------------------------// price / 100 * (100-discount_procent);
   $sql .= " ORDER BY price ".$order."";
 }
 if ($sort === 'default') {
@@ -31,7 +32,9 @@ $currentPrice='';
 
 while($row = mysqli_fetch_array($result)) {
 
-  $currentPrice = $row['price'] / 100 * (100-$row['discount_procent']);
+  //$currentPrice = $row['price'] / 100 * (100-$row['discount_procent']);
+  $currentPrice = discountedPrice($row['price'],$row['discount_procent']);
+
   $resultHtml .= "<div class='col-12 col-md-4 col-lg-3 py-2 box_height'>
                   <a href='product-details.php?id=" .$row['pk_product_id']."'>
                       <div class='square'>

@@ -59,7 +59,7 @@ if (isset($_POST['btn-login'])) {
             $banDate = date('d-m-y H:i:s', strtotime($bannedUntil));
 
             if ($count == 1 && $inputPW == $password) {
-                if ($status == 'active' && $role == 'admin') {
+                if ($status == 'active' && ($role == 'admin' || $role == 'superadmin')) {
                     $_SESSION['admin'] = $userId;
                     header("Location: admin/dashboard.php");
                 } else if ($status == 'active' && $role == 'user' && banChecker($conn, $userId)) {

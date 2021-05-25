@@ -13,10 +13,11 @@ if (isset($_SESSION["user"])) {
 require_once '../components/db_connect.php';
 
 $userId = $_SESSION['admin'];
-//protect admin from deletion if id is '1'
-$sqlSelect = "SELECT * FROM user WHERE pk_user_id != ?";
+$protectedRole = 'superadmin';
+//protect super admin from deletion
+$sqlSelect = "SELECT * FROM user WHERE role != ?";
 $stmt = $conn->prepare($sqlSelect);
-$stmt->bind_param("s", $userId);
+$stmt->bind_param("s", $protectedRole);
 $work = $stmt->execute();
 $result = $stmt->get_result();
 

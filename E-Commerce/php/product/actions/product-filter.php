@@ -16,8 +16,7 @@ if (($filter === 'category' || $filter === 'clear') && $value !== 'all') {
   
 } 
 if ($sort === 'price') {
-  // To Do Calculate price after discount ----------------------------// price / 100 * (100-discount_procent);
-  $sql .= " ORDER BY price ".$order."";
+  $sql .= " ORDER BY price / 100 * (100 - discount_procent) ".$order."";
 }
 if ($sort === 'default') {
   // To Do Calculate average rating of products ------------------------------------------

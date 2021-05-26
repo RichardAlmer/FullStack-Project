@@ -305,10 +305,10 @@ $conn->close();
                     </div>
                 </div>
             <?php } else { ?>
-                <div>
-                    <h2>Thank you for shopping with us!</h2>
-                    <h1>Your order was successfull.</h1>
-                    <p><?php echo $_SESSION['emailResponse']['statusMessage'] ?></p>
+                <div class="my-5">
+                    <div class="fs-5 my-3"><span class="my_text_maincolor">Thank you</span> for shopping with us!</div>
+                    <div class="my_text_gray fs-4">Your order was successfull.</div>
+                    <div class="fs_7 my-2 my_text_lightgray"><?php echo $_SESSION['emailResponse']['statusMessage'] ?></div>
                     <a href="../product/product-catalog.php" class="col-12 col-md-auto btn bg_lightgray bg_hover rounded-pill py-2 px-md-5 text-white my-4">Continue Shopping</a>
                 </div>
             <?php

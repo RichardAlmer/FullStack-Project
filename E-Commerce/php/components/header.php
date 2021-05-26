@@ -56,9 +56,9 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cart
                             <a class="nav-link my_text" href="'.$level2.'logout.php?logout&level='.$level3.'">Logout</a>
                         </li>
                         <li class="nav-item px-2">
-                            <span id="count">'.$cartCount.'</span>
-                            <a class="nav-link text-dark" href="'.$level1.'php/cart/cart.php">
+                            <a class="nav-link text-dark position-relative" href="'.$level1.'php/cart/cart.php">
                                 <img class="cart_img" src="'.$level1.'img/general_images/cart.png" alt="cart">
+                                <span id="count" class="position-absolute bg_maincolor text-white rounded-circle fs_7 text-center align-bottom cart-number">'.$cartCount.'</span>
                             </a>
                         </li>
                         <li class="nav-item px-2">

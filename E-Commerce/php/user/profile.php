@@ -96,12 +96,12 @@ $result = $conn->query($sqlCart);
                 }
                 ?>
 
-                <div class="row col-12 col-md-4">
+                <div class="row col-12 col-md-5">
                     <?php 
                         echo "<img class='img-thumbnail big-thumbnail p-1 rounded-circle' src='../../img/user_images/".$picture."'>";
                     ?>
                 </div>
-                <div class="row col-12 col-md-8 py-5">
+                <div class="row col-12 col-md-7 py-5">
                     <div class="col-12 col-md-4 fw-bold py-2">First name</div>
                     <div class="col-12 col-md-8 pb-3 py-md-2"><?php echo $firstName ?></div>
 

@@ -38,6 +38,10 @@ img {
   color: var(--light_gray) !important;
 }
 
+.success {
+    color: var(--main_color);
+}
+
 /*color variables*/
 
 :root {
@@ -157,6 +161,14 @@ img {
 .big-thumbnail {
     width: 15rem;
     height: 15rem;
+}
+
+.cart-number {
+    width: 25px; 
+    height: 25px; 
+    padding-top: 2px;
+    top: -4px;
+    right: -5px;
 }
 
 /*media*/

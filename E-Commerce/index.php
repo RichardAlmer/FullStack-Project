@@ -18,7 +18,7 @@ if(isset($_SESSION['admin'])){
 }
 
 $cartCount = "";
-if(isset($_session['admin']) || isset($_SESSION['user'])){
+if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
     $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
     $result = $conn->query($sqlCart);
     if ($result->num_rows == 1){

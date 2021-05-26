@@ -48,6 +48,20 @@ if(mysqli_num_rows($result) > 0) {
    $tbody =  "<div><center>No Data Available </center></div>";
 }
 
+$userId = '';
+if(isset($_SESSION['admin'])){
+    $userId = $_SESSION['admin'];
+} else if(isset($_SESSION['user'])){
+    $userId = $_SESSION['user'];
+}
+$cartCount = "";
+$sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+$result = $conn->query($sqlCart);
+    if ($result->num_rows == 1){
+        $data = $result->fetch_assoc();
+        $cartCount = $data['COUNT(quantity)'];
+    }
+
 $conn->close();
 ?>
 
@@ -75,7 +89,7 @@ $conn->close();
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("../../", "../", "../", $id, $session);
+        navbar("../../", "../", "../", $id, $session, $cartCount);
     ?>
 
     <div id="container" class="container">

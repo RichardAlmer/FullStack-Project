@@ -12,6 +12,7 @@
 
 <body>
     <?php 
+        require_once 'components/db_connect.php';
         session_start();
         require_once 'components/header.php';
         $id = "";
@@ -23,7 +24,14 @@
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("../", "", "", $id, $session);
+        $cartCount = "";
+        $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$id}";
+        $result = $conn->query($sqlCart);
+            if ($result->num_rows == 1){
+                $data = $result->fetch_assoc();
+                $cartCount = $data['COUNT(quantity)'];
+            }
+        navbar("../", "", "", $id, $session, $cartCount);
     ?>
     <div class="container">
         <div class="row my-5 py-5">

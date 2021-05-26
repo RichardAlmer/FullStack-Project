@@ -108,6 +108,15 @@ if (isset($_POST["submit"])) {
     }
 }
 
+
+$cartCount = "";
+$sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+$result = $conn->query($sqlCart);
+    if ($result->num_rows == 1){
+        $data = $result->fetch_assoc();
+        $cartCount = $data['COUNT(quantity)'];
+    }
+
 $conn->close();
 ?>
 
@@ -141,7 +150,7 @@ $conn->close();
         $id = $_SESSION['user'];
         $session = "user";
     }
-    navbar("../../", "../", "../", $id, $session);
+    navbar("../../", "../", "../", $id, $session, $cartCount);
     ?>
     <div id="container" class="container">
         <div id="content" class="row my-5 py-5">

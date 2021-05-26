@@ -139,6 +139,7 @@
                                 <input type='hidden' name='productId' value='$productId'/>
                                 <input type='hidden' name='userId' value='$userId'/>
                                 <input type='hidden' name='quantity' value='1'/>
+                                <input class='quantityCart' type='hidden' name='quantityCart' value='$quantity'/>
                                 <button class='col-2 del btn fw-bold fs-3 px-3' type='submit' name='plus'> + </button>
                             </form>
 
@@ -157,6 +158,15 @@
             }
         }
     }
+    $cartCount = "";
+    $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+    $result = $conn->query($sqlCart);
+        if ($result->num_rows == 1){
+            $data = $result->fetch_assoc();
+            if($data['COUNT(quantity)'] != 0){
+                $cartCount = $data['COUNT(quantity)'];
+            }
+        }
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -181,7 +191,7 @@
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("../../", "../", "../", $id, $session);
+        navbar("../../", "../", "../", $id, $session, $cartCount);
     ?>
     <div class="container">
         <div class="my-5 py-5">

@@ -1,6 +1,6 @@
 <?php 
-// session_start();
-function navbar($level1="", $level2="", $level3="", $id="", $session = ""){
+
+function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cartCount = ""){
     if($session == ""){
         echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">
@@ -56,6 +56,7 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = ""){
                             <a class="nav-link my_text" href="'.$level2.'logout.php?logout&level='.$level3.'">Logout</a>
                         </li>
                         <li class="nav-item px-2">
+                            <span id="count">'.$cartCount.'</span>
                             <a class="nav-link text-dark" href="'.$level1.'php/cart/cart.php">
                                 <img class="cart_img" src="'.$level1.'img/general_images/cart.png" alt="cart">
                             </a>
@@ -97,6 +98,7 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = ""){
                             <a class="nav-link my_text" href="'.$level1.'php/admin/dashboard.php">Admin Dashboard</a>
                         </li>
                         <li class="nav-item px-2">
+                            <span id="count">'.$cartCount.'</span>
                             <a class="nav-link text-dark" href="'.$level1.'php/cart/cart.php">
                                 <img class="cart_img" src="'.$level1.'img/general_images/cart.png" alt="cart">
                             </a>
@@ -113,3 +115,4 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = ""){
     </header>';
     }
 }
+?>

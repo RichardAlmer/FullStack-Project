@@ -198,7 +198,7 @@
                             <div class='col-12 col-md-8 my-2'>Answer from <span class='my_text_maincolor'>$rowA[first_name]</span></div>
                             <div class='col-12 col-md-4 my_text_lightgray text-md-end'>$rowA[create_datetime]</div>
                         </div>
-                        <div class='mt-3 ps-md-5'>$rowA[answer]</div>
+                        <div class='mb-3 ps-md-5'>$rowA[answer]</div>
                     ";
             }
             if($aId == $row['pk_question_id']){
@@ -266,6 +266,16 @@
         }
     }
 
+    $cartCount = "";
+    $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+    $result = $conn->query($sqlCart);
+        if ($result->num_rows == 1){
+            $data = $result->fetch_assoc();
+            if($data['COUNT(quantity)'] != 0){
+                $cartCount = $data['COUNT(quantity)'];
+            }
+        }
+
     $conn->close();
     
 ?>
@@ -292,12 +302,12 @@
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("../../", "../", "../", $id, $session);
+        navbar("../../", "../", "../", $id, $session, $cartCount);
     ?>
     <div class="container">
         <div id="product" class="my-5 py-5">
             <div class="col-12 fs_6 text-uppercase my-2">About product </div>
-            <div class="my-2 text-<?=$class;?>"><?php echo ($messageC) ?? ""; ?></div>
+            <div class="my-2 text-<?=$class;?> my_text_maincolor"><?php echo ($messageC) ?? ""; ?></div>
             <div class="row my-4">
                 <div class="col-12 col-md-6">
                     <img id="proImg" src="../../img/product_images/<?php echo $image ?>" alt="<?php echo $image ?>">
@@ -355,7 +365,7 @@
                         <input class="form-control mb-2" type="text" name="title" placeholder="Leave a title here" id="reviewTitle">
                         <textarea class="form-control mb-2" type="text" name="review" placeholder="Leave a review here" id="reviewText"></textarea>
                     </div>
-                    <div class="text-<?=$class;?> my-2"><?php echo ($messageReview) ?? ""; ?></div>
+                    <div class="text-<?=$class;?> my-2 my_text_maincolor"><?php echo ($messageReview) ?? ""; ?></div>
                     <input id="rating" type="hidden" name="rating" value="" />
                     <button type="submit" name="submitRev" class="btn btn bg_gray bg_hover rounded-pill col-12 col-md-auto py-2 px-4 text-white my-2">Create review</button>
                 </form>

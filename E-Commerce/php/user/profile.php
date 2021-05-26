@@ -39,10 +39,22 @@ if ($_GET['id']) {
     } else {
         header("location: ../error.php");
     }
-    $conn->close();
+    
 } else {
     header("location: ../error.php");
 }
+
+
+$cartCount = "";
+$sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+$result = $conn->query($sqlCart);
+    if ($result->num_rows == 1){
+        $data = $result->fetch_assoc();
+        if($data['COUNT(quantity)'] != 0){
+            $cartCount = $data['COUNT(quantity)'];
+        }
+    }
+    $conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +80,7 @@ if ($_GET['id']) {
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("../../", "../", "../", $id, $session);
+        navbar("../../", "../", "../", $id, $session, $cartCount);
     ?>
     <div id="container" class="container">
         <div class="row my-5 py-5">

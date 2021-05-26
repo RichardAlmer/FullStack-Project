@@ -9,6 +9,25 @@ function getAllProducts()
     return $result;
 }
 $products = getAllProducts();
+
+$userId = '';
+if(isset($_SESSION['admin'])){
+    $userId = $_SESSION['admin'];
+} else if(isset($_SESSION['user'])){
+    $userId = $_SESSION['user'];
+}
+
+$cartCount = "";
+if(isset($_session['admin']) || isset($_SESSION['user'])){
+    $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+    $result = $conn->query($sqlCart);
+    if ($result->num_rows == 1){
+        $data = $result->fetch_assoc();
+        if($data['COUNT(quantity)'] != 0){
+            $cartCount = $data['COUNT(quantity)'];
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +52,7 @@ $products = getAllProducts();
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("", "php/", "../", $id, $session);
+        navbar("", "php/", "../", $id, $session, $cartCount);
     ?>
     <div class="container my-1 p-md-2">
         <div class="row px-md-5 my-5 pt-5">

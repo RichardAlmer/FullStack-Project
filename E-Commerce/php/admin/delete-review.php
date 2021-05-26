@@ -35,7 +35,21 @@
             $message = "The entry was not deleted due to: <br>" . $conn->error;
         }
     }
-    
+    $userId = '';
+    if(isset($_SESSION['admin'])){
+        $userId = $_SESSION['admin'];
+    } else if(isset($_SESSION['user'])){
+        $userId = $_SESSION['user'];
+    }
+    $cartCount = "";
+    $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+    $result = $conn->query($sqlCart);
+        if ($result->num_rows == 1){
+            $data = $result->fetch_assoc();
+            if($data['COUNT(quantity)'] != 0){
+                $cartCount = $data['COUNT(quantity)'];
+            }
+        }
     $conn->close();
 
 ?>
@@ -61,7 +75,7 @@
                 $id = $_SESSION['user'];
                 $session = "user";
             }
-            navbar("../../", "../", "../", $id, $session);
+            navbar("../../", "../", "../", $id, $session, $cartCount);
         ?>
         
         <div class="my-5 py-5">

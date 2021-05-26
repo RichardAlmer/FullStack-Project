@@ -11,10 +11,10 @@
         exit;
     }
 
-    $sql = "SELECT product.name, product.category, product.brand, product.status, purchase_item.fk_product_id, purchase_item.sold, SUM(purchase_item.quantity) AS quantity 
+    $sql = "SELECT product.name, product.category, product.brand, product.status, purchase_item.fk_product_id, SUM(purchase_item.sold) AS sold, SUM(purchase_item.quantity) AS quantity 
     FROM purchase_item 
     INNER JOIN product ON purchase_item.fk_product_id = product.pk_product_id 
-    GROUP BY purchase_item.fk_product_id, purchase_item.sold 
+    GROUP BY purchase_item.fk_product_id
     ORDER BY quantity DESC";
     $result = mysqli_query($conn, $sql);
 

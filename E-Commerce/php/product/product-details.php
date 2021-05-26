@@ -311,13 +311,13 @@
             <div class="col-12 fs_6 text-uppercase my-2">About product </div>
             <div class="my-2 text-<?=$class;?> my_text_maincolor"><?php echo ($messageC) ?? ""; ?></div>
             <div class="row my-4">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <img id="proImg" src="../../img/product_images/<?php echo $image ?>" alt="<?php echo $image ?>">
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <div class="row align-items-center">
-                        <div id="name" class="col-12 col-md-10 py-3 py-md-0 fs-4"><?php echo $name ?></div>
+                        <div id="name" class="col-12 col-md-10 py-3 py-lg-0 fs-4"><?php echo $name ?></div>
                         <div class="col-12 col-md-2 my_text_maincolor fw-bold"><?php echo ($status === 'deactive') ? "deactive" : "" ?></div>
                     </div>
                     <div class="col-12 my-3 fs-5"><?php echo $avgRating ?></div>

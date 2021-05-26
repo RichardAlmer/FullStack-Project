@@ -33,6 +33,11 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cart
         </nav>
     </header>';
     } else if ($session == "user"){
+
+        if ($cartCount) {
+           $cartCount = '<span id="count" class="position-absolute bg_maincolor text-white rounded-circle fs_7 text-center align-bottom cart-number">'.$cartCount.'</span>';
+        }
+        
         echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">
             <div class="container container-fluid">
@@ -58,7 +63,7 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cart
                         <li class="nav-item px-2">
                             <a class="nav-link text-dark position-relative" href="'.$level1.'php/cart/cart.php">
                                 <img class="cart_img" src="'.$level1.'img/general_images/cart.png" alt="cart">
-                                <span id="count" class="position-absolute bg_maincolor text-white rounded-circle fs_7 text-center align-bottom cart-number">'.$cartCount.'</span>
+                                '.$cartCount.'
                             </a>
                         </li>
                         <li class="nav-item px-2">

@@ -152,14 +152,15 @@ if (isset($_POST['buyBtn'])) {
     }
     for ($i = 0; $i < count($allProductIds); $i++) {
         $sql2 = "INSERT INTO purchase_item (quantity, fk_product_id, fk_purchase_id, sold) VALUES ($allQuantitys[$i], $allProductIds[$i], $purchaseId, $allDiscountPrice[$i])";
+        if ($conn->query($sql2) === true) {
+            $class2 = "success";
+            // $message2 = "Succsess Item";
+        } else {
+            $class2 = "danger";
+            $message2 = "Error Item. Try again: <br>" . $conn->error;
+        }
     }
-    if ($conn->query($sql2) === true) {
-        $class2 = "success";
-        // $message2 = "Succsess Item";
-    } else {
-        $class2 = "danger";
-        $message2 = "Error Item. Try again: <br>" . $conn->error;
-    }
+    
 
     //send email notification & 
     //save result into session otherwise variable does not survive the $_SERVER['PHP_SELF']

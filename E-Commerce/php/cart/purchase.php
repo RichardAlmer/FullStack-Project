@@ -174,7 +174,9 @@ if (isset($_POST['buyBtn'])) {
     $result = $conn->query($sqlCart);
         if ($result->num_rows == 1){
             $data = $result->fetch_assoc();
-            $cartCount = $data['COUNT(quantity)'];
+            if($data['COUNT(quantity)'] != 0){
+                $cartCount = $data['COUNT(quantity)'];
+            }
         }
 $conn->close();
 ?>

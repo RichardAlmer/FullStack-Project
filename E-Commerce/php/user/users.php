@@ -51,7 +51,9 @@ $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
 $result = $conn->query($sqlCart);
     if ($result->num_rows == 1){
         $data = $result->fetch_assoc();
-        $cartCount = $data['COUNT(quantity)'];
+        if($data['COUNT(quantity)'] != 0){
+            $cartCount = $data['COUNT(quantity)'];
+        }
     }
 
 $conn->close();

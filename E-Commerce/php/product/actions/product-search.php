@@ -38,8 +38,8 @@ while($row = mysqli_fetch_array($result)) {
                         </div>
                         <div class='row py-3 text-center'>
                             <div class='col-12 fs-5 my-2'>{$row['name']}</div>
-                            <a href='/' class='col-12 my-1 my_text_maincolor'>{$row['category']}</a>
-                            <a href='/' class='col-12'>{$row['brand']}</a> 
+                            <div href='/' class='col-12 my-1 my_text_maincolor'>{$row['category']}</div>
+                            <div href='/' class='col-12'>{$row['brand']}</div> 
                             <div class='col-12 fw-bold mt-2'>".$stars."</div>
                             <div class='col-12 text-decoration-line-through mt-2'>{$price}</div>
                             <div class='col-12 fw-bold'>€{$currentPrice} ";

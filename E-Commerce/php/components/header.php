@@ -1,6 +1,6 @@
 <?php 
 
-function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cartCount = ""){
+function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cartCount = "", $image = ""){
     if($session == ""){
         echo '<header class="my-4">
         <nav class="navbar navbar-expand-lg navbar-light my_bg">
@@ -68,7 +68,7 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cart
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link text-dark" href="'.$level1.'php/user/profile.php?id='.$id.'">
-                                <img class="cart_img" src="'.$level1.'img/user_images/default-user.jpg" alt="profile">
+                                <img class="profile_img img-thumbnail rounded-circle" src="'.$level1.'img/user_images/'.$image.'" alt="profile">
                             </a>
                         </li>
                     </ul>
@@ -114,7 +114,7 @@ function navbar($level1="", $level2="", $level3="", $id="", $session = "", $cart
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link text-dark" href="'.$level1.'php/user/profile.php?id='.$id.'">
-                                <img class="cart_img" src="'.$level1.'img/user_images/default-user.jpg" alt="profile">
+                                <img class="profile_img img-thumbnail rounded-circle" src="'.$level1.'img/user_images/'.$image.'" alt="profile">
                             </a>
                         </li>
                     </ul>

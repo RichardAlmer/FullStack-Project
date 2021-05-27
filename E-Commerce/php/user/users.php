@@ -47,10 +47,12 @@ if(isset($_SESSION['admin'])){
     $userId = $_SESSION['user'];
 }
 $cartCount = "";
-$sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+$image = "";
+$sqlCart = "SELECT COUNT(quantity), profile_image FROM cart_item INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_user_id = {$userId}";
 $result = $conn->query($sqlCart);
     if ($result->num_rows == 1){
         $data = $result->fetch_assoc();
+        $image = $data['profile_image'];
         if($data['COUNT(quantity)'] != 0){
             $cartCount = $data['COUNT(quantity)'];
         }
@@ -89,7 +91,7 @@ $conn->close();
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("../../", "../", "../", $id, $session, $cartCount);
+        navbar("../../", "../", "../", $id, $session, $cartCount, $image);
     ?>
 
     <div id="container" class="container">

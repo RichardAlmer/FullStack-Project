@@ -18,15 +18,17 @@ if(isset($_SESSION['admin'])){
 }
 
 $cartCount = "";
+$image = "";
 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
-    $sqlCart = "SELECT COUNT(quantity) FROM cart_item WHERE fk_user_id = {$userId}";
+    $sqlCart = "SELECT COUNT(quantity), profile_image FROM cart_item INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_user_id = {$userId}";
     $result = $conn->query($sqlCart);
-    if ($result->num_rows == 1){
-        $data = $result->fetch_assoc();
-        if($data['COUNT(quantity)'] != 0){
-            $cartCount = $data['COUNT(quantity)'];
+        if ($result->num_rows == 1){
+            $data = $result->fetch_assoc();
+            $image = $data['profile_image'];
+            if($data['COUNT(quantity)'] != 0){
+                $cartCount = $data['COUNT(quantity)'];
+            }
         }
-    }
 }
 ?>
 <!DOCTYPE html>
@@ -52,7 +54,7 @@ if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
             $id = $_SESSION['user'];
             $session = "user";
         }
-        navbar("", "php/", "../", $id, $session, $cartCount);
+        navbar("", "php/", "../", $id, $session, $cartCount, $image);
     ?>
     <div class="container my-1 p-md-2">
         <div class="row px-md-5 my-5 pt-5">

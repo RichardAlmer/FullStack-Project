@@ -377,5 +377,4 @@ $conn->close();
 
     <?php require_once 'components/boot-javascript.php' ?>
 </body>
-
 </html>

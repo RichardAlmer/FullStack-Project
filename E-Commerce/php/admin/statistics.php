@@ -29,7 +29,8 @@
                             <th class='border-0'>Quantity</th>
                         </tr>
                     </thead>
-                    <tbody>"; 
+                    <tbody>";
+
     if ($result->num_rows > 0) {  
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
             $htmlResult .= "
@@ -43,7 +44,7 @@
             </tr>";
         };
     } else  {
-    $htmlResult =  "<center>No Data Available </center>";
+        $htmlResult =  "<center>No Data Available </center>";
     }
     $htmlResult .= "</tbody></table>";
 
@@ -110,5 +111,4 @@
         require_once '../components/boot-javascript.php';
     ?>
 </body>
-
 </html>

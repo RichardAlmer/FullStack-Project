@@ -23,7 +23,7 @@ function file_upload($image, $source = 'user')
             if ($fileError === 0) {
                 if ($fileSize < 1500000) { //1500kb this number is in bytes
                     //it gives a file name based microseconds
-                    $fileNewName = uniqid('') . "." . $fileExtension; // 1233343434.jpg i.e
+                    $fileNewName = uniqid('') . "." . $fileExtension;
                     if($source == 'product'){
                         $destination = "../../img/product_images/$fileNewName";
                     } elseif ($source == 'user'){

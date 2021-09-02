@@ -12,7 +12,6 @@ if (isset($_SESSION["user"])) {
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
-//fetch and populate form
 if (isset($_GET['id'])) {
     $userId = $_GET['id'];
     $sql = "SELECT * FROM user WHERE pk_user_id = {$userId}";
@@ -36,15 +35,11 @@ if (isset($_GET['id'])) {
         $role = $data['role'];
         $status = $data['status'];
 
-        //banned until
         $bannedUntil = $data['banned_until'];
         $time = strtotime($bannedUntil);
-        // echo date('d-m-y H:i:s', $time);
     }
 }
 
-//Delete
-//protect super admin from deletion
  if (isset($_POST["btnDelete"])) {
 
     $userId = $_POST['id'];

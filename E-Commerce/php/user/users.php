@@ -14,14 +14,12 @@ require_once '../components/db_connect.php';
 
 $userId = $_SESSION['admin'];
 $protectedRole = 'superadmin';
-//protect super admin from deletion
 $sqlSelect = "SELECT * FROM user WHERE role != ?";
 $stmt = $conn->prepare($sqlSelect);
 $stmt->bind_param("s", $protectedRole);
 $work = $stmt->execute();
 $result = $stmt->get_result();
 
-//this variable will hold the body for the table
 $tbody = '';
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -60,10 +58,8 @@ $result = $conn->query($sqlCart);
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,9 +73,7 @@ $conn->close();
         }
     </style>
 </head>
-
 <body>
-
     <?php
         require_once '../components/header.php';
         $id = "";
@@ -121,11 +115,7 @@ $conn->close();
 
     <?php
         require_once '../components/footer.php';
-
+        require_once '../components/boot-javascript.php' 
     ?>
-
-    <?php require_once '../components/boot-javascript.php' ?>
-
 </body>
-
 </html>

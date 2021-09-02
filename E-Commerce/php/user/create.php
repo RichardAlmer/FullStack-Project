@@ -16,27 +16,23 @@ $passError = '';
 $firstName = $lastName = $email = $pass = $birthDate = $street = $zipCode = $city = $country = $role = $status = $bannedUntil = $picture = '';
 $firstNameError = $lastNameError = $emailError =  $passwordError = $birthDateError = $streetError = $zipCodeError = $cityError = $countryError = $roleError = $statusError = $pictureError = '';
 
-//role dropdown
 $roleList = ["user", "admin"];
 $roleOptions = "";
 foreach ($roleList as $role) {
     $roleOptions .= "<option value='$role'>" . ucfirst($role) . "</option>";
 }
 
-//status dropdown
 $statusList = ["active", "inactive"];
 $statusOptions = "";
 foreach ($statusList as $status) {
     $statusOptions .= "<option value='$status'>" . ucfirst($status) . "</option>";
 }
 
-//Create
 $class = 'd-none';
 if (isset($_POST["btnCreate"])) {
 
     $error = false;
 
-    // sanitize user input to prevent sql injection
     $firstName = trim($_POST['firstName']);
     $firstName = strip_tags($firstName);
     $firstName = htmlspecialchars($firstName);
@@ -77,7 +73,6 @@ if (isset($_POST["btnCreate"])) {
     $status = $_POST['status'];
     $bannedUntil = $_POST['bannedUntil'];
 
-    // basic name validation
     if (empty($firstName) || empty($lastName)) {
         $error = true;
         $firstNameError = "Please enter your full name and surname";
@@ -89,12 +84,10 @@ if (isset($_POST["btnCreate"])) {
         $firstNameError = "Name and surname must contain only letters and no spaces.";
     }
 
-    //basic email validation
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = true;
         $emailError = "Please enter valid email address.";
     } else {
-        // checks whether the email exists or not
         $query = "SELECT email FROM user WHERE email='$email'";
         $result = mysqli_query($conn, $query);
         $count = mysqli_num_rows($result);
@@ -104,7 +97,6 @@ if (isset($_POST["btnCreate"])) {
         }
     }
 
-    // password validation
     if (empty($password)) {
         $error = true;
         $passwordError = "Please enter password.";
@@ -113,51 +105,41 @@ if (isset($_POST["btnCreate"])) {
         $passwordError = "Password must have at least 6 characters.";
     }
 
-    //checks if the date input was left empty
     if (empty($birthDate)) {
         $error = true;
         $birthDateError = "Please enter a date of birth.";
     }
 
-    //checks if the street input was left empty
     if (empty($street)) {
         $error = true;
         $streetError = "Please enter a street.";
     }
 
-    //checks if the ZIP-Code input was left empty
     if (empty($zipCode)) {
         $error = true;
         $zipCodeError = "Please enter a postcode.";
     }
 
-    //checks if the city input was left empty
     if (empty($city)) {
         $error = true;
         $cityError = "Please enter a city.";
     }
 
-    //checks if the country input was left empty
     if (empty($country)) {
         $error = true;
         $countryError = "Please enter a country.";
     }
 
-    //you cannot ban other admins
     if ($role == 'admin') {
         $bannedUntil = "";
     }
 
-    // password hashing for security
     $password = hash('sha256', $password);
 
-    // if there's no error, continue to signup
     if (!$error) {
-        //variable for upload pictures errors is initialized
         $uploadError = '';
-        $picture = file_upload($_FILES['picture']); //file_upload() called
+        $picture = file_upload($_FILES['picture']);
 
-        //if banned until is empty then insert NULL into db
         if ($bannedUntil == "") {
             $sql = "INSERT INTO user (first_name, last_name, email, password, birthdate, address, postcode, city, country, role, status, banned_until, profile_image) VALUES ('$firstName', '$lastName', '$email', '$password', '$birthDate', '$street', '$zipCode', '$city', '$country', '$role', '$status', NULL, '$picture->fileName')";
         } else {
@@ -360,7 +342,5 @@ $conn->close();
         footer("../../");
         require_once '../components/boot-javascript.php';
     ?>
-
 </body>
-
 </html>

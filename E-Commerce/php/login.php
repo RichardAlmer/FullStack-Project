@@ -46,10 +46,8 @@ if (isset($_POST['btn-login'])) {
 
         $row = $result->fetch_assoc();
         $count = $result->num_rows;
-        //Email check if account exists if not to else
-        if ($count != 0) {
 
-            // var_dump($count);
+        if ($count != 0) {
 
             $userId = $row['pk_user_id'];
             $password = $row['password'];
@@ -145,12 +143,9 @@ $conn->close();
     </div>
 
     <?php
-    require_once 'components/footer.php';
-    footer("../");
+        require_once 'components/footer.php';
+        footer("../");
+        require_once 'components/boot-javascript.php';
     ?>
-
-    <?php require_once 'components/boot-javascript.php' ?>
-
 </body>
-
 </html>

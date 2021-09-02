@@ -7,10 +7,6 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
     header("Location: ../../index.php");
     exit;
 }
-// if (isset($_SESSION["admin"])) {
-//     header("Location: ../product/product-catalog.php");
-//     exit;
-// }
 
 $userId = '';
 if (isset($_SESSION['admin'])) {
@@ -130,7 +126,6 @@ if (isset($_POST['buyBtn'])) {
     $sql3 = "DELETE FROM cart_item WHERE fk_user_id = {$userId}";
     if ($conn->query($sql1) === true) {
         $class1 = "success";
-        // $message1 = "Succsess Purchase";
     } else {
         $class1 = "danger";
         $message1 = "Error Purchase. Try again: <br>" . $conn->error;
@@ -154,7 +149,6 @@ if (isset($_POST['buyBtn'])) {
         $sql2 = "INSERT INTO purchase_item (quantity, fk_product_id, fk_purchase_id, sold) VALUES ($allQuantitys[$i], $allProductIds[$i], $purchaseId, $allDiscountPrice[$i])";
         if ($conn->query($sql2) === true) {
             $class2 = "success";
-            // $message2 = "Succsess Item";
         } else {
             $class2 = "danger";
             $message2 = "Error Item. Try again: <br>" . $conn->error;
@@ -221,7 +215,6 @@ $conn->close();
                         <div id="address" class="my-3">
                             <div class="col-12 fw-bold my-4">Delivery | Billing address</div>
                             <div class="col-12 my-3"><span class="my_text_maincolor"><?php echo $firstName . " " . $lastName ?> </span><?php echo $address .", ". $city . " - " . $postcode . ", ". $country?></div>
-                            <!-- <button id='addressBtn' type="button" class="btn btn-primary">Change Delivery Address</button> -->
                         </div>
                         <div id="payment" class="col-12 col-md-6">
                             <select class="form-select" aria-label="Default select example">

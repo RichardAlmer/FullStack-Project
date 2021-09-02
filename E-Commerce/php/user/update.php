@@ -12,7 +12,6 @@ if (isset($_SESSION["user"])) {
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
-//fetch and populate form
 if (isset($_GET['id'])) {
     $userId = $_GET['id'];
     $sql = "SELECT * FROM user WHERE pk_user_id = {$userId}";
@@ -33,7 +32,6 @@ if (isset($_GET['id'])) {
         $city = $data['city'];
         $country = $data['country'];
 
-        //role dropdown
         $roleList = ["user", "admin"];
         $selectedRole = $data['role'];
         $roleOptions = "";
@@ -45,7 +43,6 @@ if (isset($_GET['id'])) {
             }
         }
 
-        //status dropdown
         $statusList = ["active", "inactive"];
         $selectedStatus = $data['status'];
         $statusOptions = "";
@@ -57,12 +54,10 @@ if (isset($_GET['id'])) {
             }
         }
 
-        //banned until
         $bannedUntil = $data['banned_until'];
         $time = strtotime($bannedUntil);
         $timeResult = date('Y.m.d H:i:s', $time);
 
-        //you cannot ban other admins
         if ($role == 'admin') {
             $bannedUntil = NULL;
         }
@@ -70,15 +65,12 @@ if (isset($_GET['id'])) {
 }
 
 $firstNameError = $lastNameError = $emailError =  $passwordError = $birthDateError = $streetError = $zipCodeError = $cityError = $countryError = $roleError = $statusError = $pictureError = '';
-//update
+
 $class = 'd-none';
 if (isset($_POST["btnSave"])) {
 
-    // var_dump($_POST);
-
     $error = false;
 
-    // sanitize user input to prevent sql injection
     $firstName = trim($_POST['firstName']);
     $firstName = strip_tags($firstName);
     $firstName = htmlspecialchars($firstName);
@@ -122,14 +114,12 @@ if (isset($_POST["btnSave"])) {
     $bannedUntilNew = $_POST['bannedUntilNew'];
     $intoDB = "";
 
-    //IF there is a new bannedUntil value, the old one is overwritten!
     if (!empty($bannedUntilNew)) {
         $intoDB = $bannedUntilNew;
     } else {
         $intoDB = $bannedUntil;
     }
 
-    // basic name validation
     if (empty($firstName) || empty($lastName)) {
         $error = true;
         $firstNameError = "Please enter your full name and surname";
@@ -141,12 +131,11 @@ if (isset($_POST["btnSave"])) {
         $firstNameError = "Name and surname must contain only letters and no spaces.";
     }
 
-    //basic email validation
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = true;
         $emailError = "Please enter valid email address.";
     } else {
-        // checks whether the email exists or not
+
         $query = "SELECT pk_user_id, email FROM user WHERE email='$email'";
         $result = mysqli_query($conn, $query);
         $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -157,66 +146,52 @@ if (isset($_POST["btnSave"])) {
         }
     }
 
-    // use old password if no new input
     if (empty($password)) {
         $sql = "SELECT * FROM user WHERE pk_user_id = {$userId}";
         $result = $conn->query($sql);
         $data = $result->fetch_assoc();
         $newPassword = $data['password'];
-    } else if (strlen($password) < 6) { //if new input check passw length
+    } else if (strlen($password) < 6) {
         $error = true;
         $passwordError = "Password must have at least 6 characters.";
     } else {
-        // password hashing for security
         $newPassword = hash('sha256', $password);
     }
 
-    //checks if the date input was left empty
     if (empty($birthDate)) {
         $error = true;
         $birthDateError = "Please enter a date of birth.";
     }
 
-    //checks if the street input was left empty
     if (empty($street)) {
         $error = true;
         $streetError = "Please enter a street.";
     }
 
-    //checks if the ZIP-Code input was left empty
     if (empty($zipCode)) {
         $error = true;
         $zipCodeError = "Please enter a ZIP-Code.";
     }
 
-    //checks if the city input was left empty
     if (empty($city)) {
         $error = true;
         $cityError = "Please enter a city.";
     }
 
-    //checks if the country input was left empty
     if (empty($country)) {
         $error = true;
         $countryError = "Please enter a country.";
     }
 
-    //you cannot ban other admins
     if ($role == 'admin') {
         $intoDB = NULL;
     }
 
-    // // password hashing for security
-    // $password = hash('sha256', $password);
-
-    // if there's no error, continue to signup
     if (!$error) {
-        //variable for upload pictures errors is initialized
         $uploadError = '';
-        $pictureArray = file_upload($_FILES['picture']); //file_upload() called
+        $pictureArray = file_upload($_FILES['picture']);
         $picture = $pictureArray->fileName;
 
-        //if banned until is empty (like when never used or unbanned) then insert NULL into db
         if (empty($intoDB)) {
             if ($pictureArray->error === 0) {
                 ($_POST["picture"] == "default-user.jpg") ?: unlink("../../img/user_images/{$_POST["picture"]}");

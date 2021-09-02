@@ -17,10 +17,9 @@ $name = $description = $brand = $picture = $price = $category = $status = $disco
 $nameError = $descriptionError = $brandError = $pictureError = $priceError = $categoryError = '';
 
 function sanitizeUserInput ($fieldInput, $fieldName) {
-    // --- sanitize user input to prevent sql injection --- //
     $fieldInput = trim($_POST[$fieldName]);     
     $fieldInput = strip_tags($fieldInput);       
-    $fieldInput = htmlspecialchars($fieldInput);  // htmlspecialchars converts special characters to HTML entities
+    $fieldInput = htmlspecialchars($fieldInput);
     return $fieldInput;
 }
 
@@ -40,7 +39,6 @@ if (isset($_POST['btnCreate'])) {
    
     $uploadError = '';
   
-    // validation of required fields and input type where needed
     if (empty($name)) {
         $error = true;
         $nameError = "Please enter a name for the product.";
@@ -68,7 +66,6 @@ if (isset($_POST['btnCreate'])) {
         $categoryError = "Category must contain only letters and no spaces.";
     }
 
-    // if there's no error, continue to create product
     if (!$error) {
         $uploadError = '';
         $picture = file_upload($_FILES['picture'], 'product');

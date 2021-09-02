@@ -22,10 +22,7 @@ function purchaseNotification($purchaseId)
 
     $jsonStrg = curl_get($url);
     $jsonData = json_decode($jsonStrg, true);
-    // var_dump($jsonData);
 
     return $jsonData;
 }
-
-// purchaseNotification(1);
 ?>

@@ -13,8 +13,6 @@
         exit;
     }
 
-    //$id = $_GET['id'];
-    // $sql = "SELECT pk_review_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id WHERE review.fk_product_id = {$id} ORDER BY create_datetime DESC";
     $sql = "SELECT pk_review_id, fk_user_id, rating, title, create_datetime, name, pk_product_id FROM review INNER JOIN product ON fk_product_id = pk_product_id ORDER BY create_datetime DESC";
     $result = mysqli_query($conn ,$sql);
     $tbody='';

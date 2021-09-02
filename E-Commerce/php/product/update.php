@@ -15,7 +15,6 @@ require_once '../components/file_upload.php';
 $error = false;
 $nameError = $descriptionError = $brandError = $pictureError = $priceError = $categoryError = '';
 
-//fetch and populate form
 if (isset($_GET['id'])) {
     $productId = $_GET['id'];
     $sql = "SELECT * FROM product WHERE pk_product_id = {$productId}";
@@ -31,21 +30,17 @@ if (isset($_GET['id'])) {
         $category = $data['category'];
         $status = $data['status'];
         $discountProcent = $data['discount_procent'];
-
-        // echo "picture: " . $picture;
     }
 }
 
 function sanitizeUserInput($fieldInput, $fieldName)
 {
-    // --- sanitize user input to prevent sql injection --- //
     $fieldInput = trim($_POST[$fieldName]);
     $fieldInput = strip_tags($fieldInput);
-    $fieldInput = htmlspecialchars($fieldInput);  // htmlspecialchars converts special characters to HTML entities
+    $fieldInput = htmlspecialchars($fieldInput);
     return $fieldInput;
 }
 
-//update on submit
 $class = 'd-none';
 if (isset($_POST["btnSave"])) {
 
@@ -59,11 +54,6 @@ if (isset($_POST["btnSave"])) {
     $status = $_POST['status'];
     $discountProcent = $_POST['discountProcent'];
 
-    // echo "POST picture: " . $picture . "<br>";
-    // echo "imageFILE: " . var_dump($_FILES['picture']) . "<br>";
-    // echo "imageFILE: " . var_dump($_POST) . "<br>";
-
-    // validation of required fields and input type where needed
     if (empty($name)) {
         $error = true;
         $nameError = "Please enter a name for the product.";
@@ -91,7 +81,6 @@ if (isset($_POST["btnSave"])) {
         $categoryError = "Category must contain only letters and no spaces.";
     }
 
-    // if there's no error, continue to create product
     if (!$error) {
         $uploadError = '';
         $picture = file_upload($_FILES['picture'], 'product');

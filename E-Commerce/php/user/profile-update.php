@@ -19,7 +19,6 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
 require_once '../components/db_connect.php';
 require_once '../components/file_upload.php';
 
-//fetch and populate form
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "SELECT * FROM user WHERE pk_user_id = {$id}";
@@ -45,7 +44,6 @@ function sanitizeUserInput($fieldInput, $fieldName)
     return $fieldInput;
 }
 
-//update on submit
 $class = 'd-none';
 if (isset($_POST["submit"])) {
     $firstName = sanitizeUserInput($firstName, 'firstName');
@@ -88,7 +86,7 @@ if (isset($_POST["submit"])) {
     }
     if (!$error) {
         $uploadError = '';
-        $pictureArray = file_upload($_FILES['picture']); //file_upload() called
+        $pictureArray = file_upload($_FILES['picture']);
         if ($pictureArray->error === 0) {
             ($_POST["picture"] == "default-user.jpg") ?: unlink("../../img/user_images/{$_POST["picture"]}");
             $sql = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', address = '$address', city = '$city', postcode = '$postcode', country = '$country', birthdate = '$birthdate', profile_image = '$pictureArray->fileName' WHERE pk_user_id = '$id'";
@@ -108,7 +106,6 @@ if (isset($_POST["submit"])) {
     }
 }
 
-
 $cartCount = "";
 $image = "";
 $sqlCart = "SELECT COUNT(quantity), profile_image FROM cart_item INNER JOIN user ON fk_user_id = pk_user_id WHERE fk_user_id = {$userId}";
@@ -123,11 +120,8 @@ $result = $conn->query($sqlCart);
 
 $conn->close();
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -141,7 +135,6 @@ $conn->close();
         }
     </style>
 </head>
-
 <body>
     <?php
     require_once '../components/header.php';
@@ -247,5 +240,4 @@ $conn->close();
     require_once '../components/boot-javascript.php';
     ?>
 </body>
-
 </html>

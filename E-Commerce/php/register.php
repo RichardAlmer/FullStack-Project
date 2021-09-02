@@ -110,7 +110,7 @@ if (isset($_POST['btnRegister'])) {
 
     // password hashing for security
     $password = hash('sha256', $pass);
-    // if there's no error, continue to signup
+
     if (!$error) {
         $uploadError = '';
         $profile_image = file_upload($_FILES['profile_image'], 'register');
@@ -248,10 +248,9 @@ $conn->close();
     </div>
 
     <?php
-    require_once 'components/footer.php';
-    footer("../");
-    require_once 'components/boot-javascript.php';
+        require_once 'components/footer.php';
+        footer("../");
+        require_once 'components/boot-javascript.php';
     ?>
 </body>
-
 </html>

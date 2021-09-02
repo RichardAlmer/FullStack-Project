@@ -6,10 +6,6 @@
         header("Location: ../../index.php");
         exit;
     }
-    // if (isset($_SESSION["admin"])) {
-    //     header("Location: ../product/product-catalog.php");
-    //     exit;
-    // }
 
     $userId = '';
     if(isset($_SESSION['admin'])){
@@ -26,7 +22,6 @@
         $sql = "DELETE FROM cart_item WHERE pk_cart_item_id = {$itemId}";
         if ($conn->query($sql) === true ) {
             $class = "success";
-            // $message = "One Item Removed";
         } else {
             $class = "danger";
             $message = "Error. Try again: <br>" . $conn->error;
@@ -41,7 +36,6 @@
         $sql = "INSERT INTO cart_item (quantity, fk_product_id, fk_user_id) VALUES ($quantity, $productId, $userId)";
         if ($conn->query($sql) === true ) {
             $class = "success";
-            // $message = "One Item Added";
         } else {
             $class = "danger";
             $message = "Error. Try again: <br>" . $conn->error;

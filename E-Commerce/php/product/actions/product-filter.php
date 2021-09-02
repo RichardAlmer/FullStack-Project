@@ -19,7 +19,6 @@ if ($sort === 'price') {
   $sql .= " ORDER BY price / 100 * (100 - discount_procent) ".$order."";
 }
 if ($sort === 'default') {
-  // To Do Calculate average rating of products ------------------------------------------
   $sql .= " ORDER BY pk_product_id DESC";
   
 }
@@ -30,8 +29,6 @@ $resultHtml='';
 $currentPrice='';
 
 while($row = mysqli_fetch_array($result)) {
-
-  //$currentPrice = $row['price'] / 100 * (100-$row['discount_procent']);
   $price = '';
   if ($row['discount_procent']) {
       $price = '€'. number_format($row['price'], 2, ',', ' ');

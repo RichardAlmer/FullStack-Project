@@ -91,8 +91,6 @@
         }
         
         
-    } else {
-        //header("location: ../error.php");
     }
 
     $userId = '';

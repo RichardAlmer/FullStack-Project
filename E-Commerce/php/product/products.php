@@ -127,7 +127,5 @@ $conn->close();
         footer("../../");
         require_once '../../php/components/boot-javascript.php';
     ?>
-
 </body>
-
 </html>
